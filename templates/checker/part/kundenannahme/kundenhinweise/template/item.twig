@@ -1,0 +1,20 @@
+{% if in_modal == 'false' %}
+<div class="work_block">
+    <div class="w_block">
+        <div class="icon">
+            <i class="fa fa-user" aria-hidden="true"></i>
+        </div>
+        <div class="title">{{ item.title }}</div>
+    </div>
+</div>
+{% else %}
+    <div class="work_block">
+        <div class="w_block">
+            <div class="icon">
+                <i class="fas fa-cog"></i>
+            </div>
+            <div class="title">{{ item.title }}</div>
+        </div>
+    </div>
+    <hr>
+{% endif %}

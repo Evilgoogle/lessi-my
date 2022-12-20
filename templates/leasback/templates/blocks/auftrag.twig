@@ -1,0 +1,115 @@
+{#<div class="panel panel-default main_panel">
+    <div class="panel-heading flex">
+        Auftrag
+        <button type="button" class="btn btn-primary btn-sm js_auftrag" data-id="{{ leasback.lb.id }}">+</button>
+    </div>
+    <div class="block">
+        {% if leasback.attach_auftrag is not null %}
+            <table class="panel-body table table-condensed">
+                <tbody class="head_data">
+                    <tr>
+                        <td>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>Nummer</th>
+                                        <td class="text_right">{{ leasback.attach_auftrag.AUFTRAGSNR }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Status</th>
+                                        <td class="text_right">{{ leasback.attach_auftrag.STATUS }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Typ</th>
+                                        <td class="text_right">{{ leasback.attach_auftrag.TYP }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>Anlieferung</th>
+                                        <td class="text_right">{{ leasback.attach_auftrag.ANLIEFERUNG |date('d.m.Y h:s') }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Annahme</th>
+                                        <td class="text_right">{{ leasback.attach_auftrag.ANNAHME |date('d.m.Y h:s') }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Vermerk</th>
+                                        <td class="text_right">{{ leasback.attach_auftrag.VERMERK }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        {% else %}
+            <p style="padding: 10px;"><u>nicht gefunden</u></p>
+        {% endif %}
+    </div>
+</div>#}
+
+<div class="panel panel-default main_panel">
+    <div class="panel-heading flex_between">
+        Auftrag
+        <button type="button" class="btn btn-primary btn-sm js_auftrag" data-id="{{ customer.id }}">+</button>
+    </div>
+    <div class="block">
+        {% if auftrag is not null %}
+            <table class="panel-body table table-condensed">
+                <tbody class="head_data">
+                    <tr>
+                        <td>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>Nummer</th>
+                                        <td class="text_right">{{ auftrag.AUFTRAGSNR }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Status</th>
+                                        <td class="text_right">{{ auftrag.STATUS }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Typ</th>
+                                        <td class="text_right">{{ auftrag.TYP }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>Anlieferung</th>
+                                        <td class="text_right">{{ auftrag.ANLIEFERUNG |date('d.m.Y h:s') }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Annahme</th>
+                                        <td class="text_right">{{ auftrag.ANNAHME |date('d.m.Y h:s') }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Vermerk</th>
+                                        <td class="text_right">{{ auftrag.VERMERK }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        {% else %}
+            <p style="padding: 10px;"><u>nicht gefunden</u></p>
+        {% endif %}
+    </div>
+</div>

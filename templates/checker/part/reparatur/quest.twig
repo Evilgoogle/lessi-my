@@ -1,0 +1,301 @@
+<div class="task_panel panel panel-warning aufgaben_head">
+    <div class="panel-heading flex-between">
+        <span>Aufgaben</span>
+    </div>
+    <div class="panel-body bg_green">
+            {% for kundenhinweise in auftrag.kundenhinweises %}
+                {% if kundenhinweise.tasks('behebung_kundehunweise') | length != 0 %}
+                    <div class="item panel panel-default">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-10">Technische Hinweise: {{ kundenhinweise.id }}</div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="work_block">
+                                <div class="w_block">
+                                    <div class="icon">
+                                        <i class="fas fa-cog"></i>
+                                    </div>
+                                    <div class="title">{{ kundenhinweise.title }}</div>
+                                </div>
+                            </div>
+                            <hr>
+
+                            {% for task in kundenhinweise.tasks('behebung_kundehunweise') %}
+                                <form class="task_form">
+                                <div class="task_panel panel panel-default">
+                                    <div class="panel-heading">
+                                        <b>Aufgaben</b>
+                                        <span class="label label-warning">Behebung kundehunweise</span>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="well color_azure"><span class="badge">Kundehinweise:</span> {{ task.kundenhinweise_title }}</div>
+                                        {% for hi in task.history() %}
+                                            <div class="well">
+                                                <span class="i">
+                                                    <span class="badge">{% if hi.step == 'fahrzeugannahme' %}Serviceberater{% elseif hi.step == 'reparatur' %}Monteur{% endif %} antwort:</span>
+                                                    {{ hi.message }}
+                                                </span>
+                                                <span class="i">
+                                                    {% if task.task == 'fehlerfrei_bedienfehler' %}
+                                                        Behoben (Fehlerfrei/Bedienfehler)
+                                                    {% elseif task.task == 'durch_auftragspositionen_gelöst' %}
+                                                        Reparatur (durch Auftragspositionen gelöst)
+                                                    {% elseif task.task == 'diagnose' %}
+                                                        Diagnose
+                                                    {% elseif task.task == 'nachterminierung' %}
+                                                        Nachterminierung
+                                                    {% elseif task.task == 'behebung_kundehunweise' %}
+                                                        Behebung Kundehunweise
+                                                    {% endif %}
+                                                </span>
+                                                <span class="i">{{ hi.select | json_encode() }}</span>
+                                            </div>
+                                        {% endfor %}
+                                        <div class="dashed">
+                                            <input type="hidden" name="task_type" value="behebung_kundehunweise">
+                                            <select name="select" class="form-control" style="margin-bottom: 15px;" {% if task.child() %} disabled {% endif %}>
+                                                <option value="Behoben" {% if task.child() %} {{ task.child().select == 'Behoben' ? 'selected' : '' }} {% endif %}>Behoben</option>
+                                                <option value="Rep-Erweiterung" {% if task.child() %} {{ task.child().select == 'Rep-Erweiterung' ? 'selected' : '' }} {% endif %}>Rep-Erweiterung</option>
+                                            </select><br><br>
+                                            <textarea class="form-control" {% if task.child() %} disabled {% endif %}>{{ task.child().message }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <ol class="breadcrumb">
+                                            {% for hi in task.history() %}
+                                                <li {% if hi.last == 'ok' %} class="active" {% endif %}>
+                                                    <div class="box">
+                                                        <span>
+                                                            {{ hi.step == 'fahrzeugannahme' ? 2 : hi.step == 'reparatur' ? 3 : '' }} STEP 
+                                                            ({{ hi.step == 'fahrzeugannahme' ? 'fahrzeugannahme' : hi.step == 'reparatur' ? 'reparatur' : '' }})
+                                                        </span>
+                                                        <h5>{{ hi.set_time | date('d-m-Y H:i') }} <span class="label label-default">{{ hi.set_user }}</span></h5>
+                                                    </div>
+                                                </li>
+                                            {% endfor %}
+                                        </ol>
+                                        {% if task.child() is null and task.step_target != 'end' %}
+                                            <div class="execute">
+                                                <div class="main_status label label-default">
+                                                    <i class="fa fa-times"></i>&nbsp;<span>nicht abgeschlossen</span>
+                                                </div>
+                                                <button type="submit" class="btn btn-warning btn-sm js_status_child_save is_task" 
+                                                        data-auftragnr="{{ auftrag.auftragnr }}" 
+                                                        data-kundenhinweise_id="{{ task.kundenhinweise_id }}" 
+                                                        data-step="{{ task.step_target }}" 
+                                                        data-step_child="task" 
+                                                        data-parent="{{ task.id }}"  
+                                                        data-child_id="null"
+                                                        data-place="head"
+                                                >
+                                                    Ausführen
+                                                </button>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                </form>
+
+                                {#% if task.child() is null and task.step_target != 'end' %}
+                                    <form class="task_form item panel panel-default">
+                                    <div class="task_panel panel panel-default">
+                                        <div class="panel-heading">
+                                            <b>Aufgaben</b>
+                                            <span class="label label-warning">Rep.Empfehlung</span>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="well color_azure"><span class="badge">Kundehinweise:</span> {{ task.kundenhinweise_title }}</div>
+                                            {% for hi in task.history() %}
+                                                <div class="well">
+                                                    <span class="badge">{% if hi.step == 'fahrzeugannahme' %}Serviceberater{% elseif hi.step == 'reparatur' %}Monteur{% endif %} antwort:</span> 
+                                                    {{ hi.task != 'rep_anweisung' ? hi.message : 'Ist behoben' }}
+                                                    <hr>
+                                                    <span>{{ hi.task }}</span>
+                                                </div>
+                                            {% endfor %}
+                                            <div class="dashed">
+                                                {% include 'checker/tasks/technische/select.twig' with {'place': 'task' ,'item': task } %}
+                                            </div>
+                                        </div>
+                                        <div class="panel-footer flex-between">
+                                            <div></div>
+                                            <div class="execute">
+                                                <div class="main_status label label-default">
+                                                    <i class="fa fa-times"></i>&nbsp;<span>nicht abgeschlossen</span>
+                                                </div>
+                                                <button type="submit" class="btn btn-warning btn-sm js_status_child_save is_task" 
+                                                        data-auftragnr="{{ auftrag.auftragnr }}" 
+                                                        data-kundenhinweise_id="{{ task.kundenhinweise_id }}" 
+                                                        data-step="{{ task.step_target }}" 
+                                                        data-step_child="task" 
+
+                                                        data-parent="{{ task.id }}"  
+                                                        data-child_id="null"
+                                                        data-place="head"
+                                                >
+                                                    Ausführen
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </form>
+                                {% else %}
+                                    {{ 'doom' }}
+
+                                {% endif %#}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {#<div class="panel panel-default">
+            <div class="panel-heading block_heading">2 STEP (Fahrzeugannahme) - Technishe Hinweise - Rep.Anweisung</div>
+            <div class="panel-body">
+                {% for item in tasks.rep_anweisung %}
+                <form class="item panel panel-default">
+                    <div class="panel-heading flex-between">
+                        <span>Technishe Hinweise ID: {{ item.kundenhinweise_id }}</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="well"><span class="badge">Kundehinseise:</span> {{ item.kundenhinweise_title }}</div>
+                        {% for hi in item.history() %}
+                            <div class="well"><span class="badge">{% if hi.step == 'fahrzeugannahme' %}Serviceberater{% elseif hi.step == 'reparatur' %}Monteur{% endif %} antwort:</span> {{ hi.message }}</div>
+                        {% endfor %}
+                        <div class="dashed">
+                            <input type="hidden" name="task_type" value="rep_anweisung">
+                            <div class="checkbox_flex checkbox">
+                                <label>
+                                    <input {% if item.child() %} disabled {% endif %} type="checkbox" {% if item.child() %} checked {% endif %}> <span>Ist behoben</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer history_block">
+                        <ol class="breadcrumb">
+                            {% for a_hi in tasks.history.rep_anweisung %}
+                                {% if a_hi.kundenhinweise_id == item.id %}
+                                    {% for hi in a_hi.items %}
+                                        <li {% if hi.last == 'ok' %} class="active" {% endif %}>
+                                            <div class="box">
+                                                <span>
+                                                    {{ hi.step == 'fahrzeugannahme' ? 2 : hi.step == 'reparatur' ? 3 : '' }} STEP 
+                                                    ({{ hi.step == 'fahrzeugannahme' ? 'fahrzeugannahme' : hi.step == 'reparatur' ? 'reparatur' : '' }})
+                                                </span>
+                                                <h5>{{ hi.set_time | date('d-m-Y H:i') }} <span class="label label-default">{{ hi.set_user }}</span></h5>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        </ol>
+                        <div class="execute">
+                            <div class="main_status label label-default">
+                                {% if item.child() %}
+                                    <i class="fa fa-check"></i>&nbsp;<span> abgeschlossen</span>
+                                {% else %}
+                                    <i class="fa fa-times"></i>&nbsp;<span>nicht abgeschlossen</span>
+                                {% endif %}
+                            </div>
+                            <button type="button" class="btn btn-warning btn-sm js_status_child_save is_task" data-auftragnr="{{ item.auftragnr }}" data-kundenhinweise_id="{{ item.kundenhinweise_id }}" data-step="reparatur" data-step_child="task" data-parent="{{ item.id }}" data-child_id="{{ item.child() ? item.child().id : 'null' }}">Ausführen</button>
+                        </div>
+                    </div>
+                </form>
+               {% endfor %}
+            </div>
+        </div> #} 
+
+        {#<div class="panel panel-default">
+            <div class="panel-heading">2 STEP (Fahrzeugannahme) - Technishe Hinweise - Rep.Empfehlung</div>
+            <div class="panel-body">
+                {% for item in tasks.rep_empfehlung %}
+                <form class="task_form item panel panel-default">
+                    <div class="panel-heading flex-between">
+                        <span>Technishe Hinweise ID: {{ item.kundenhinweise_id }}</span>
+                        <div class="execute">
+                            <div class="main_status label label-default">
+                                {% if item.child() %}
+                                    <i class="fa fa-check"></i>&nbsp;<span> abgeschlossen</span>
+                                {% else %}
+                                    <i class="fa fa-times"></i>&nbsp;<span>nicht abgeschlossen</span>
+                                {% endif %}
+                            </div>
+                            <button type="submit" class="btn btn-warning btn-sm js_status_child_save is_task" data-auftragnr="{{ item.auftragnr }}" data-kundenhinweise_id="{{ item.kundenhinweise_id }}" data-step="reparatur" data-step_child="task" data-task_type="rep_empfehlung" data-parent="{{ item.id }}"  data-child_id="{{ item.child() ? item.child().id : 'null' }}">Ausführen</button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="well color_azure"><span class="badge">Kundehinweise:</span> {{ item.kundenhinweise_title }}</div>
+                        <div class="well"><span class="badge">Serviceberater antwort:</span> {{ item.message }}</div>
+                        <div class="dashed">
+                            <div class="checkbox_flex checkbox">
+                                <label>
+                                    <input type="checkbox" {% if item.child() %} checked {% endif %}> <span>Ich habe eine komplette Diagnose gemacht</span>
+                                </label>
+                            </div>
+                            <textarea class="form-control">{{ item.child().message }}</textarea>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <ol class="breadcrumb">
+                            <li>2 STEP (Fahrzeugannahme)</li>
+                            <li class="active">3 STEP (Diagnose / Reparatur)</li>
+                        </ol>
+                    </div>
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">2 STEP (Fahrzeugannahme) - Technishe Hinweise - Rep.Anweisung</div>
+            <div class="panel-body">
+                {% for item in tasks.rep_anweisung %}
+                <form class="item panel panel-default">
+                    <div class="panel-heading flex-between">
+                        <span>Technishe Hinweise ID: {{ item.kundenhinweise_id }}</span>
+                        <div class="execute">
+                            <div class="main_status label label-default">
+                                {% if item.child() %}
+                                    <i class="fa fa-check"></i>&nbsp;<span> abgeschlossen</span>
+                                {% else %}
+                                    <i class="fa fa-times"></i>&nbsp;<span>nicht abgeschlossen</span>
+                                {% endif %}
+                            </div>
+                            <button type="button" class="btn btn-warning btn-sm js_status_child_save is_task" data-auftragnr="{{ item.auftragnr }}" data-kundenhinweise_id="{{ item.kundenhinweise_id }}" data-step="reparatur" data-step_child="task" data-task_type="rep_anweisung" data-parent="{{ item.id }}" data-child_id="{{ item.child() ? item.child().id : 'null' }}">Ausführen</button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="well"><span class="badge">Kundehinseise:</span> {{ item.kundenhinweise_title }}</div>
+                        <div class="dashed">
+                            <div class="checkbox_flex checkbox">
+                                <label>
+                                    <input type="checkbox" {% if item.child() %} checked {% endif %}> <span>ich behebe</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <ol class="breadcrumb">
+                            <li>2 STEP (Fahrzeugannahme)</li>
+                            <li>3 STEP (Diagnose / Reparatur)</li>
+                            <li>2 STEP (Fahrzeugannahme)</li>
+                            <li class="active">3 STEP (Diagnose / Reparatur)</li>
+                        </ol>
+                    </div>
+                </form>
+               {% endfor %}
+            </div>
+        </div>#}   
+    </div>
+    <div class="panel-footer white_fon flex-end">
+        <div class="execute">
+            <div class="main_status label label-default task_main_status">
+                {% if tasks.status %}
+                    <i class="fa fa-check"></i>&nbsp;<span> abgeschlossen</span>
+                {% else %}
+                    <i class="fa fa-times"></i>&nbsp;<span>nicht abgeschlossen</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

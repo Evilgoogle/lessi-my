@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AACI,0BAAe;EAClB,gBAAgB,EAAE,OAAO;EACzB,MAAM,EAAE,cAAc",
+"sources": ["style_evilgoogle.scss"],
+"names": [],
+"file": "style_evilgoogle.css"
+}

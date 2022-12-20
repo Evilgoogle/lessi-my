@@ -1,0 +1,650 @@
+.icon_hinweises {
+    font-size: 20px;
+}
+.form-control {
+    font-size: 16px;
+    @media only screen and (max-width: 799px) {
+        font-size: 14px;
+    }
+}
+.flex {
+    display: flex;
+}
+.flex_right {
+    display: flex;
+    justify-content: flex-end;
+}
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+}
+.flex-end {
+    display: flex;
+    justify-content: flex-end;
+}
+.flex-center {
+    display: flex;
+    justify-content: center;
+}
+.flex-align {
+    display: flex;
+    align-items: center;
+}
+.black_fon {
+    width: 100%;
+    height: 20px;
+    background-color: #e1e1e1;
+    display: block;
+}
+.white_fon {
+    background-color: #ffffff;
+}
+.btn {
+    i, span {
+        pointer-events: none;
+    }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+  }
+
+  50% {
+    transform: rotate(180deg);
+  }
+  
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.kontakter_datenshutz {
+    padding-top: 20px;
+    .head {
+        background-color: #f7f8f9; 
+        border-color: #e7eaec;
+    }
+    i {
+        font-size: 25px;
+        margin: 0 5px;
+    }
+}
+
+.not_notcompleted_hinweise {
+    background-color: #f15050 !important;
+    .status_block {
+        color: white;
+    }
+}
+.not_success_hinweise {
+    background-color: #71b5a7!important;
+    .status_block {
+        color: white;
+    }
+}
+
+.hinweises_block {
+    .col-xs-12 {
+        margin: 5px 0;
+    }
+    .list-group {
+        margin: 0;
+    }
+    .main {
+        z-index: 2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        .icon_hinweises {
+            font-size: 25px;
+        }
+        span, i {
+            pointer-events: none;
+        }
+        span {
+            font-size: 15px;
+            background-color: #ffffff;
+        }
+    }
+    button {
+        width: 100%;
+    }
+}
+#auf_tabs {
+   display: flex;
+   li {
+       a {
+           height: 100%;
+           p {
+               margin: 0;
+           }
+       }
+   }
+}
+
+.checker_step_block {
+  .item {
+    .panel-heading {
+      background-color: #d2dce3;
+      border: 1px solid #fff;
+    }
+  }
+  .switch_button {
+      button {
+          width: 50%;
+          display: inline-block;
+      }
+  }
+  .switch_button3 {
+      button {
+          width: 33.3%;
+          display: inline-block;
+      }
+  }
+  .execute {
+      display: flex;
+      .label {
+          display: flex;
+          align-items: center;
+      }
+      button {
+          width: 80px;
+          height: 30px;
+          margin-left: 5px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+      }
+  }
+  .loader {
+      width: 20px;
+      height: 20px;
+      border: 3px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 3px solid #4a4a4a;
+      animation: spin 1s linear infinite;
+      display: block;
+  }
+
+  .work_block {
+    display: flex;
+    align-items: flex-end;
+    .w_block {
+      width: calc(100% - 150px);
+      display: flex;
+      align-items: center;
+      padding-right: 20px;
+      .icon {
+        font-size: 40px;
+        margin-right: 15px;
+      }
+    }
+    button {
+      width: 150px;
+    }
+  }
+        
+  .kundenhinweise_block {
+    .item {
+      .panel-heading {
+        .select_info {
+          margin-bottom: 10px;
+        }
+        .select_type, .js_kundenhinweise_select_type {
+          display: flex;
+        }
+      }
+      .panel-body {
+        .title {
+          font-size: 16px;
+          font-weight: bold;
+          @media only screen and (max-width: 1279px) {
+            font-size: 14px;
+          }
+        }
+
+        .no_active {
+          .title {
+            color: #c7c7c7;
+          }
+        }
+      }
+      .panel-footer {
+        background-color: #fbfbfb;
+        .status_block {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+      }
+    }
+  }
+  .infos_block {
+    .tag_buttons {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 -5px;
+      .box {
+        width: 20%;
+        padding: 0 5px;
+        margin-bottom: 10px;
+        @media only screen and (max-width: 1279px) {
+          width: 25%;
+        }
+        @media only screen and (max-width: 1023px) {
+          width: 33.3%;
+        }
+        button {
+          width: 100%;
+          height: 100%;
+          white-space: normal;
+          line-height: 1.1;
+          word-wrap: break-word;
+        }
+      }
+    }
+    .insert_tags, .insert_sonstige {
+        display: flex;
+        flex-wrap: wrap;
+        .tag {
+            width: 20%;
+            padding: 10px;
+            @media only screen and (max-width: 1023px) {
+                width: 33.3%;
+            }
+            .box {
+                .sonstige {
+                    display: flex;
+                    p {
+                        width: calc(100% - 40px + 10px);
+                    }
+                    button {
+                        width: 40px;
+                        margin-left: 10px;
+                    }
+                }
+            }
+        }
+    }
+  }
+  .reparaturhinweise_block {
+      .item {
+          .panel-body {
+              white-space: pre-line;
+          }
+      }
+  }
+  .auftragspositionen_block {
+      .action_b {
+          .label {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+          }
+          button {
+              margin-left: 5px;
+              span {
+                  pointer-events: none;
+              }
+          }
+      }
+  }
+  .kundenbeanstandung_block {
+      .panel-default {
+          .panel-body {
+              display: flex;
+              .icon {
+                  width: 50px;
+                  height: 50px;
+                  background: url("../../../static/img/checker/ico_kundenbeanstandung.png") no-repeat center;
+                  background-size: contain;
+                  margin-right: 10px;
+              }
+          }
+      }
+  }
+  .vorschlag_block {
+      .panel-body {
+          &:before, &:after {
+              content: none;
+          }
+          .label {
+              height: 25px;
+              margin-left: 20px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+          }
+      }
+  }
+  .dokumentation_block {
+      form {
+          button {
+              width: 200px;
+              margin-top: 10px;
+              display: flex;
+              justify-content: center;
+          }
+      }
+  }
+  .statusmeldung_kundenhinweis_block {
+      .panel-body {
+          .flex {
+              align-items: center;
+              opacity: 0.8;
+              .icon {
+                  font-size: 25px;
+              }
+              .title {
+                  margin-left: 15px;
+                  font-size: 17px;
+              }
+          }
+      }
+      .comments {
+          margin-top: 10px;
+      }
+  }
+}
+.aufgaben_head {
+    background-color: #8f8f8f;
+    .item {
+        .task_panel {
+            .panel-heading {
+                background-color: #f5f5f5;
+            }
+        }
+    }
+}
+
+.checker_kinds {
+    .head {
+        background-color: #d2dce3;
+        border: 1px solid #fff;
+    }
+    .body {
+        display: flex;
+        textarea {
+            width: calc(100% - (150px + 10px));
+            height: 100px;
+            margin-right: 10px
+        }
+        .right {
+            width: 150px;
+            .label {
+                float: right;
+            }
+        }
+    }
+    button {
+        width: 180px;
+        span {
+            margin: auto;
+        }
+    }
+}
+
+.checkbox_flex {
+    max-width: 100%;
+    margin-bottom: 20px;
+    label {
+        display: flex;
+        align-items: center;
+    }
+    input {
+        width: 40px;
+        height: 40px;
+        display: block !important;
+        position: static !important;
+        margin: 0;
+    }
+    span {
+        font-size: 17px;
+        margin-left: 10px;
+    }
+}
+
+.steps_block {
+    .panel-heading {
+        border-bottom: none;
+    }
+    .panel-body {
+        border-top: 1px solid #e5c4a1;
+        border-bottom: 1px solid #e5c4a1;
+        .item {
+            .panel-body {
+                border-top: 1px solid #d2dce3;
+                border-bottom: 1px solid #d2dce3;
+            }
+        }
+    }
+    .panel-footer {
+        border-top: none;
+    }
+}
+
+.task_panel {
+    .bg_green {
+        background-color: #a0a3a2;
+    }
+    .block_heading {
+        font-weight: bold;
+    }
+    
+    .execute {
+        button {
+            color: #000;
+        }
+    }
+    .collapse_button {
+        margin-bottom: 15px;
+    }
+    .breadcrumb {
+        margin-bottom: 5px;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 5px 5px 1px;
+        li {
+            width: 25%;
+            padding: 0 3px;
+            margin-bottom: 5px;
+            &:before {
+                content: none;
+            }
+            .box {
+                padding: 5px 10px;
+                background-color: #f7f7f7;
+                border: 1px solid#ebebeb;
+                border-radius: 10px;
+            }
+        }
+        .active {
+            .box {
+                background-color: aliceblue;
+            }
+        }
+    }
+    .well {
+        background-color: #fbfbfb;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 16px;
+        margin-bottom: 15px;
+        .badge {
+            padding: 2px 8px 3px;
+        }
+        .i {
+            border: 1px dashed#e1e1e1;
+            padding: 3px 6px;
+            border-radius: 6px;
+            margin: 0 4px;
+        }
+    }
+    .execute {
+        .main_status {
+            height: 31px;
+            background-color: #ffffff;
+        }
+        button {
+            color: #ffffff;
+        }
+    }
+    .dashed {
+        border: 1px solid #e3e3e3;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: ghostwhite;
+    }
+}
+
+.termin {
+    .datas {
+        .form-inline {
+            display: flex;
+            justify-content: space-between;
+            .form-group {
+                width: calc(50% - 10px);
+                input {
+                    width: 100%;
+                }
+            }
+        }
+    }
+    .controller {
+        .action {
+            width: 100%;
+            display: flex !important;
+            .item {
+                padding: 6px 8px;
+                background-color: #efefef;
+                border-radius: 5px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0 3px;
+                font-weight: normal;
+                cursor: pointer;
+                input {
+                    width: 18px;
+                    height: 18px;
+                    margin: 0 5px 0 0;
+                    pointer-events: none;
+                }
+            }
+            .loader {
+                width: 40px;
+                height: 32px;
+                padding: 6px 8px;
+                border-radius: 5px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0 3px;
+                background-color: #f0ad4e;
+                color: #fff;
+                .load {
+                    width: 20px;
+                    height: 20px;
+                    border: 3px solid #f3f3f3;
+                    border-radius: 50%;
+                    border-top: 3px solid #4a4a4a;
+                    animation: spin 1s linear infinite;
+                    display: block;
+                }
+            }
+        }
+        .selector {
+            width: 100% !important;
+            margin-top: 5px;
+        }
+        .bootstrap-select {
+            width: 100% !important;
+        }
+    }
+}
+
+.color_azure {
+    background-color: #f3f6f9 !important;
+}
+
+.history_block {
+    display: flex;
+    .breadcrumb {
+        width: 100%;
+    }
+}
+
+.swal2-container {
+    z-index: 3000 !important;
+}
+
+.kundenfahrzeug {
+    font-size: 14px;
+    .label_pick {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 8px;
+        input {
+            margin: 0 10px 0 0;
+        }
+    }
+    .form-inline {
+        .form-group {
+            width: calc(100% - 40px);
+            input {
+                width: 100%;
+            }
+        }
+        button {
+            width: 40px;
+        }
+    }
+}
+
+.garantie_kulanzantrag {
+    .garantieträger {
+        width: 300px;
+        justify-content: space-between;
+        label {
+            width: calc(50% - 2px);
+            display: flex;
+            align-items: center;
+            padding: 6px 10px;
+            border: 1px solid#d5d5d5;
+            background-color: #ffffff;
+            input {
+                margin: 0 10px 0 0;
+            }
+        }
+        hr {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+    }
+    .filemanager_info {
+        > * {
+            display: table;
+        }
+    }
+}
+
+.genehmigt {
+    .garantieträger {
+        margin-bottom: 10px;
+    }
+    .block_g {
+        display: none
+    }
+    .active {
+        display: block
+    }
+}
+.garantieträger_block {
+    .block_g {
+        display: none
+    }
+    .active {
+        display: block
+    }
+}

@@ -1,0 +1,8 @@
+<div class="col-xs-10">Technische Hinweise: {{ item.id }}</div>
+{% if in_modal == 'false' %}
+    <div class="col-xs-2 flex_right">
+        {% if item.from_macs == 0 %}
+            <button type="button" class="btn btn-danger js_remove_kundenhinweise" data-id="{{ item.id }}">-</button>
+        {% endif %}
+    </div>
+{% endif %}

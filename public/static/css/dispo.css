@@ -1,0 +1,295 @@
+.radioBtn .notActive{
+    color: #3276b1;
+    background-color: #fff;
+}
+
+#fixed_bottom{
+    position: fixed;
+    height: 200px;
+    bottom: 0;
+    width: calc(100% - 250px);
+    background: white;
+    border-top: 1px solid #c0c0c0;
+    padding-top: 10px;
+}
+
+.pos-auf-wrap{
+    width: 240px;
+}
+
+.dispo_chat_toggle{
+    position: fixed;
+    bottom:0;
+    right:20px;
+    width: 200px;
+    background:white;
+    border:1px solid #c9c9c9;
+    border-bottom:none;
+    border-radius: 3px 3px 0;
+    text-align: center;
+    padding:5px;
+    z-index:10;
+    cursor: pointer;
+}
+
+#auf_tabs{
+    margin:10px !important;
+}
+
+.head_data th{
+    background-color: #f8f8f8;
+}
+
+#navPageMenu{
+    /* width: calc(100% - 240px); */
+    /* position: fixed; */
+    /* left: 230px; */
+    z-index: 10;
+    /* top: 0; */
+    background: #fff;
+    border-bottom: 2px solid;
+    margin-bottom: 20px;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.form-control, .single-line {
+    background-color: #f3fcff;
+    background-image: none;
+    border: 1px solid #dedede;
+    border-radius: 1px;
+    color: inherit;
+    display: block;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 100%;
+    box-shadow: 0 0 3px #28c8d8;
+}
+
+
+.checkbox label:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.checkbox .cr {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #a9a9a9;
+    border-radius: .25em;
+    width: 1.3em;
+    height: 1.3em;
+    float: left;
+    margin-right: .5em;
+}
+
+.checkbox .cr .cr-icon {
+    position: absolute;
+    font-size: .8em;
+    line-height: 0;
+    top: 50%;
+    left: 15%;
+}
+
+.checkbox label input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox label input[type="checkbox"]+.cr>.cr-icon {
+    opacity: 0;
+}
+
+.checkbox label input[type="checkbox"]:checked+.cr>.cr-icon {
+    opacity: 1;
+}
+
+.checkbox label input[type="checkbox"]:disabled+.cr {
+    opacity: .5;
+}
+
+#alert-container{
+    background: #0000000d;
+    width: 300px;
+    /*height: 10px;*/
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1;
+}
+/*.faq-search__wrapper .msearch, .page-content {
+    margin: 0 auto;
+    padding: 2rem 0 1rem;
+    width: 800px;
+}
+.faq-content h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.75rem;
+    line-height: 2.75rem;
+    letter-spacing: .4375rem;
+}
+.faq-content p {
+    margin-bottom: 1rem;
+    font-family: MazdaTypeRegular, sans-serif;
+    color: #191919;
+    margin: 0;
+}
+.faq-content ul li a {
+    text-transform: capitalize;
+    color: #6e6e6e;
+    text-decoration: none;
+    transition: color .2s;
+}
+.faq-content ul li a:hover {
+    color: #000!important;
+}
+.faq-content .faqListWrapper li {
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+.faq-content .p-md {
+    padding-left: 0;
+}
+.faq-content .control-label {
+    text-align: left;
+}
+*/
+/*.article-comment-item {
+    border: 1px solid #ccc;
+    padding: .5rem;
+    margin-bottom: 2rem;
+}
+.article-comment-item:last-child {
+    margin-bottom: 0;
+}*/
+.vote-wrapper {
+    margin-bottom: 3rem;
+}
+/*.vote-up .border-bottom-yes  {
+    border-bottom: 1px solid #1ab394!important;
+}*/
+.vote-up {
+    margin-right: 2rem;
+    color: #1ab394!important;
+}
+.border_bottom {
+    border-bottom: 1px solid!important;
+}
+/*.border-bottom-no {
+    border: none!important;
+}
+.vote-down .border-bottom-yes  {
+    border-bottom: 1px solid #ed5565!important;
+}*/
+.vote-down {
+    color: #ed5565!important;
+}
+.input-group {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    width: 100%;
+}
+.input-group>.custom-select:not(:last-child), .input-group>.form-control:not(:last-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.faq-search__wrapper .form-control, .faq-search__wrapper .btn {
+    font-size: 1.2rem;
+}
+.input-group-append {
+    margin-left: -1px;
+}
+.input-group-append, .input-group-prepend {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+.input-group>.custom-file, .input-group>.custom-select, .input-group>.form-control {
+    position: relative;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    width: 1%;
+    margin-bottom: 0;
+}
+.d-none {
+    display: none;
+}
+.form-control {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.faq-search__wrapper .form-control {
+    box-shadow: none;
+}
+.faq-search__wrapper .btn, .btn-tag, .btn-back, .btn-contact, .faq-form-go {
+    background: #191919;
+    color: #fff;
+    transition: all .2s;
+}
+.faq-search__wrapper .btn, .btn-tag, .btn-back, .btn-contact, .faq-form-go {
+    background: #191919;
+    color: #fff;
+    transition: all .2s;
+}
+#search_result {
+    margin: 0 auto;
+    width: 800px;
+}
+#search_result ul {
+    width: 74rem;
+    bottom: 1rem;
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #c5c5c5;
+    padding: 15px 30px;
+    list-style: auto;
+    color: #000;
+    font-size: 1.5rem;
+    margin-bottom: 0;
+}
+#search_result ul a {
+    color: #191919;
+    font-size: 13px;
+}
+.article-comments td {
+    border: 2px solid #dddddd;
+    padding: 1rem;
+}
+.keyword-btn {
+    margin-top: 1rem;
+ }
+ 
+ /* Faqs */
+ .fags_articles_buttons {
+     max-width: 100% !important;
+     display: flex;
+     justify-content: flex-end;
+ }
+ .fags_articles_buttons a {
+     margin: 0 2px;
+ }

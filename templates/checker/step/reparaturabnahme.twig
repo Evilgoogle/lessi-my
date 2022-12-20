@@ -1,0 +1,249 @@
+{% extends "checker/step_layout.twig" %}
+
+{% block step %}
+    {% if step_complete %}
+        {% for child in step_data.step_subs %}
+
+            <div class="steps_block
+                {% if child.step == 'abnahme' %}
+                    abnahme_block
+                {% elseif child.step == 'probefahrt' %}
+                    probefahrt_block
+                {% elseif child.step == 'statusmeldung_kundenhinweis' %}
+                    statusmeldung_kundenhinweis_block
+                {% elseif child.step == 'dokumentation' %}
+                    dokumentation_block
+                {% endif %}
+                panel panel-default">
+                <div class="panel-heading flex-between">
+                    <span> 
+                    {{ child.title }}
+                    </span>
+                    <div class="execute">
+                        <div class="main_status label label-default">
+                            {{ child.status == 'success' ? '<i class="fa fa-check"></i>&nbsp;<span> abgeschlossen</span>' : '<i class="fa fa-times"></i>&nbsp;<span> nicht abgeschlossen</span>' }}
+                        </div>
+                        <button type="button" class="btn btn-warning btn-sm js_status_child_save" 
+                            data-auftragnr="{{ auftrag.auftragnr }}" 
+                            data-step="reparaturabnahme" 
+                            data-step_child="{{ child.step }}"
+                        >Ausführen</button>
+                    </div>
+                </div>
+                {% if child.step == 'abnahme' %}
+                    <div class="panel-body">
+                        <button type="button" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse_positions" aria-expanded="false" aria-controls="collapseExample">Details</button>
+                        <table id="collapse_positions" class="table table-condensed collapse">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Positionstype</th>
+                                    <th>Nummer</th>
+                                    <th>Bezeichnung</th>
+                                    <th>Typ</th>
+                                    <th>Menge</th>
+                                    <th>Preis</th>
+                                    <th>Betrag</th>
+                                    <th>Status</th>
+                                    <th>Bemerkung</th>
+                                    <th>Anteil</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in step_data.abnahme %}
+                                    {% include 'checker/part/reparatur/auftragspositionen/item.twig' with { 'item': item, 'type': 'abnahme' } %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% elseif child.step == 'probefahrt' %}
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="col-xs-10">
+                                    <div class="switch_button btn-group btn-group-justified">
+                                        <button class="btn {{ step_data.probefahrt.status == 'success' ? 'btn-danger' : 'btn-default' }} btn-sm {{ step_data.probefahrt.status == 'success' ? 'active' : '' }} js_reparaturabnahme_probefahrt"
+                                                data-auftragnr="{{ auftrag.auftragnr }}"
+                                                data-type="1">Ja</button>
+                                        <button class="btn {{ step_data.probefahrt.status == 'notcompleted' ? 'btn-danger' : 'btn-default' }} btn-sm {{ step_data.probefahrt.status == 'notcompleted' ? 'active' : '' }}">Nein</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 flex_right">
+                                <div class="col-xs-10">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">Nutzer: <span class="badge nutzer">{{ step_data.probefahrt.user != null ? step_data.probefahrt.user : 'Nein' }}</span></li>
+                                        <li class="list-group-item">Wann: <span class="badge wann">{{ step_data.probefahrt.date != null ? step_data.probefahrt.date : 'Nein' }}</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% elseif child.step == 'statusmeldung_kundenhinweis' %}
+                    <div class="panel-body">
+                        {% if step_data.statusmeldung_kundenhinweis.count == 0 is null %}
+                            <p>Keine hinweise</p>
+                        {% else %}
+                            {% for item in step_data.statusmeldung_kundenhinweis.items %}
+                                {% include 'checker/part/reparaturabnahme/statusmeldung_kundenhinweis/item.twig' with { 'item': item } %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                {% elseif child.step == 'dokumentation' %}
+                    <div class="panel-body">
+                        <div class="panel-body">
+                            <form id="js_dokumentation_form">
+                                <textarea id="dokumentation" class="editor" name="text">{{ step_data.dokumentation.text | raw }}</textarea>
+                                <input type="hidden" name="id" value="{{ step_data.dokumentation.id }}"></>
+                                <button type="submit" class="btn btn-primary">Speichern</button>
+                                <script>
+                                    window.onload = function() {
+                                        CKEDITOR.replace('dokumentation');
+                                    }
+                                </script>
+                            </form>
+                        </div>
+                    </div>
+                {# elseif child.step == 'kundenfahrzeug' #}
+                {#<div class="panel-body kundenfahrzeug">
+                    <div class="panel-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td colspan="3" style="background-color: #f1f1f1">
+                                        <div class="panel panel-default item">
+                                            <div class="panel-heading"></div>
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <table class="table">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td><b><span class="label label-info">Kundenname:</span></b></td>
+                                                                    <td>text</td>
+                                                                    <td><b><span class="label label-info">Kennzeichen:</span></b></td>
+                                                                    <td>text</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b><span class="label label-info">Mitarbeiter:</span></b></td>
+                                                                    <td>text</td>
+                                                                    <td><b><span class="label label-info">Datum:</span></b></td>
+                                                                    <td>text</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b><span class="label label-info">Prüfpunkte:</span></b></td>
+                                                                    <td>text</td>
+                                                                    <td><b><span class="label label-info">Prüfung:</span></b></td>
+                                                                    <td>Feststellung/ Anmerkung</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="50%">Kontrolllampen im Fahrzeug</td>
+                                    <td width="15%">
+                                        <label class="label label-primary label_pick js_kundenfahrzeug_pick" data-id="1">
+                                            <input type="radio" name="pick_1" checked value="yes"> i.O
+                                        </label>
+                                        <label class="label label-danger label_pick js_kundenfahrzeug_pick" data-id="1">
+                                            <input type="radio" name="pick_1" value="no"> n.i.O
+                                        </label>
+                                    </td>
+                                    <td id="text_form_1" width="35%"></td>
+                                </tr>
+                                <tr>
+                                    <td width="50%">Fahrzeug außen gereinigt</td>
+                                    <td width="15%">
+                                        <label class="label label-primary label_pick js_kundenfahrzeug_pick" data-id="2">
+                                            <input type="radio" name="pick_2" checked value="yes"> i.O
+                                        </label>
+                                        <label class="label label-danger label_pick js_kundenfahrzeug_pick" data-id="2">
+                                            <input type="radio" name="pick_2" value="no"> n.i.O
+                                        </label>
+                                    </td>
+                                    <td id="text_form_2" width="35%"></td>
+                                </tr>
+                                <tr>
+                                    <td width="50%">Fahrzeug innen gereinigt</td>
+                                    <td width="15%">
+                                        <label class="label label-primary label_pick js_kundenfahrzeug_pick" data-id="3">
+                                            <input type="radio" name="pick_3" checked value="yes"> i.O
+                                        </label>
+                                        <label class="label label-danger label_pick js_kundenfahrzeug_pick" data-id="3">
+                                            <input type="radio" name="pick_3" value="no"> n.i.O
+                                        </label>
+                                    </td>
+                                    <td id="text_form_3" width="35%"></td>
+                                </tr>
+                                <tr>
+                                    <td width="50%">Fahrzeug verschlossen</td>
+                                    <td width="15%">
+                                        <label class="label label-primary label_pick js_kundenfahrzeug_pick" data-id="4">
+                                            <input type="radio" name="pick_4" checked value="yes"> i.O
+                                        </label>
+                                        <label class="label label-danger label_pick js_kundenfahrzeug_pick" data-id="4">
+                                            <input type="radio" name="pick_4" value="no"> n.i.O
+                                        </label>
+                                    </td>
+                                    <td id="text_form_4" width="35%"></td>
+                                </tr>
+                                <tr>
+                                    <td width="50%">FZG auf KD-Parkplatz in Fahrtrichtung geparkt</td>
+                                    <td width="15%">
+                                        <label class="label label-primary label_pick js_kundenfahrzeug_pick" data-id="5">
+                                            <input type="radio" name="pick_5" checked value="yes"> i.O
+                                        </label>
+                                        <label class="label label-danger label_pick js_kundenfahrzeug_pick" data-id="5">
+                                            <input type="radio" name="pick_5" value="no"> n.i.O
+                                        </label>
+                                    </td>
+                                    <td id="text_form_5" width="35%"></td>
+                                </tr>
+                                <tr>
+                                    <td width="50%">Getauschte Verschleißteile (Altteile) </td>
+                                    <td width="15%">
+                                        <label class="label label-primary label_pick js_kundenfahrzeug_pick" data-id="6">
+                                            <input type="radio" name="pick_6" checked value="yes"> i.O
+                                        </label>
+                                        <label class="label label-danger label_pick js_kundenfahrzeug_pick" data-id="6">
+                                            <input type="radio" name="pick_6" value="no"> n.i.O
+                                        </label>
+                                    </td>
+                                    <td id="text_form_6" width="35%"></td>
+                                </tr>
+                                <tr>
+                                    <td width="50%">für Fahrzeugübergabe verfügbar</td>
+                                    <td width="15%">
+                                        <label class="label label-primary label_pick js_kundenfahrzeug_pick" data-id="7">
+                                            <input type="radio" name="pick_7" checked value="yes"> i.O
+                                        </label>
+                                        <label class="label label-danger label_pick js_kundenfahrzeug_pick" data-id="7">
+                                            <input type="radio" name="pick_7" value="no"> n.i.O
+                                        </label>
+                                    </td>
+                                    <td id="text_form_7" width="35%"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>#}
+                {% endif %}
+            </div>
+
+        {% endfor %}
+        
+        {% include 'checker/part/reparaturabnahme/quest.twig' with {'task': task} %}
+    {% else %}
+        <div class="label label-danger">Schritt 3 ist nicht abgeschlossen</div>
+    {% endif %}
+    
+    {% include 'checker/part/reparaturabnahme/statusmeldung_kundenhinweis/modals.twig' %}
+    
+    <script src="/static/js/checker/steps/reparaturabnahme.js"></script>
+{% endblock %} 

@@ -1,0 +1,28 @@
+.ckeditor_insert_file {
+  width: 80px;
+  height: 80px;
+  display: block;
+  text-decoration: none;
+  color: #000; }
+  .ckeditor_insert_file:link {
+    color: #000; }
+  .ckeditor_insert_file:visited {
+    color: #000; }
+  .ckeditor_insert_file .pdf, .ckeditor_insert_file .docx, .ckeditor_insert_file .txt, .ckeditor_insert_file .doc {
+    width: 100%;
+    height: 100%;
+    display: block; }
+  .ckeditor_insert_file .pdf {
+    background: url("../../libs/filemanager/img/f_pdf.png") no-repeat center;
+    background-size: contain; }
+  .ckeditor_insert_file .doc {
+    background: url("../../libs/filemanager/img/f_doc.png") no-repeat center;
+    background-size: contain; }
+  .ckeditor_insert_file .docx {
+    background: url("../../libs/filemanager/img/f_docx.png") no-repeat center;
+    background-size: contain; }
+  .ckeditor_insert_file .txt {
+    background: url("../../libs/filemanager/img/f_txt.png") no-repeat center;
+    background-size: contain; }
+
+/*# sourceMappingURL=text_editor.css.map */

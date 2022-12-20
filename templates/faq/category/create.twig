@@ -1,0 +1,38 @@
+{% extends "main.twig" %}
+
+{% block wrapper %}
+    <div class="row">
+        <div class="col-lg-12 p-md">
+            <a href="{{ path_for('faqs.category.index')}}" class="backLink">
+                <i class="fa fa-arrow-left"></i> 
+                {{ lang.btn.back }}
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Artikel Kategorie parameter</h5>
+                </div>
+                <div class="ibox-content">
+                    <form method="post" action="{{ path_for('faqs.category.create')}}" class="form-horizontal">
+                        <div class="form-group {{ errors.title?'has-error':'' }}">
+                            <label for="inputtitle" class="control-label col-xs-2">Titel</label>
+                            <div class="col-xs-10">
+                                <input name="title" id="inputtitle" class="form-control" value="{{ old.title }}" placeholder="Titel" autofocus>
+                                {% if errors.title %}
+                                    <span class="help-block">{{ errors.title|first }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        {{ csrf.field|raw }}
+                        <button class="btn btn-primary " type="submit">{{ lang.btn.create }}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

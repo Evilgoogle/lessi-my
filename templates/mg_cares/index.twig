@@ -1,0 +1,193 @@
+{% extends "mg_cares/base.twig" %}
+{% set title = 'Mg-Cares' %}
+
+{% block wrapper %}
+    
+<style>
+    .relative .loader {
+        border: 3px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 3px solid #3498db;
+        width: 20px;
+        height: 20px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+    }
+
+    @-webkit-keyframes spin {
+        0% {
+            -webkit-transform: rotate(0deg);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .relative {
+        position: relative;
+    }
+
+    .relative > .loader {
+        position: absolute;
+        right: 10px;
+        bottom: 5px;
+    }
+    .flex-between {
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
+    
+    <form action="{{ path_for('mg_cares.search') }}" class="panel panel-default" method="get">
+        <div class="panel-heading">Suchen</div>
+        <div class="panel-body">
+            <div class="relative">
+                <input id="search-input" type="text" name="vin_title" class="form-control" autocomplete="off">
+                <input id="search-input-hidden" type="hidden" name="vin">
+                <div id="search-loader" class="loader" style="display: none;"></div>
+            </div>
+        </div>
+        <div class="panel-footer flex-between">
+            <button type="submit" class="btn btn-primary btn-sm">Suchen</button>
+            <a href="{{ path_for('mg_cares.index') }}" class="btn btn-primary btn-sm">Reset</a>
+        </div>
+    </form>
+    
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Auftragsnr</th>
+            <th>Datum</th>
+            <th>FIN</th>
+            <th>Modelltext</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in auftrags %}
+            {% if item.fahrzeug.junge_cares | length > 0 %}
+                <tr>
+                    <td><a href="/auftragspdf/{{ item.AUFTRAGSNR }}">{{ item.AUFTRAGSNR }}</a></td>
+                    <td>{{ item.ANNAHME|date('d.m.Y') }}</td>
+                    <td>{{ item.fahrzeug.FAHRGESTELLNUMMER }}</td>
+                    <td>{{ item.fahrzeug.MODELLTEXT }}</td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapse_table_{{ item.AUFTRAGSNR }}" aria-expanded="false" aria-controls="collapseExample">Details</button>
+                        <div id="collapse_table_{{ item.AUFTRAGSNR }}" class="collapse">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Designation</th>
+                                    <th>VIN</th>
+                                    <th>Pdf1</th>
+                                    <th>Pdf2</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {% for cares in item.fahrzeug.junge_cares %}
+                                        <tr>
+                                            <td>{{ cares.Designation }}</td>
+                                            <td>{{ cares.VIN }}</td>
+                                            <td><a href="{{ cares.Pdf1 }}" target="_blank">View</a></td>
+                                            <td><a href="{{ cares.Pdf2 }}" target="_blank">View</a></td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>    
+                </tr>
+            {% endif %}
+        {% endfor %}
+
+        {% if cares | length > 0 %}
+            <tr>
+                    <td>Kein</td>
+                    <td>----</td>
+                    <td>----</td>
+                    <td>----</td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapse_table_{{ item.AUFTRAGSNR }}" aria-expanded="false" aria-controls="collapseExample">Details</button>
+                    <div id="collapse_table_{{ item.AUFTRAGSNR }}" class="collapse">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Designation</th>
+                                <th>VIN</th>
+                                <th>Pdf1</th>
+                                <th>Pdf2</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for care in cares %}
+                                    <tr>
+                                        <td>{{ care.Designation }}</td>
+                                        <td>{{ care.VIN }}</td>
+                                        <td><a href="{{ care.Pdf1 }}" target="_blank">View</a></td>
+                                        <td><a href="{{ care.Pdf2 }}" target="_blank">View</a></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </td>    
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+       
+    <script src="/static/js/bootstrap3-typeahead.min.js"></script>
+    <script>
+    $('.collapse').collapse('show');
+        
+    var searchLoader = $('#search-loader');
+    $('#search-input').typeahead({
+        autoSelect: true,
+        minLength: 1,
+        delay: 400,
+        source: function (query, process) {
+            searchLoader.show();
+            $.ajax({
+                url: "{{ path_for('mg_cares.search_js') }}",
+                data: {string: query},
+                dataType: 'json'
+            })
+            .done(function (response) {
+                searchLoader.hide();
+
+                var arr = [];
+                response.forEach(function (el, t) {
+                    arr.push(
+                        {
+                            id: t,
+                            name: 'Auftrag: '+el.AUFTRAGSNR+', Vin: '+el.FAHRGESTELLNUMMER,
+                            vin: el.FAHRGESTELLNUMMER
+                        }
+                    );
+                });
+
+                return process(arr);
+            });
+        }
+    });
+    $('#search-input').change(function () {
+        var current = $('#search-input').typeahead("getActive");
+        $('#search-input-hidden').val(current.vin);
+    });
+    </script>
+        
+{% endblock %}
+
+

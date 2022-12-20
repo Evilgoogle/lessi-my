@@ -1,0 +1,97 @@
+<div class="task_panel panel panel-warning">
+    <div class="panel-heading flex-between">
+        <span>Aufgaben</span>
+    </div>
+    <div class="panel-body bg_green">
+        <div class="panel panel-default">
+            <div class="panel-heading block_heading">2 STEP (Fahrzeugannahme) - Technishe Hinweise - Rep.Empfehlung Nachternierung</div>
+            <div class="panel-body">
+                {% for item in tasks.rep_empfehlung_nachternierung %}
+                <form class="item panel panel-default">
+                    <div class="panel-heading flex-between">
+                        <input type="hidden" name="task_type" value="rep_empfehlung_nachternierung">
+                        <span>Technishe Hinweise ID: {{ item.kundenhinweise_id }}</span>
+                        <div class="execute">
+                            <div class="main_status label label-default">
+                                {% if item.child() %}
+                                    <i class="fa fa-check"></i>&nbsp;<span> abgeschlossen</span>
+                                {% else %}
+                                    <i class="fa fa-times"></i>&nbsp;<span>nicht abgeschlossen</span>
+                                {% endif %}
+                            </div>
+                            <button type="button" class="btn btn-warning btn-sm js_status_child_save is_task" data-auftragnr="{{ item.auftragnr }}" data-kundenhinweise_id="{{ item.kundenhinweise_id }}" data-step="rechnungsstellung" data-step_child="task" data-parent="{{ item.id }}"  data-child_id="{{ item.child() ? item.child().id : 'null' }}">Ausführen</button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="well"><span class="badge">Kundehinseise:</span> {{ item.kundenhinweise_title }}</div>
+                        <div class="alert alert-info" role="alert">Monteur - eine Diagnose gestellt</div>
+                        <div class="alert alert-danger" role="alert">Serviceberater - Nachternierung</div>
+                        <div class="alert alert-info" role="alert">Reparaturabnahme - Bestätigt</div>
+                        <div class="dashed">
+                            <div class="checkbox_flex checkbox">
+                                <label>
+                                    <input type="checkbox" {% if item.child() %} checked {% endif %}> <span>Ich überprüfte</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <ol class="breadcrumb">
+                            <li>2 STEP (Fahrzeugannahme)</li>
+                            <li>3 STEP (Diagnose / Reparatur)</li>
+                            <li>2 STEP (Fahrzeugannahme)</li>
+                            <li>3 STEP (Diagnose / Reparatur)</li>
+                            <li>4 STEP (Reparaturabnahme)</li>
+                            <li class="active">5 STEP (Rechnungsstellung)</li>
+                        </ol>
+                    </div>
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">2 STEP (Fahrzeugannahme) - Technishe Hinweise - Nachternierung</div>
+            <div class="panel-body">
+                {% for item in tasks.nachternierung %}
+                <form class="item panel panel-default">
+                    <div class="panel-heading flex-between">
+                        <input type="hidden" name="task_type" value="nachternierung">
+                        <span>Technishe Hinweise ID: {{ item.kundenhinweise_id }}</span>
+                        <div class="execute">
+                            <div class="main_status label label-default">
+                                {% if item.child() %}
+                                    <i class="fa fa-check"></i>&nbsp;<span> abgeschlossen</span>
+                                {% else %}
+                                    <i class="fa fa-times"></i>&nbsp;<span>nicht abgeschlossen</span>
+                                {% endif %}
+                            </div>
+                            <button type="button" class="btn btn-warning btn-sm js_status_child_save is_task" data-auftragnr="{{ item.auftragnr }}" data-kundenhinweise_id="{{ item.kundenhinweise_id }}" data-step="rechnungsstellung" data-step_child="task" data-parent="{{ item.id }}"  data-child_id="{{ item.child() ? item.child().id : 'null' }}">Ausführen</button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="well"><span class="badge">Kundehinseise:</span> {{ item.kundenhinweise_title }}</div>
+                        <div class="checkbox_flex checkbox">
+                            <label>
+                                <input type="checkbox" disabled checked> <span>Ich überprüfte</span>
+                            </label>
+                        </div>
+                        <div class="dashed">
+                            <div class="checkbox_flex checkbox">
+                                <label>
+                                    <input type="checkbox" {% if item.child() %} checked {% endif %}> <span>Ich überprüfte</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <ol class="breadcrumb">
+                            <li>2 STEP (Fahrzeugannahme)</li>
+                            <li class="active">5 STEP (Rechnungsstellung)</li>
+                        </ol>
+                    </div>
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

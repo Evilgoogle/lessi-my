@@ -1,0 +1,91 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Flatrate</div>
+    <table class="panel-body table table-condensed">
+	{% set  flatRate = auftrag.MACSFahrzeug.fzh_actuell.ankauf %} 
+	<table class="table">
+	    {% if flatRate.toArray() %}
+		<input type="hidden" name="ankaufFlatrateStatus" value="{{ flatRate.FZFLATRATESTATUSID }}"/>
+		<tbody class="head_data ">
+		    <tr>
+			<th>FZFLATRATETEXT</th>
+			<td>{{ flatRate.FZFLATRATETEXT|mb_convert_encoding }}</td>
+			<th>Status</th>
+			<td>{{ flatRate.status.FZFLATRATESTATUSTEXT|mb_convert_encoding }}</td>
+		    </tr>
+		    <tr>
+			<th>Type</th>
+			<td>{{ flatRate.typ.FZFLATRATETYPTEXT|mb_convert_encoding }}</td>
+			<th>Laufzeit</th>
+			<td>{{ flatRate.typ.LAUFZEITMONATE }} Monate
+			    / {{ flatRate.typ.LAUFZEITJAHRE }} Jahre
+			</td>
+		    </tr>
+		    <tr>
+			<th>ERSTZULASSUNG</th>
+			<td>{{auftrag.MACSFahrzeug.ERSTZULASSUNG|date('d-m-Y') }}</td>
+			<th>Laufzeit</th>
+			<td>{{ flatRate.LAUFZEITKILOMETER }} Km</td>
+		    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse_flatrate" aria-expanded="false" aria-controls="collapseExample">Details</button>
+                            <div id="collapse_flatrate" class="collapse" style="padding-top: 10px">
+                                <table class="table table-condensed table-bordered">
+                                    <tbody>
+                                        {% for item in flatrates %}
+                                            <tr>
+                                                <th>Fzflatrateleistung</th>
+                                                <td>{{ item.FZFLATRATELEISTUNGTEXT | mb_convert_encoding }}</td>
+                                            </tr>
+                                            <tr>    
+                                                <th>Nummer</th>
+                                                <td>{{ item.NUMMER }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Bezeichnung</th>
+                                                <td>{{ item.BEZEICHNUNG }}</td>
+                                            </tr>
+                                            <tr>    
+                                                <th>Status</th>
+                                                <td>{{ item.FZFLATRATESTATUSTEXT | mb_convert_encoding }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Datum</th>
+                                                <td>{{ item.DATUM }}</td>
+                                            </tr>
+                                            <tr>    
+                                                <th>AuftragsNR</th>
+                                                <td>{{ item.AUFTRAGSNR }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Betrag plan</th>
+                                                <td>{{ item.BETRAGPLAN }}</td>
+                                            </tr>
+                                            <tr>    
+                                                <th>Betrag</th>
+                                                <td>{{ item.BETRAG }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Saldo</th>
+                                                <td>{{ item.SALDO }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" style="padding: 0"><span class="black_fon"></th>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+		</tbody>
+	    {% else %}
+		<tr>
+		    <td class="alert-success">
+			Keine Flatrate
+		    </td>
+		</tr>
+	    {% endif %}
+	</table>
+    </table>
+</div>

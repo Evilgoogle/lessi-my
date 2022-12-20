@@ -1,0 +1,212 @@
+.flex-between {
+  display: flex;
+  justify-content: space-between; }
+
+.page_faq h2 {
+  font-size: 24px; }
+.page_faq small {
+  font-size: 17px; }
+.page_faq .title {
+  color: #fff;
+  font-size: 16px;
+  margin-bottom: 20px;
+  word-wrap: break-word;
+  text-align: center;
+  font-weight: bold; }
+.page_faq .panel-heading {
+  background-color: #d2dce3;
+  border: 1px solid #fff; }
+.page_faq .panel-body {
+  border: 1px solid #fff; }
+.page_faq .loader {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 3px solid #4a4a4a;
+  animation: spin 1s linear infinite;
+  display: block; }
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg); } }
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+.page_faq .searh_block {
+  padding-bottom: 40px; }
+  .page_faq .searh_block h2 {
+    text-align: center; }
+  .page_faq .searh_block .relative {
+    width: 100%;
+    position: relative; }
+    .page_faq .searh_block .relative .input-group {
+      z-index: 1; }
+    .page_faq .searh_block .relative .loader {
+      position: absolute;
+      right: 10px;
+      bottom: 5px;
+      z-index: 2; }
+.page_faq .block_80 {
+  width: 80%;
+  padding: 20px 0;
+  margin: auto; }
+  @media only screen and (max-width: 639px) {
+    .page_faq .block_80 {
+      width: calc(100% - 30px); } }
+  .page_faq .block_80 .bn {
+    margin-bottom: 30px; }
+    .page_faq .block_80 .bn .panel-heading {
+      height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 20px 10px; }
+.page_faq .block_show .title {
+  color: #000; }
+.page_faq .block_show .panel {
+  font-size: 16px; }
+  .page_faq .block_show .panel .items {
+    border-top: 1px solid #ccc;
+    width: 100%;
+    padding: 10px 0; }
+    .page_faq .block_show .panel .items a {
+      display: block;
+      color: #000000;
+      malign: 5px 0; }
+      .page_faq .block_show .panel .items a:link {
+        color: #000000; }
+      .page_faq .block_show .panel .items a:visited {
+        color: #000000; }
+.page_faq .block_show .content {
+  font-size: 16px;
+  color: #000; }
+  .page_faq .block_show .content .black {
+    padding: 10px 20px; }
+  .page_faq .block_show .content .items .item .button {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    padding: 0;
+    text-align: left; }
+    .page_faq .block_show .content .items .item .button span {
+      padding-right: 20px;
+      pointer-events: none; }
+    .page_faq .block_show .content .items .item .button i {
+      color: #fff;
+      font-size: 14px;
+      transform: rotate(0);
+      transition: 0.5s;
+      margin-top: 3px;
+      pointer-events: none; }
+  .page_faq .block_show .content .items .item .active_button i {
+    transform: rotate(180deg); }
+  .page_faq .block_show .content .items .item .spoiler {
+    width: 100%;
+    display: none; }
+    .page_faq .block_show .content .items .item .spoiler .editor {
+      font-size: 16px;
+      line-height: 1.2;
+      line-height: 1.2;
+      padding: 5px 10px;
+      border: 1px dashed #bbb; }
+      .page_faq .block_show .content .items .item .spoiler .editor img {
+        max-width: 100% !important;
+        height: auto !important; }
+      .page_faq .block_show .content .items .item .spoiler .editor p {
+        margin: 5px 0; }
+      .page_faq .block_show .content .items .item .spoiler .editor ul {
+        margin: 5px 0;
+        padding: 0; }
+        .page_faq .block_show .content .items .item .spoiler .editor ul li {
+          list-style-type: none;
+          display: flex;
+          position: relative;
+          padding-left: 15px;
+          margin-bottom: 5px; }
+          .page_faq .block_show .content .items .item .spoiler .editor ul li:before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 4px;
+            background-color: #000000;
+            border-radius: 50%;
+            position: absolute;
+            top: 15px;
+            left: 0; }
+      .page_faq .block_show .content .items .item .spoiler .editor ol li {
+        margin-bottom: 5px; }
+      .page_faq .block_show .content .items .item .spoiler .editor a {
+        color: #000000;
+        text-decoration: underline;
+        text-decoration: underline; }
+        .page_faq .block_show .content .items .item .spoiler .editor a:link {
+          color: #000000; }
+        .page_faq .block_show .content .items .item .spoiler .editor a:visited {
+          color: #000000; }
+      .page_faq .block_show .content .items .item .spoiler .editor .youtube-embed-wrapper {
+        width: 100% !important; }
+      .page_faq .block_show .content .items .item .spoiler .editor span {
+        text-decoration: none; }
+      .page_faq .block_show .content .items .item .spoiler .editor h1, .page_faq .block_show .content .items .item .spoiler .editor h2, .page_faq .block_show .content .items .item .spoiler .editor h3, .page_faq .block_show .content .items .item .spoiler .editor h4, .page_faq .block_show .content .items .item .spoiler .editor h5, .page_faq .block_show .content .items .item .spoiler .editor h6 {
+        font-size: 1.4em; }
+      .page_faq .block_show .content .items .item .spoiler .editor iframe {
+        width: 100%; }
+    .page_faq .block_show .content .items .item .spoiler .like_block {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 15px 0; }
+      .page_faq .block_show .content .items .item .spoiler .like_block button {
+        background: transparent;
+        outline: none;
+        border: none; }
+        .page_faq .block_show .content .items .item .spoiler .like_block button i, .page_faq .block_show .content .items .item .spoiler .like_block button span {
+          pointer-events: none; }
+      .page_faq .block_show .content .items .item .spoiler .like_block .selected {
+        text-decoration: underline; }
+    .page_faq .block_show .content .items .item .spoiler .form .insert {
+      margin-top: 15px; }
+
+.ckeditor_insert_file {
+  width: 80px;
+  height: 80px;
+  display: block;
+  text-decoration: none;
+  color: #000; }
+  .ckeditor_insert_file:link {
+    color: #000; }
+  .ckeditor_insert_file:visited {
+    color: #000; }
+  .ckeditor_insert_file .pdf, .ckeditor_insert_file .docx, .ckeditor_insert_file .txt, .ckeditor_insert_file .doc {
+    width: 100%;
+    height: 100%;
+    display: block; }
+  .ckeditor_insert_file .pdf {
+    background: url("../../libs/filemanager/img/f_pdf.png") no-repeat center;
+    background-size: contain; }
+  .ckeditor_insert_file .doc {
+    background: url("../../libs/filemanager/img/f_doc.png") no-repeat center;
+    background-size: contain; }
+  .ckeditor_insert_file .docx {
+    background: url("../../libs/filemanager/img/f_docx.png") no-repeat center;
+    background-size: contain; }
+  .ckeditor_insert_file .txt {
+    background: url("../../libs/filemanager/img/f_txt.png") no-repeat center;
+    background-size: contain; }
+
+.index_text {
+  max-height: 200px;
+  -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, color-stop(75%, #000), to(transparent));
+  -webkit-mask-image: linear-gradient(180deg, #000 75%, transparent);
+  mask-image: -webkit-gradient(linear, left top, left bottom, color-stop(75%, #000), to(transparent));
+  mask-image: linear-gradient(180deg, #000 75%, transparent); }
+
+/*# sourceMappingURL=style.css.map */

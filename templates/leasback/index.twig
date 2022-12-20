@@ -1,0 +1,85 @@
+{% extends "dispo/base.twig" %}
+{% set title = 'LeasBack Title' %}
+
+{% block wrapper %}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/static/css/leasback/main.css">
+    <link rel="stylesheet" href="/static/css/style_evilgoogle.css">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="tabs-container">
+                <!--<ul class="nav nav-tabs">
+                    <li><a href="#" class="active">Aktiv</a></li>
+                    <li><a href="#">Archiv</a></li>
+                </ul>-->
+                <div class="tab-content white-bg">
+                    <div class="tab-pane active" style="padding:15px 10px;">
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+			    <i class="fa fa-plus"></i>&nbsp;Add appointment
+			</button>
+			<hr>
+
+			{% for leasback in data %}
+			    <div class="leasback">
+				<h3>
+				    {#<span class="callback-chat btn btn-primary btn-xs" data-toggle="modal" data-target="#comment_modal">
+					<i class="glyphicon glyphicon-edit"></i> [<span class="commentsCount">0</span>] Kommentar
+				    </span>#}
+				    <a href="/leasback/{{ leasback.steps[0].leasback_id }}/{{ leasback.steps[0].step }}">{{ leasback.lb.name }} / Mazda</a> | <span>{#Appointment date:#} <strong>{{ leasback.lb.dt }}</strong></span>
+				</h3>
+				<br>
+
+				<div class="row mb-4">
+				    <div class="col-md-6">
+					{% include 'leasback/templates/blocks/customer.twig' with {customer: leasback.lb} %}
+				    </div>
+
+				    <div class="col-md-6">
+					{% include 'leasback/templates/blocks/fahrzeug.twig' with {fahrzeug: leasback.fahrzeug, autfrag: leasback.autfrag, customer: leasback.lb} %}
+				    </div>
+							    
+				    <div class="col-md-6">
+					{% include 'leasback/templates/blocks/auftrag.twig' with {auftrag: leasback.attach_auftrag, customer: leasback.lb} %}
+				    </div>
+                                    
+                                    <div class="col-md-6">
+					{% include 'leasback/templates/blocks/fahrzeug_junge.twig' with {fahrzeug: leasback.attach_fahrzeug_junge, customer: leasback.lb} %}
+				    </div>
+				</div>
+
+				<div class="percent_wrap">
+                                    {%  set s = 0 %}
+                                    {% for step in leasback.steps %}
+                                        {% set s = s + 1 %}
+                                        <a href="/leasback/{{ step.leasback_id }}/{{ step.step }}" class="percent {{ step.status == 'success' ? 'success' : '' }} active">
+                                            <span class="border">
+                                                <span class="top">
+                                                    <i class="fa fa-times"></i>
+                                                    <span class="title">{{ s }}: {{ step.title }}</span>
+                                                </span>
+
+                                                {% if step.status == 'success' %}
+                                                    <span class="time">{{ step.success_time | date('d.m.Y h:i') }}</span>
+                                                {% endif %}
+                                            </span>
+                                        </a>
+				    {% endfor %}
+				</div>
+			    </div>
+			{% endfor %}
+
+			{% include 'leasback/modals/auftrag.twig' %}
+			{% include 'leasback/modals/create.twig' %}
+			{% include 'leasback/modals/fahrzeug.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/bootstrap3-typeahead.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/i18n/jquery-ui-i18n.min.js"></script>
+    <script src="/static/js/leasback/main.js"></script>
+{% endblock %}

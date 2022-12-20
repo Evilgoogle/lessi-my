@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="tag_buttons">
+            {% for item in step_data.infos.filter %}
+            <div class="box">
+                <button id="kundenannahme_infos_b_{{ item.id }}" type="button" 
+                        class="btn {{ (item.set == 1) ? 'btn-danger' : 'btn-primary' }} btn-sm js_infotag_set" 
+                        data-id="{{ item.id }}"
+                        {% if item.tag == 'Wartekunde' %}
+                            data-modal="ok"
+                        {# elseif item.tag == 'Verkaufsberatung erwünscht' %}
+                            data-modal="ok"#}
+                        {% endif %}
+                        data-desc="{{ item.desc }}"
+                >
+                    {{ item.tag }}
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<br>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="insert_tags">
+            {% for item in step_data.infos.items %}
+                {% include 'checker/part/kundenannahme/infos/tag.twig' with {'item': item, 'sonstige': false} %}
+            {% endfor %}
+        </div>
+    </div>
+</div>  
+<div class="panel panel-default">
+    <div class="panel-body">
+        <button type="button" class="btn btn-primary btn-sm js_kundenannahme_sonstige_add" data-auftragnr="{{ auftrag.auftragnr }}">Sonstige +</button>
+        <div class="insert_sonstige">
+            {% for item in step_data.infos.sonstige %}
+                {% include 'checker/part/kundenannahme/infos/tag.twig' with {'item': item, 'sonstige': true} %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

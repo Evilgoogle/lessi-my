@@ -1,0 +1,277 @@
+.percent_wrap {
+  display: flex;
+  height: 56px;
+  .percent {
+    width: 20%;
+    height: 100%;
+    color: #000;
+    padding: 0 2px;
+    filter: opacity(0.5);
+    font-size: 14px;
+    .border {
+        height: 100%;
+        border: 1px solid #b5bbc9;
+        padding: 6px 12px;
+        display: block;
+    }
+    .top {
+        display: flex;
+        align-items: center;
+        i {
+            margin-right: 5px;
+        }
+    }
+    .time {
+        display: block;
+        margin-top: 5px;
+    }
+  }
+  .success{
+    background: #0fc70f;
+    color:white;
+  }
+  .active {
+      filter: opacity(1);
+  }
+}
+
+.pr-red {
+  background: red;
+  color:white;
+}
+
+.pr-white {
+  background: white;
+}
+
+.text_right {
+    text-align: right;
+}
+.flex {
+    display: flex;
+}
+.flex_between {
+    display: flex;
+    justify-content: space-between;
+}
+
+//
+.leasback {
+    border: 1px solid #cdcdcd;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.10);
+    .main_panel {
+	.panel-heading {
+	    height: 50px;
+	}
+	.block {
+	    height: 170px;
+            @media only screen and (max-width: 1919px) {
+                height: 220px;
+            }
+            @media only screen and (max-width: 1919px) {
+                height: 245px;
+            }
+	    table {
+		height: 100%;
+                tbody {
+                    height: 100%;
+                }
+	    }
+	}
+    }
+    .label {
+        font-size: 13px;
+        margin-bottom: 3px;
+        display: inline-block;
+        font-weight: normal;
+    }
+}
+
+.leas_info_params {
+  margin: 15px 0px;
+  div {
+    display: inline-block;
+    width: 45%;
+  }
+}
+
+.leasback_block {
+  border: 3px solid #ccc;
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+
+.leasback_step_block {
+    .controller {
+        margin-bottom: 20px;
+    }
+    
+    .damage_block {
+        width: 236px;
+        height: 100%;
+        position: relative;
+        .tag {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            opacity: .5;
+            &:hover {
+                background: gray;
+            }
+            .detectDamage {
+                background: red;
+            }
+        }
+        .active {
+            background: red;
+        }
+        
+        .p31-1 {
+            top: 55px;
+            left: 92px;
+        }
+        .p33-1 {
+            top: 284px;
+            left: 92px;
+        }
+        .p34-1 {
+            top: 508px;
+            left: 92px;
+        }
+        .s1-1 {
+            top: 171px;
+            left: 92px;
+        }
+        .s2-1 {
+            top: 255px;
+            left: 5px;
+        }
+        .s3-1 {
+            top: 328px;
+            left: 5px;
+        }
+        .s4-1 {
+            top: 435px;
+            left: 93px;
+        }
+        .s5-1 {
+            top: 328px;
+            right: 5px;
+        }
+        .s6-1 {
+            top: 255px;
+            right: 5px;
+        }
+        .p01-2 {
+            top: 57px;
+            right: 9px;
+        }
+        .p02-2 {
+            top: 502px;
+            left: 11px;
+        }
+        .p03-2 {
+            top: 5px;
+            left: 10px;
+        }
+        .p05-2 {
+            top: 219px;
+            left: 10px;
+        }
+        .p07-2 {
+            top: 348px;
+            left: 10px;
+        }
+        .p09-2 {
+            top: 125px;
+            right: 9px;
+        }
+        .p11-2 {
+            top: 440px;
+            left: 11px;
+        }
+        .p13-2 {
+            top: 194px;
+            right: 9px;
+        }
+        .p17-2 {
+            top: 415px;
+            right: 9px;
+        }
+        .p23-2 {
+            top: 282px;
+            left: 10px;
+        }
+        .p26-2 {
+            top: 516px;
+            right: 9px;
+        }
+        .p01-3 {
+            top: 57px;
+            left: 11px;
+        }
+        .p02-3 {
+            top: 502px;
+            right: 9px;
+        }
+        .p03-3 {
+            top: 5px;
+            right: 9px;
+        }
+        .p06-3 {
+            top: 219px;
+            right: 9px;
+        }
+        .p08-3 {
+            top: 348px;
+            right: 9px;
+        }
+        .p10-3 {
+            top: 124px;
+            left: 11px;
+        }
+        .p12-3 {
+            top: 440px;
+            right: 8px;
+        }
+        .p14-3 {
+            top: 194px;
+            left: 11px;
+        }
+        .p18-3 {
+            top: 414px;
+            left: 11px;
+        }
+        .p24-3 {
+            top: 282px;
+            right: 8px;
+        }
+        .p26-3 {
+            top: 516px;
+            left: 11px;
+        }
+    }
+    .kosten_block {
+        margin-top: 20px;
+    }
+}
+
+.filemanager_insert {
+    .filemanager_info {
+        img {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            object-fit: cover;
+            background-color: #eee;
+            border-radius: 10px;
+            padding: 5px;
+            border: 1px solid#ddd;
+        }
+    }
+}

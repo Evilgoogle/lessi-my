@@ -1,0 +1,40 @@
+<div class="bn">
+    <div class="column">
+        <div class="rubber blue">
+            <div class="box js_select" 
+                data-id="{{ set.id }}" data-title="{{ set.title }}" 
+                data-file="{{ set.file }}" data-type="{{ set.type }}" 
+                data-alt="{{ set.alt }}" data-mass="{{ set.size }}" data-created_at="{{ set.created_at }}"
+            >
+                {% if set.type == 'image/jpeg' or set.type == 'image/png' or set.type == 'image/gif' or set.type == 'image/svg+xml' %}
+                    <div class="image" style="background-image: url(/static/{{ path }}/{{ set.file~'?id='~set.rand }})"></div>
+                {% elseif set.type == 'application/pdf' %}
+                    <div class="image">
+                        <span class="pdf"></span>
+                    </div>
+                {% elseif set.type == 'application/msword' %}
+                    <div class="image">
+                        <span class="doc"></span>
+                    </div>
+                {% elseif set.type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' %}
+                    <div class="image">
+                        <span class="docx"></span>
+                    </div>
+                {% elseif set.type == 'text/plain' %}
+                    <div class="image">
+                        <span class="txt"></span>
+                    </div>
+                {% elseif set.type == 'video/mp4' %}
+                    <div class="image">
+                        <span class="mp4"></span>
+                    </div>
+                {% endif %}
+                <div class="date">{{ set.created_at | date('y-m-d : h') }}</div>
+                <div class="title">{{ set.title | slice(0, 24) }}</div>
+            </div>
+            <label>
+                <input type="checkbox" name="picked_items" data-id="{{ set.id }}">
+            </label>
+        </div>
+    </div>
+</div>

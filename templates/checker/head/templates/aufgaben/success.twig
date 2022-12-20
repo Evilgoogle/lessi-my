@@ -1,0 +1,91 @@
+<div class="checker_step_block">
+    {% for item in kundenhinweises %}
+    <div class="item panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-10">Technische Hinweise: {{ item.id }}</div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="work_block">
+                <div class="w_block">
+                    <div class="icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <div class="title">{{ item.title }}</div>
+                </div>
+            </div>
+            <hr>
+            
+            {% for task in item.tasks() %}
+                <div class="task_panel panel panel-default">
+                    <div class="panel-heading">
+                        <b>Aufgaben</b>
+                        <span class="label label-info">
+                            {% if task.step == 'fahrzeugannahme' %}
+                                Fahrzeugannahme
+                            {% elseif task.step == 'reparatur' %}
+                                Reparatur
+                            {% endif %}
+                        </span>&nbsp;
+                        <span class="label label-warning">
+                            {% if task.task == 'fehlerfrei_bedienfehler' %}
+                                Behoben (Fehlerfrei/Bedienfehler)
+                            {% elseif task.task == 'durch_auftragspositionen_gelöst' %}
+                                Reparatur (durch Auftragspositionen gelöst)
+                            {% elseif task.task == 'diagnose' %}
+                                Diagnose
+                            {% elseif task.task == 'nachterminierung' %}
+                                Nachterminierung
+                            {% elseif task.task == 'behebung_kundehunweise' %}
+                                Behebung Kundehunweise
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="well color_azure"><span class="badge">Kundehinweise:</span> {{ task.kundenhinweise_title }}</div>
+                        {% for hi in task.history() %}
+                            <div class="well">
+                                <span class="i">
+                                    <span class="badge">{% if hi.step == 'fahrzeugannahme' %}Serviceberater{% elseif hi.step == 'reparatur' %}Monteur{% endif %} antwort:</span>
+                                    {{ hi.message }}
+                                </span>
+                                <span class="i">
+                                    {% if task.task == 'fehlerfrei_bedienfehler' %}
+                                        Behoben (Fehlerfrei/Bedienfehler)
+                                    {% elseif task.task == 'durch_auftragspositionen_gelöst' %}
+                                        Reparatur (durch Auftragspositionen gelöst)
+                                    {% elseif task.task == 'diagnose' %}
+                                        Diagnose
+                                    {% elseif task.task == 'nachterminierung' %}
+                                        Nachterminierung
+                                    {% elseif task.task == 'behebung_kundehunweise' %}
+                                        Behebung Kundehunweise
+                                    {% endif %}
+                                </span>
+                                <span class="i">{{ hi.select | json_encode() }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="panel-footer">
+                        <ol class="breadcrumb">
+                            {% for hi in task.history() %}
+                                <li>
+                                    <div class="box">
+                                        <span>
+                                            {{ hi.step == 'fahrzeugannahme' ? 2 : hi.step == 'reparatur' ? 3 : '' }} STEP 
+                                            ({{ hi.step == 'fahrzeugannahme' ? 'fahrzeugannahme' : hi.step == 'reparatur' ? 'reparatur' : '' }})
+                                        </span>
+                                        <h5>{{ hi.set_time | date('d-m-Y H:i') }} <span class="label label-default">{{ hi.set_user }}</span></h5>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="panel-footer"></div>
+    </div>
+    {% endfor %}
+</div>

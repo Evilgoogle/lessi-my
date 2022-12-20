@@ -1,0 +1,117 @@
+{% extends "checker/step_layout.twig" %}
+
+{% block step %}
+    
+    <link rel="stylesheet" href="/static/css/checker/main.css">
+    
+    {% if step_complete %}
+        {% if auftrag_m.fahrzeug.auftrags().where('STATUS', 1).where('ART', '<>', -1).where('AUFTRAGSNR', '<>', auftrag.auftragnr).get | length > 0 %}
+        <div class="task_panel panel panel-warning">
+            <div class="panel-heading flex-between">
+                <span>Auftrags</span>
+            </div>
+            <div class="panel-body">
+                <form id="auftrag_add" action="{{ path_for('checker.step.fahrzeugannahme.auftrag.add') }}">
+                    <input type="hidden" name="auftrag_id" value="{{ auftrag.id }}">
+                    <div class="panel panel-default">
+                        <div id="auftrag_errors"></div>
+                        <div id="auftrag_insert" class="item panel-body">
+                            {% for a in auftrag_m.fahrzeug.auftrags().where('STATUS', 1).where('ART', '<>', -1).where('AUFTRAGSNR', '<>', auftrag.auftragnr).get %}
+                                <label>
+                                    <input type="checkbox" name="pick[]" value="{{ a.AUFTRAGSNR }}"
+                                        {% for ad in auftrag.addon %}
+                                            {% if a.AUFTRAGSNR == ad.auftragnr %}
+                                                checked
+                                            {% endif %}
+                                        {% endfor %}
+                                    > 
+                                    <div class="flex">
+                                        <div><span class="label label-info">Auftrag:</span> {{ a.AUFTRAGSNR }}</div>
+                                        <div><span class="label label-info">Data:</span> {{ a.ANNAHME | date('d.m.Y H:i') }}</div> 
+                                        <div><span class="label label-info">Typ:</span> {{ a.typ.BEZEICHNUNG }}</div>
+                                        <div><span class="label label-info">Vermerk:</span> {{ a.VERMERK }}</div>
+                                    </div>
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <button id="auftrag_button" class="btn btn-primary" type="submit">Hinzufügen</button>
+                </form>
+            </div>
+        </div>
+        {% endif %}                
+                    
+        {% for child in step_data.step_subs %}
+            <div class="steps_block 
+                {% if child.step == 'kundenhinweise' %}
+                    kundenhinweise_block
+                    {# elseif child.step == 'reparaturhinweise' reparaturhinweise_block#}
+                {% endif %}
+                panel panel-default"
+            >
+                <div class="panel-heading flex-between">
+                    <span>                
+                    {{ child.title }}
+                    </span>
+                </div>
+                {% if child.step == 'kundenhinweise' %}
+                    <div class="panel-body">
+                        <button type="button" class="btn btn-primary js_kundenhinweise_add_f">Hinzufügen</button>
+                        <br><br>
+                        <div class="insert">
+                        {% if step_data.kundenhinweises.count == 0 is null %}
+                            <p>Keine Hinweise vorhanden?</p>
+                        {% else %}
+                            {% for item in step_data.kundenhinweises.items %}
+                                {% include 'checker/part/fahrzeugannahme/kundenhinweise/item.twig' with {'item': item, 'method': 'edit', 'step': 'fahrzeugannahme'} %}
+                            {% endfor %}
+                        {% endif %}
+                        </div>
+                    </div>
+                {% elseif child.step == 'vsc' %}
+                    <div class="panel-body">
+                        <p>Klicken Sie hier, um zum Handler zu gelangen (FIN: {{ auftrag.fahrzeug.vin }})</p>
+                        <div class="flex-between">
+                            <a href="https://mapps.mazdaeur.com/dsr/searchVehicle.do?vin={{ auftrag.fahrzeug.vin }}&regNUmber=&action=Suche" class="btn btn-primary" target="_blank">Open - DSR</a>
+                            <div class="result"></div>
+                        </div>
+                    </div>
+                {# elseif child.step == 'reparaturhinweise'
+                    <div class="panel-body">
+                        <button type="button" class="btn btn-primary js_reparaturhinweise_modal">Hinzufügen</button>
+                        <br><br>
+                        <div class="insert">
+                            {% for item in step_data.reparaturhinweise %}
+                                {% include 'checker/part/fahrzeugannahme/reparaturhinweise/item.twig' with {'item': item } %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% elseif child.step == 'annahmeprotokoll' #}
+                    
+                {% endif %}
+                <div class="panel-footer white_fon flex-end">
+                    <div class="execute">
+                        <div class="main_status label label-default">
+                        {{ child.status == 'success' ? '<i class="fa fa-check"></i>&nbsp;<span> abgeschlossen</span>' : '<i class="fa fa-times"></i>&nbsp;<span> nicht abgeschlossen</span>' }}
+                        </div>
+                        <button type="button" class="btn btn-warning btn-sm js_status_child_save" 
+                            data-auftragnr="{{ auftrag.auftragnr }}" 
+                            data-step="fahrzeugannahme" 
+                            data-step_child="{{ child.step }}"
+                        >Ausführen</button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        
+        {% include 'checker/part/fahrzeugannahme/quest.twig' with {'task': task} %}
+    {% else %}
+        <div class="label label-danger">Schritt 1 ist nicht abgeschlossen</div>
+    {% endif %}
+    
+    {% include 'checker/part/fahrzeugannahme/kundenhinweise/modals.twig' %}
+    {# include 'checker/part/fahrzeugannahme/reparaturhinweise/modals.twig' #}
+    
+    <script src="/static/js/bootstrap3-typeahead.min.js"></script>
+    <script src="/static/js/checker/steps/fahrzeugannahme.js"></script>
+{% endblock %}        

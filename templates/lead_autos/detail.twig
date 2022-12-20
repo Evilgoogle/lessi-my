@@ -1,0 +1,200 @@
+{% extends "leads/base.twig" %}
+{#{% set title = lang.dashboard.title %}#}
+{% set title = lang.menu.m15%}
+{% block wrapper %}
+
+
+    <div class="row">
+        <div class="col-xs-4" style="border-right: 1px solid #e8e8e8;">
+            <h4>Kontaktdaten</h4>
+            <table class="table table-bordered table-condensed">
+                {% for k in lead.contacts %}
+                    <tr>
+                        <td>{{ k.type=='phone'?'Telefon':'E-Mail' }}</td>
+                        <td>{{ k.type=='phone'?'0'~k.value:k.value }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <hr/>
+	    {% for item in lead.activity|sort((a,b)=>a.date_time>b.date_time)|filter(i=>i.type in ['hws','mein_auto','eastwood','mail'] and not i.direction)|slice(0, 1) %}
+
+		{% if item.type=='hws'  %}
+		    {{ item.note|convert_encoding('UTF-8', 'ISO-8859-1')|nl2br }}
+		{% elseif item.type=='mein_auto' %}
+		    {{ item.note|convert_encoding('UTF-8', 'ISO-8859-1')|raw }}
+		    {{ ('<a href="/leads/show_mein_auto/'~item.external_id~'" target="_blank">Show data</a>')|raw }}
+		{% elseif item.type=='eastwood' %}
+		    {{ item.note|raw }}
+		{% elseif item.type=='call' %}
+
+		    {% for exti in item.external.abonents if exti.success%}
+			{{ exti.destination~' - '~exti.description~'; ' }}
+		    {% endfor %}
+		{% elseif item.type=='mail' %}
+		    {% if item.source==5 %}
+			{{ item.note|raw }}<br/>
+		    {% endif %}
+		    {{ ('<a href="/leads/show_mail/'~item.external_id~'" target="_blank">Show mail</a>')|raw }}
+		{% endif %}
+	    {% endfor %}
+	    <hr/>
+	    <h4>E-Mail log</h4>
+
+	    <table class="table table-bordered">
+		{% for mail in mails %}
+
+		    {% for lstr in mail.logs() %}
+			<tr>
+			    <td>{{lstr.datetime|date('d-m-Y H:i:s') }}</td>
+			    <td>{{lstr.action }}</td>
+
+			    {#			    <td>{{ (lstr.data|json_decode()).Folder }}</td>#}
+			    <td>{{ (lstr.data|json_decode()).Subject }}</td>
+			    <td>{{ (lstr.data|json_decode()).User }}</td>
+			    <td>  {{ ('<a href="/leads/show_mail/'~mail.id~'" target="_blank">Show mail</a>')|raw }}</td>
+
+			</tr>
+		    {% endfor %}
+
+		{% endfor %}
+	    </table>
+
+            <h4>Kunde</h4>
+            {%   if lead.kunde_nr  %}
+                <table class="table table-bordered table-condensed">
+                    <tr>
+                        <td>Nummer</td>
+                        <td>{{ lead.kunde_nr }}</td>
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td>{{ lead.name }}</td>
+                    </tr>
+                </table>
+                <hr>
+                <h4>Aufträge</h4>
+                <table class="table table-bordered table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Nummer</th>
+                            <th>Anlagedatum</th>
+                            <th>Verkäufer</th>
+                        </tr>
+                    <thead>
+                    <tbody>
+                        {% for k in lead.orders %}
+                            <tr>
+                                <td>{{ k.nr }}</td>
+                                <td>{{ k.date_time?(k.date_time|date('d.m.Y')) }}</td>
+                                <td>{{ k.worker }}</td>
+                            </tr>
+                        {% else %}
+                            <tr class='bg-warning'>
+                                <td colspan='3'>keine Aufträge</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class='bg-warning'><p style='padding:15px;'>Keine Kundendaten</p></div>
+                {% if lead.name %}
+                    <table class="table table-bordered table-condensed">
+
+                        <tr>
+                            <td>Name</td>
+                            <td>{{ lead.name }}</td>
+                        </tr>
+                    </table>
+                {% endif %}
+            {% endif %}
+            <hr/>
+            <h4>Kommentare</h4>
+            <form method="post" action='{{ path_for('leads.comment',{id:lead.id}) }}'>
+                <textarea class='form-control' name="lead_comment"></textarea>
+                <input type="submit" class="btn btn-primary  m-t"/>
+            </form>
+
+            <table class='table table-condensed m-t'>
+                {% for comment in lead.comments %}
+
+                    <tr>
+                        <td width='90'>{{ comment.date_time|date('d.m.Y H:i:s') }}</td>
+                        <td width='20'>{{comment.user.name~' '~comment.user.surname  }}</td>
+                        <td>{{ comment.text }}</td>
+                    </tr>
+
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col-xs-8">
+
+            <h4>Verlauf</h4>
+
+            <table class="table table-condensed table-bordered">
+                <thead>
+                    <tr>
+                        <th>Typ</th>
+                        <th>Ablauf</th>
+                        <th>Datum</th>
+                        <th>Benutzer</th>
+                        <th>Mitarbeiter</th>
+                        <th>Status</th>
+                        <th>Antwortzeit</th>
+                        <th>Endpunkt</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for item in lead.activity %}
+                        {% set  ans_call = item.answer_time %}
+
+                        <tr data-id="{{ item.id}}" data-extid="{{ item.external_id }}">
+                            <td>{{ item.type=='hws'?'MACS':(item.type=='eastwood'?'HWS':(item.type=='call'?'Anruf':item.type)) }}</td>
+                            <td>{{ item.direction?'out':'in' }}</td>
+                            <td>{{ item.date_time|date('d-m-Y H:i:s') }}</td>
+                            <td>{{ item.direction?item.from:item.to }}</td>
+                            <td>
+                                {% for w in workers %}
+                                    {{ w.id==item.worker_id?w.name:'' }}
+                                {% endfor %}
+                            </td>
+
+                            <td>{{ item.status?'<i class="fa fa-check"></i>':'<i class="fa fa-times"></i>' }}</td>
+                            <td>{{ ans_call ==0
+                                        ? ''
+                                        :ans_call==-1
+                                            ?'No answer'
+                                            :ans_call>86400
+                                                ?ans_call|date('d', '+00:00 GMT')~'d. '~ans_call|date('H:i:s', '+00:00 GMT')
+                                                :ans_call|date('H:i:s', '+00:00 GMT') 
+                                }}</td> 
+                            <td>
+                                {% if item.type=='hws'  %}
+                                    {{ item.note|convert_encoding('UTF-8', 'ISO-8859-1')|nl2br }}
+                                {% elseif item.type=='mein_auto' %}
+                                    {{ item.note|convert_encoding('UTF-8', 'ISO-8859-1')|raw }}
+                                    {{ ('<a href="/leads/show_mein_auto/'~item.external_id~'" target="_blank">Show data</a>')|raw }}
+				{% elseif item.type=='eastwood' %}
+                                    {{ item.note|raw }}
+                                {% elseif item.type=='call' %}
+
+                                    {% for exti in item.external.abonents if exti.success%}
+                                        {{ exti.destination~' - '~exti.description~'; ' }}
+                                    {% endfor %}
+                                {% elseif item.type=='mail' %}
+                                    {% if item.source==5 %}
+                                        {{ item.note|raw }}<br/>
+                                    {% endif %}
+                                    {{ ('<a href="/leads/show_mail/'~item.external_id~'" target="_blank">Show mail</a>')|raw }}
+                                {% endif %}
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+{% endblock %}

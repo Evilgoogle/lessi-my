@@ -1,0 +1,58 @@
+{% extends "faq/base.twig" %}
+{% set title = lang.user_manager.articles %}
+
+{% block wrapper %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Likes</th>
+            <th>Dislike</th>
+            <th>Category</th>
+            <th>Sub Category</th>
+            <th class="table-controls">
+                <a href="{{path_for('faqs.article.add')}}" class="btn btn-primary" >{{ lang.btn.create }}</a>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for article in articles %}
+            <tr data-id="{{ article.id }}">
+                <td style="width: 25%">{{ article.title }}</td>
+                <td  style="width: 25%"><div class="index_text">{{ article.description | raw }}</div></td>
+                <td>{{ article.likes.count }}</td>
+                <td>{{ article.dislikes.count }}</td>
+                <td>{{ article.category_id }}</td>
+                <td>{{ article.sub_category_id }}</td>
+                <td class="fags_articles_buttons">
+                    <a href="{{ path_for('faqs.article.edit', { 'id': article.id }) }}" class="btn btn-default" >{{ lang.btn.update }}</a>
+                    <a href="{{ path_for('faqs.article.delete', { 'id': article.id }) }}" class="btn btn-danger js_del">-</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        $(document).on('click', '.js_del', function (e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'Wirklich löschen?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#1ab394',
+                cancelButtonColor: '#f8ac59',
+                confirmButtonText: 'Ja',
+                cancelButtonText: 'Nein'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = e.target.href;
+                    }
+            });   
+        });
+    </script>
+{% endblock %}
+
+

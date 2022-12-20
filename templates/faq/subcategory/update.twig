@@ -1,0 +1,40 @@
+{% extends "main.twig" %}
+
+{% block wrapper %}
+    <div class="row">
+        <div class="col-lg-12 p-md">
+            <a href="/faqs/categories/edit/{{ category_id }}" class="backLink">
+                <i class="fa fa-arrow-left"></i> 
+                {{ lang.btn.back }}
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Artikel Sub Kategorie parameter</h5>
+                </div>
+                <div class="ibox-content">
+                    <form method="post" action="/faqs/categories/{{ category_id }}/update" class="form-horizontal">
+                        <div class="form-group {{ errors.title ? 'has-error' : '' }}">
+                            <label for="inputtitle" class="control-label col-xs-2">Titel</label>
+                            <div class="col-xs-10">
+                                <input name="title" id="inputtitle" class="form-control" value="{{ category.title }}" placeholder="Titel"  autofocus>
+                                {% if errors.title %}
+                                    <span class="help-block">{{ errors.title|first }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" value="{{ category.id }}">
+                        <input type="hidden" name="category_id" value="{{ category_id }}">
+                            
+                        {{ csrf.field|raw }}
+                        <button class="btn btn-primary " type="submit">{{ lang.btn.update }}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

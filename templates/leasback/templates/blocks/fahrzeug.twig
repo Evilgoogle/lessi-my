@@ -1,0 +1,197 @@
+{#<div class="panel panel-default main_panel">
+    <div class="panel-heading flex">
+        Car (MACS)
+        <button type="button" class="btn btn-primary btn-sm js_fahrzeug" data-id="{{ leasback.lb.id }}">+</button>
+    </div>
+    <div class="block">
+        {% if leasback.fahrzeug is not null %}
+            <table class="panel-body table table-condensed">
+                <tbody class="head_data">
+                    <tr>
+                        <td>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>Status</th>
+                                        <td class="text_right">
+                                            {{ leasback.fahrzeug.FZSTATUSTEXT }}
+                                            {% if leasback.isset == 'ok' %}
+                                                | Art: {{ leasback.fahrzeug.FAHRZEUGARTTEXT }}
+                                            {% else %}
+                                                | Art: {{ leasback.fahrzeug.fzh_actuell.art.FAHRZEUGARTTEXT|mb_convert_encoding }}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>FIN</th>
+                                        <td class="text_right">{{ leasback.fahrzeug.FAHRGESTELLNUMMER }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><i class="fas fa-tachometer-alt"></i>&nbsp;LL&nbsp;in&nbsp;km</th>
+                                        <td class="text_right">{{ leasback.fahrzeug.KMSTAND }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th><i class="fas fa-file-alt"></i>&nbsp;Datum&nbsp;EZ</th>
+                                        <td class="text_right">{{ leasback.fahrzeug.ERSTZULASSUNG|date('m/y') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Kunde</th>
+                                        <td class="text_right">
+                                            {% if leasback.isset == 'ok' %}
+                                                {% if leasback.fahrzeug.KUNDENNAME is not null %}
+                                                    {{ leasback.fahrzeug.KUNDENNAME }}
+                                                    <br>
+                                                    [{{ leasback.fahrzeug.KUNDENNR }} - {{ leasback.fahrzeug.KURZNAME }}]
+                                                {% else %}
+                                                    <p style="padding: 10px;"><u>nicht gefunden</u></p>
+                                                {% endif %}
+                                            {% else %}
+                                                {% if leasback.autfrag is not null %}
+                                                    {{ leasback.autfrag.kunde.adresse.NAME1|mb_convert_encoding }}
+                                                    <br>
+                                                    [{{ leasback.autfrag.kunde.KUNDENNR }} - {{ leasback.autfrag.kunde.adresse.KURZNAME|mb_convert_encoding }}]
+                                                {% else %}
+                                                    <p style="padding: 10px;"><u>nicht gefunden</u></p>
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Verkaufsberater</th>
+                                        <td class="text_right">
+                                            {% if leasback.isset == 'ok' %}
+                                                {% if leasback.fahrzeug.MITARBEITERNAME is not null %}
+                                                    {{ leasback.fahrzeug.MITARBEITERKURZNAME }}
+                                                    <br>
+                                                    {{ leasback.fahrzeug.MITARBEITERNAME }}
+                                                {% else %}
+                                                    <p style="padding: 10px;"><u>nicht gefunden</u></p>
+                                                {% endif %}
+                                            {% else %}
+                                                {% if leasback.autfrag is not null %}
+                                                    {{ leasback.autfrag.mitarbeiter.adresse.KURZNAME|mb_convert_encoding }}
+                                                    <br>
+                                                    {{ leasback.autfrag.mitarbeiter.adresse.NAME1|mb_convert_encoding }}
+                                                {% else %}
+                                                    <p style="padding: 10px;"><u>nicht gefunden</u></p>
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        {% else %}
+            <p style="padding: 10px;"><u>nicht gefunden</u></p>
+        {% endif %}
+    </div>
+</div>#}
+
+<div class="panel panel-default main_panel">
+    <div class="panel-heading flex_between">
+        Fahrzeug
+        <button type="button" class="btn btn-primary btn-sm js_fahrzeug" data-id="{{ customer.id }}">+</button>
+    </div>
+    <div class="block">
+        {% if fahrzeug is not null %}
+            <table class="panel-body table table-condensed">
+                <tbody class="head_data">
+                    <tr>
+                        <td>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>Status</th>
+                                        <td class="text_right">
+                                            {{ fahrzeug.FZSTATUSTEXT }}
+                                            {% if leasback.isset == 'ok' %}
+                                                | Art: {{ fahrzeug.FAHRZEUGARTTEXT }}
+                                            {% else %}
+                                                | Art: {{ fahrzeug.fzh_actuell.art.FAHRZEUGARTTEXT|mb_convert_encoding }}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>FIN</th>
+                                        <td class="text_right">{{ fahrzeug.FAHRGESTELLNUMMER }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><i class="fas fa-tachometer-alt"></i>&nbsp;LL&nbsp;in&nbsp;km</th>
+                                        <td class="text_right">{{ fahrzeug.KMSTAND }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th><i class="fas fa-file-alt"></i>&nbsp;Datum&nbsp;EZ</th>
+                                        <td class="text_right">{{ fahrzeug.ERSTZULASSUNG|date('m/y') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Kunde</th>
+                                        <td class="text_right">
+                                            {% if leasback.isset == 'ok' %}
+                                                {% if fahrzeug.KUNDENNAME is not null %}
+                                                    {{ fahrzeug.KUNDENNAME }}
+                                                    <br>
+                                                    [{{ fahrzeug.KUNDENNR }} - {{ fahrzeug.KURZNAME }}]
+                                                {% else %}
+                                                    <p style="padding: 10px;"><u>nicht gefunden</u></p>
+                                                {% endif %}
+                                            {% else %}
+                                                {% if autfrag is not null %}
+                                                    {{ autfrag.kunde.adresse.NAME1|mb_convert_encoding }}
+                                                    <br>
+                                                    [{{ autfrag.kunde.KUNDENNR }} - {{ autfrag.kunde.adresse.KURZNAME|mb_convert_encoding }}]
+                                                {% else %}
+                                                    <p style="padding: 10px;"><u>nicht gefunden</u></p>
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Verkaufsberater</th>
+                                        <td class="text_right">
+                                            {% if isset == 'ok' %}
+                                                {% if fahrzeug.MITARBEITERNAME is not null %}
+                                                    {{ fahrzeug.MITARBEITERKURZNAME }}
+                                                    <br>
+                                                    {{ fahrzeug.MITARBEITERNAME }}
+                                                {% else %}
+                                                    <p style="padding: 10px;"><u>nicht gefunden</u></p>
+                                                {% endif %}
+                                            {% else %}
+                                                {% if autfrag is not null %}
+                                                    {{ autfrag.mitarbeiter.adresse.KURZNAME|mb_convert_encoding }}
+                                                    <br>
+                                                    {{ autfrag.mitarbeiter.adresse.NAME1|mb_convert_encoding }}
+                                                {% else %}
+                                                    <p style="padding: 10px;"><u>nicht gefunden</u></p>
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        {% else %}
+            <p style="padding: 10px;"><u>nicht gefunden</u></p>
+        {% endif %}
+    </div>
+</div>

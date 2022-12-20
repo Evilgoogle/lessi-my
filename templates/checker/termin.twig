@@ -1,0 +1,87 @@
+{% extends "checker/base.twig" %}
+{% set title = 'Checker: Termin' %}
+
+{% block wrapper %}
+
+<link rel="stylesheet" href="/static/css/checker/style.css">
+    
+<div class="row termin">    
+<div class="col-xs-12">
+    <form action="{{ path_for('checker.termin.datas') }}" class="panel panel-default datas" method="get">
+        <div class="panel-heading">Suche nach Datum</div>
+        <div class="panel-body">
+            <div class="form-inline">
+                <div class="form-group">
+                  <label>Datum</label>
+                  <input type="text" class="form-control datepicker" name="begin" value="{{ begin }}">
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <button type="submit" class="btn btn-primary btn-sm">Suche</button>
+        </div>
+    </form>
+            
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Anlieferung</th>
+                        <th>Auftragsnummer</th>
+                        <th>Kunde Name</th>
+                        <th>WS Pakete</th>
+                        <th>Vermerk</th>
+                        <th>Hinweise</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in auftrags %}
+                        <tr>
+                            <td>{{ item.ANLIEFERUNG }}</td>
+                            <td>{{ item.AUFTRAGSNR }}</td>
+                            <td>{{ item.kunde.adresse.NAME1 | mb_convert_encoding }}</td>
+                            <td>
+                                {% for ws in wspakets %}
+                                    {% if ws.AUFTRAGID == item.AUFTRAGID %}
+                                        {% for p in ws.pakets %}
+                                            <span class="label label-default" style="display: block; font-size: 13px; margin-bottom: 5px">{{ p }}</span>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>{{ item.VERMERK | mb_convert_encoding }}</td>
+                            <td></td>
+                            <td class="controller">
+                                <div class="action">
+                                    <label class="item js_type {{ item.checker_termin().where('type', 'vip').first() ? 'active' : '' }}" data-auftragnr="{{ item.AUFTRAGSNR }}" data-type="vip">
+                                        <input type="checkbox" {{ item.checker_termin().where('type', 'vip').first() ? 'checked="checked"' : '' }}> VIP
+                                    </label>
+                                    <label class="item js_type {{ item.checker_termin().where('type', 'app').first() ? 'active' : '' }}" data-auftragnr="{{ item.AUFTRAGSNR }}" data-type="app">
+                                        <input type="checkbox" {{ item.checker_termin().where('type', 'app').first() ? 'checked="checked"' : '' }}> APP
+                                    </label>
+                                    <div class="loader">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </div>
+                                <div class="selector">
+                                    <select class="js_type_contact" data-auftragnr="{{ item.AUFTRAGSNR }}">
+                                        <option value="none" {{ item.checker_termin().where('type_contact', 'none').first() ? 'selected' : '' }}>None</option>
+                                        <option value="email" {{ item.checker_termin().where('type_contact', 'email').first() ? 'selected' : '' }}>Email</option>
+                                        <option value="sms" {{ item.checker_termin().where('type_contact', 'sms').first() ? 'selected' : '' }}>Sms</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+                
+<script src='/static/js/checker/termin.js'></script>
+
+{% endblock %}

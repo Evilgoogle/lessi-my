@@ -1,0 +1,77 @@
+.percent_wrap {
+  height: 37px; }
+
+.percent_round {
+  border: 1px solid #b5bbc9;
+  float: left;
+  margin: 2px;
+  padding: 5px 7px; }
+
+.pr-green {
+  background: #0fc70f;
+  color: white; }
+
+.pr-red {
+  background: red;
+  color: white; }
+
+.pr-white {
+  background: white; }
+
+/* Search Auftrag */
+.search_auftrag .relative .loader {
+  border: 3px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 3px solid #3498db;
+  width: 20px;
+  height: 20px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite; }
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg); } }
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+.search_auftrag .relative {
+  position: relative; }
+
+.search_auftrag .relative > .loader {
+  position: absolute;
+  right: 10px;
+  bottom: 5px; }
+
+.termin_icons {
+  display: inline-block; }
+
+#auftrag_insert {
+  display: flex;
+  flex-wrap: wrap; }
+  #auftrag_insert label {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    background-color: aliceblue; }
+    #auftrag_insert label input {
+      width: 30px;
+      height: 30px; }
+    #auftrag_insert label .flex {
+      margin-left: 10px;
+      display: flex; }
+      #auftrag_insert label .flex div {
+        margin: 0 5px;
+        padding: 6px;
+        border: 1px dashed #b5b5b5;
+        border-radius: 6px; }
+
+/*# sourceMappingURL=main.css.map */

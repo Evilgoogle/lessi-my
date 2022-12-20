@@ -1,0 +1,73 @@
+{% if place != 'task' %}
+    <div class="checker_kinds">
+        <div class="panel panel-default">
+            <div class="panel-heading head">
+                <div class="flex">
+                    <input type="hidden" name="auftragnr" value="{{ auftragnr }}">
+                    <input type="hidden" name="kundenhinweise_id" value="{{ kundenhinweise_id }}">
+                    <select class="form-control">
+                        <option value="fehlerfrei_bedienfehler">Behoben (Fehlerfrei/Bedienfehler)</option>
+                        <option value="durch_auftragspositionen_gelöst">Reparatur (durch Auftragspositionen gelöst)</option>
+                        <option value="diagnose">Diagnose</option>
+                        <option value="nachterminierung">Nachterminierung</option>
+                    </select>
+                    <button type="button" data-place="{{ task is defined ? 'task' : 'deafult' }}" class="js_technische_select btn {% if item.type is null or item.type is empty %} btn-danger {% else %} btn-primary {% endif %}" style="margin-left: 15px">ОК</button>
+                </div>
+            </div>
+            <div class="panel-body"></div>
+        </div>
+    </div>
+{% else %}
+    {% if item.child() %}
+        
+        {% if item.child().task == 'diagnose' %}
+            <div class="panel panel-default">
+                <span class="label label-danger" style="margin: 8px; display: inline-block;">Diagnose</span>
+                <input type="hidden" name="task_type" value="diagnose">
+                <textarea name="message" class="form-control" disabled>{{ item.child().message }}</textarea>
+            </div>
+        {% elseif item.child().task == 'durch_auftragspositionen_gelöst' %}
+            <div class="panel panel-default">
+                <span class="label label-danger" style="margin: 8px; display: inline-block;">Reparatur (durch Auftragspositionen gelöst)</span>
+                <input type="hidden" name="task_type" value="durch_auftragspositionen_gelöst">
+                <textarea name="message" class="form-control" disabled>{{ item.child().message }}</textarea>
+            </div>
+        {% elseif item.child().task == 'fehlerfrei_bedienfehler' %}
+            <div class="panel panel-default">
+                <span class="label label-danger" style="margin: 8px; display: inline-block;">Behoben (Fehlerfrei/Bedienfehler)</span>
+                <input type="hidden" name="task_type" value="fehlerfrei_bedienfehler">
+                <textarea name="message" class="form-control" disabled>{{ item.child().message }}</textarea>
+            </div>
+        {% elseif item.child().task == 'nachterminierung' %}
+            <div class="panel panel-default">
+                <span class="label label-danger" style="margin: 8px; display: inline-block;">Nachterminierung</span>
+                <input type="hidden" name="task_type" value="nachterminierung">
+                <select name="select" class="form-control" style="margin-bottom: 15px;" disabled>
+                        <option value="Fehlende Teile" {{ item.child().select == 'Fehlende Teile' ? 'selected' : '' }}>Fehlende Teile</option>
+                        <option value="Kapazilat (WS-Fuhrpark)" {{ item.child().select == 'Kapazilat (WS-Fuhrpark)' ? 'selected' : '' }}>Kapazilat (WS-Fuhrpark)</option>
+                        <option value="Antrag kostenübernahme" {{ item.child().select == 'Antrag kostenübernahme' ? 'selected' : '' }}>Antrag kostenübernahme</option>
+                </select>
+                <textarea name="message" class="form-control" disabled>{{ item.child().message }}</textarea>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="checker_kinds">
+            <div class="panel panel-default">
+                <div class="panel-heading head">
+                    <div class="flex">
+                        <input type="hidden" name="auftragnr" value="{{ auftragnr }}">
+                        <input type="hidden" name="kundenhinweise_id" value="{{ kundenhinweise_id }}">
+                        <select class="form-control">
+                            <option value="fehlerfrei_bedienfehler">Behoben (Fehlerfrei/Bedienfehler)</option>
+                            <option value="durch_auftragspositionen_gelöst">Reparatur (durch Auftragspositionen gelöst)</option>
+                            <option value="diagnose">Diagnose</option>
+                            <option value="nachterminierung">Nachterminierung</option>
+                        </select>
+                        <button type="button" data-place="{{ task is defined ? 'task' : 'deafult' }}" class="js_technische_select btn {% if item.type is null or item.type is empty %} btn-danger {% else %} btn-primary {% endif %}" style="margin-left: 15px">ОК</button>
+                    </div>
+                </div>
+                <div class="panel-body"></div>
+            </div>
+        </div>
+    {% endif %}
+{% endif %}

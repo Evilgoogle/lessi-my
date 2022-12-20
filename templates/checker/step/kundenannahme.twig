@@ -1,0 +1,83 @@
+{% extends "checker/step_layout.twig" %}
+
+{% block step %}
+    {% for child in step_data.step_subs %}
+        <div class="steps_block
+             {% if child.step == 'kundenhinweise' %}
+                 kundenhinweise_block
+             {% elseif child.step == 'infos' %}
+                 infos_block
+             {% endif %}
+             panel panel-default
+        ">
+            <div class="panel-heading flex-between">
+                <span>                
+                    {{ child.title }}
+                </span>
+            </div>
+            {% if child.step == 'kundenhinweise' %}
+                <div class="panel-body">
+                    <button type="button" class="btn btn-primary js_kundenhinweise_add">Hinzufügen</button>
+                    <br><br>
+                    <div class="insert">
+                    {% if step_data.kundenhinweises.count == 0 is null %}
+                        <p>Keine Hinweise vorhanden?</p>
+                    {% else %}
+                        {% for item in step_data.kundenhinweises.items %}
+                            {% include 'checker/part/kundenannahme/kundenhinweise/item.twig' with {'item': item, 'method': 'edit', 'step': 'kundenannahme', 'in_modal': 'false'} %}
+                        {% endfor %}
+                    {% endif %}
+                    </div>
+                </div>
+            {% elseif child.step == 'ersatzwagen' %}
+                <div class="panel-body">
+                    {% include 'checker/part/kundenannahme/ersatzwagen/index.twig' %}
+                    {% include 'checker/part/kundenannahme/ersatzwagen/test.twig' %}
+                </div>
+            {% elseif child.step == 'infos' %}
+                <div class="panel-body">
+                    {% include 'checker/part/kundenannahme/infos/index.twig' %}
+                </div>
+            {% elseif child.step == 'frzg' %}
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="switch_button btn-group btn-group-justified">
+                                <button class="btn {{ child.status == 'success' ? 'btn-danger' : 'btn-default' }} btn-sm {{ child.status == 'success' ? 'active' : '' }} js_kundenannahme_frzg"
+                                        data-step="kundenannahme" 
+                                        data-step_child="{{ child.step }}"
+                                        data-auftragnr="{{ auftrag.auftragnr }}" 
+                                        data-type="1">Ja</button>
+                                <button class="btn {{ child.status == 'notcompleted' ? 'btn-danger' : 'btn-default' }} btn-sm {{ child.status == 'notcompleted' ? 'active' : '' }} js_kundenannahme_frzg" 
+                                        data-step="kundenannahme" 
+                                        data-step_child="{{ child.step }}"
+                                        data-auftragnr="{{ auftrag.auftragnr }}" 
+                                        data-type="0">Nein</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="panel-footer white_fon flex-end">
+                <div class="execute">
+                    <div class="main_status label label-default">
+                        {{ child.status == 'success' ? '<i class="fa fa-check"></i>&nbsp;<span> abgeschlossen</span>' : '<i class="fa fa-times"></i>&nbsp;<span> nicht abgeschlossen</span>' }}
+                    </div>
+                    {% if child.step != 'frzg' %}
+                        <button type="button" class="btn btn-warning btn-sm js_status_child_save" 
+                                data-auftragnr="{{ auftrag.auftragnr }}" 
+                                data-step="kundenannahme" 
+                                data-step_child="{{ child.step }}"
+                        >Ausführen</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+          
+    {% include 'checker/part/kundenannahme/kundenhinweise/modals.twig' %}
+    {% include 'checker/part/kundenannahme/infos/modals.twig' %}
+    
+    <script src="/static/js/checker/steps/kundenannahme.js"></script>
+    
+{% endblock %}

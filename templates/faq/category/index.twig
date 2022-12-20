@@ -1,0 +1,50 @@
+{% extends "faq/base.twig" %}
+{% set title = lang.user_manager.categories %}
+
+{% block wrapper %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th class="table-controls">
+                <a href="{{ path_for('faqs.category.add') }}" c="" class="btn btn-primary" >{{ lang.btn.create }} + </a>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+            <tr data-id="{{ item.id }}">
+                <td style="width: 25%">categry#{{ item.id }}</td>
+                <td style="width: 25%">{{ item.title }}</td>
+                <td class="table-controls" >
+                    <a href="{{ path_for('faqs.category.edit',{'id':item.id}) }}" class="btn btn-default" >{{ lang.btn.update }}</a>
+                    <a href="{{ path_for('faqs.category.delete',{'id':item.id}) }}" class="btn btn-danger js_del">-</a>
+                </td>
+            </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+
+    <script>
+        $(document).on('click', '.js_del', function (e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'Wirklich löschen?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#1ab394',
+                cancelButtonColor: '#f8ac59',
+                confirmButtonText: 'Ja',
+                cancelButtonText: 'Nein'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = e.target.href;
+                    }
+            });   
+        });
+    </script>
+{% endblock %}
+
+

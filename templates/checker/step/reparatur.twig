@@ -1,0 +1,108 @@
+{% extends "checker/step_layout.twig" %}
+
+{% block step %}
+    {# if step_complete #}
+        {% for child in step_data.step_subs %}
+
+            <div class="steps_block
+                {% if child.step == 'auftragspositionen' %}
+                    auftragspositionen_block
+                {% elseif child.step == 'kundenbeanstandung' %}
+                    kundenbeanstandung_block
+                {# elseif child.step == 'vorschlag' #}
+                   {# vorschlag_block #}
+                {# elseif child.step == 'dokumentation' #}
+                   {# dokumentation_block #}
+                {% endif %}
+                panel panel-default">
+                <div class="panel-heading flex-between">
+                    <span>                
+                        {{ child.title }}
+                    </span>
+                </div>
+                {% if child.step == 'auftragspositionen' %}
+                    <div class="panel-body">
+                        <button type="button" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse_positions" aria-expanded="false" aria-controls="collapseExample">Details</button>
+                        <div id="collapse_positions" class="collapse" style="margin-top: 20px;">
+                            {% for position in step_data.auftragspositionen %}
+                                <div class="well well-sm">Auftrag: <b>{{ position.auftragnr }}</b></div>
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Positionstype</th>
+                                            <th>Nummer</th>
+                                            <th>Bezeichnung</th>
+                                            <th>Typ</th>
+                                            <th>Menge</th>
+                                            <th>Preis</th>
+                                            <th>Betrag</th>
+                                            <th>Status</th>
+                                            <th>Bemerkung</th>
+                                            <th>Anteil</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% include 'checker/part/reparatur/auftragspositionen/item.twig' with { 'items': position.items } %}
+                                    </tbody>
+                                </table>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% elseif child.step == 'kundenbeanstandung' %}
+                    <div class="panel-body">
+                        <button type="button" class="btn btn-primary js_kundenbeanstandung_modal">Hinzufügen</button>
+                        <br><br>
+                        <div class="insert">
+                            {% for item in step_data.kundenbeanstandung %}
+                                {% include 'checker/part/reparatur/kundenbeanstandung/item.twig' with {'item': item } %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {# elseif child.step == 'vorschlag' %}
+                    <div class="panel-body">
+                        {% for item in step_data.vorschlag %}
+                            {% include 'checker/part/reparatur/vorschlag/item.twig' with { 'item': item } %}
+                        {% endfor %}
+                    </div>
+                {% elseif child.step == 'dokumentation' %}
+                    <div class="panel-body">
+                        <form id="js_dokumentation_form">
+                            <textarea id="dokumentation" class="editor" name="text">{{ step_data.dokumentation.text | raw }}</textarea>
+                            <input type="hidden" name="id" value="{{ step_data.dokumentation.id }}"></>
+                            <button type="submit" class="btn btn-primary">Speichern</button>
+                            <script>
+                                window.onload = function() {
+                                    CKEDITOR.replace('dokumentation');
+                                }
+                            </script>
+                        </form>
+                    </div> #}
+                {% endif %}
+                <div class="panel-footer white_fon flex-end">
+                    <div class="execute">
+                        <div class="main_status label label-default">
+                            {{ child.status == 'success' ? '<i class="fa fa-check"></i>&nbsp;<span> abgeschlossen</span>' : '<i class="fa fa-times"></i>&nbsp;<span> nicht abgeschlossen</span>' }}
+                        </div>
+                        <button type="button" class="btn btn-warning btn-sm js_status_child_save" 
+                            data-auftragnr="{{ auftrag.auftragnr }}" 
+                            data-step="reparatur" 
+                            data-step_child="{{ child.step }}"
+                        >Ausführen</button>
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+
+        {% include 'checker/part/reparatur/quest.twig' with {'task': task} %}
+    {# else #}
+        {#<div class="label label-danger">Schritt 2 ist nicht abgeschlossen</div>#}
+    {# endif #}
+    
+    {% include 'checker/part/fahrzeugannahme/kundenhinweise/modals.twig' %}
+    {% include 'checker/part/reparatur/kundenbeanstandung/modals.twig' %}
+    
+    <script src="/static/js/checker/steps/reparatur.js"></script>
+{% endblock %}  

@@ -1,0 +1,11 @@
+{% extends "checker/step_layout.twig" %}
+
+{% block step %}
+    {% if step_complete %}
+        {% include 'checker/part/rechnungsstellung/quest.twig' with {'task': task} %}
+        
+    {% else %}
+        <div class="label label-danger">Schritt 4 ist nicht abgeschlossen</div>
+    {% endif %}
+    
+{% endblock %} 

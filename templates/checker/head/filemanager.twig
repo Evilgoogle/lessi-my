@@ -1,0 +1,12 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Bilder und Dateien</div>
+    <div class="panel-body">
+        <p>Anzahl der Dateien: {{ filemanager_counts }}</p>
+        <button type="button" class="btn btn-primary filemanager_open" 
+            data-basic_id="1" 
+            data-auftrag_id="{{ auftrag.id }}"
+            data-model="\App\Models\Checker\Filemanager{# ['\App\Models\Checker\Filemanager', '\App\Models\Checker\GarantieKulanzantragFilemanager'] | json_encode() #}"
+            data-path="files/checker"
+        >Open</button>
+    </div>
+</div>

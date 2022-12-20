@@ -1,0 +1,7 @@
+{% for item in calls %}
+    <tr>
+        <td>{{ item.direction ? 'Outbound' : 'Inbound' }}</td>
+        <td>{{ item.duration_in }}</td>
+        <td>{{ item.date_time|date('d-m-Y H:i:s') }}</td>
+    </tr>
+{% endfor %}

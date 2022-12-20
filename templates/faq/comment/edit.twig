@@ -1,0 +1,45 @@
+{% extends "faq/base.twig" %}
+{% set title = 'Kommentar' %}
+
+{% block wrapper %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form method="post" action="/faqs/articles/comments/{{ article_id }}/update" class="form-horizontal">
+                <input type="hidden" name="id" value="{{ comment.id }}">
+                <input type="hidden" name="article_id" value="{{ article_id }}">
+
+                {#<div class="form-group {{ errors.title ? 'has-error' : '' }}">
+                    <label for="inputname" class="control-label col-xs-2">Name</label>
+                    <div class="col-xs-10">
+                        <input name="name" id="inputname" class="form-control" placeholder="Name" value="{{ comment.name }}" autofocus>
+                        {% if errors.name %}
+                            <span class="help-block">{{ errors.name | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group {{ errors.email ? 'has-error' : '' }}">
+                    <label for="inputemail" class="control-label col-xs-2">Email</label>
+                    <div class="col-xs-10">
+                        <input name="email" id="inputemail" class="form-control" placeholder="Email" value="{{ comment.email }}" autofocus>
+                        {% if errors.email %}
+                            <span class="help-block">{{ errors.email | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>#}
+                <div class="form-group {{ errors.comment ? 'has-error' : '' }}">
+                    <label for="inputcomment" class="control-label col-xs-2">Kommentar</label>
+                    <div class="col-xs-10">
+                        <textarea name="comment" id="inputcomment" class="form-control" placeholder="Kommentar">{{ comment.comment }}</textarea>
+                        {% if errors.comment %}
+                            <span class="help-block">{{ errors.comment | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {{ csrf.field | raw }}
+                <button class="btn btn-primary " type="submit">{{ lang.btn.update }}</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+

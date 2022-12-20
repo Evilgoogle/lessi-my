@@ -1,0 +1,45 @@
+<div id="id-paginate" data-last-page="{{ paginate_view.total }}"></div>
+  
+{% for item in get %}
+    
+    <div class="bn">
+        <div class="column">
+            <div class="rubber">
+                <div class="box js_select" 
+                    data-id="{{ item.id }}" data-title="{{ item.title }}" 
+                    data-file="{{ item.file~'?id='~item.rand }}" data-type="{{ item.type }}" 
+                    data-alt="{{ item.alt }}" data-mass="{{ item.size }}" data-created_at="{{ item.created_at }}"
+                >
+                    {% if item.type == 'image/jpeg' or item.type == 'image/png' or item.type == 'image/gif' or item.type == 'image/svg+xml' %}
+                        <div class="image" style="background-image: url(/static/{{ path }}/{{ item.file~'?id='~item.rand }})"></div>
+                    {% elseif item.type == 'application/pdf' %}
+                        <div class="image">
+                            <span class="pdf"></span>
+                        </div>
+                    {% elseif item.type == 'application/msword' %}
+                        <div class="image">
+                            <span class="doc"></span>
+                        </div>
+                    {% elseif item.type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' %}
+                        <div class="image">
+                            <span class="docx"></span>
+                        </div>
+                    {% elseif item.type == 'text/plain' %}
+                        <div class="image">
+                            <span class="txt"></span>
+                        </div>
+                    {% elseif item.type == 'video/mp4' %}
+                        <div class="image">
+                            <span class="mp4"></span>
+                        </div>
+                    {% endif %}
+                    <div class="date">{{ item.created_at | date('y.md h:m') }}</div>
+                    <div class="title">{{ item.title | slice(0, 24) }}</div>
+                </div>
+                <label>
+                <input type="checkbox" name="picked_items" data-id="{{ item.id }}">
+                </label>
+            </div>
+        </div>
+    </div>
+{% endfor %}

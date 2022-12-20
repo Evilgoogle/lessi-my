@@ -1,0 +1,74 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Auftragsdaten</div>
+    <button style="margin: 10px" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse_auftragsdaten" aria-expanded="false" aria-controls="collapseExample">Details</button>
+    {% if fahrzeug_auftrags.count() %}
+        <div id="collapse_auftragsdaten" class="collapse">
+        <table class='table panel-body table-condensed table-bordered'>
+            <thead>
+                <tr>
+                    <th>Datum</th>
+                    <th>AuftragsNR</th>
+                    <th>Typ</th>
+                    <th>Vermerk</th>
+                    <th>Netto</th>
+                    <th>Brutto</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set nettobetrag = 0 %}
+                {% set bruttobetrag = 0 %}
+
+                {% for a in auftrags_daten %}
+                    <tr>
+                        <td><span style="color: red">{{ a.ANLAGEDAT|date('d.m.Y') }}</span></td>
+                        <td><a href="/auftragpdf/{{ a.AUFTRAGID }}"
+                               target="_blank">{{ a.AUFTRAGSNR }} ({{  a.status.BEZEICHNUNG|mb_convert_encoding }})<a/></td>
+                        <td>{{ a.typ.BEZEICHNUNG|mb_convert_encoding }}</td>
+                        <td>{{ a.VERMERK|mb_convert_encoding }}</td>
+                        <td>
+                            {% for rech in a.rechnungs|default([])|filter(i => i.TYP == a.TYP) %}
+                                {{ rech.NETTOBETRAG|number_format(2,',','.') }}
+                                {% set nettobetrag= nettobetrag+rech.NETTOBETRAG %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for rech in a.rechnungs|default([])|filter(i => i.TYP == a.TYP) %}
+                                {{ rech.BRUTTOBETRAG|number_format(2,',','.') }}
+                                {% set bruttobetrag= bruttobetrag+rech.BRUTTOBETRAG %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% if a.NOTIZ %}
+                        <tr>
+                            <th>Notiz</th>
+                            <td colspan="6">{{ a.NOTIZ|mb_convert_encoding|nl2br }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <th>Notiz</th>
+                            <td colspan="6">Keine Notiz</td>
+                        </tr>
+                    {% endif %}
+                    {% if  a.reparatur_plan.count() >0 %}
+                        <tr  id="rplanlist_{{a.AUFTRAGID}}" >
+                            <td colspan="8">
+                                <table class="table table-condensed" style="margin:0;">
+                                    {% for planRow in a.reparatur_plan%}
+                                        <tr>
+                                            <td>Rep. Umfang</td> <td>{{ planRow.DATUM|date('d-m-Y') }}</td>
+                                            <td>{{ planRow.gruppe.WSGRUPPETEXT|mb_convert_encoding  }}</td>
+                                            <td>{{ planRow.BEZEICHNUNG|mb_convert_encoding }}</td>
+                                            <td>{{ planRow.ANZSTD|number_format(2,',','.') }} Std.</td>
+
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {%  endfor %}
+            </tbody>
+        </table>
+        </div>
+    {% endif %} 
+</div>

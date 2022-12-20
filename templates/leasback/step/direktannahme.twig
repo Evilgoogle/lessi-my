@@ -1,0 +1,91 @@
+{% extends "leasback/step_layout.twig" %}
+
+{% block step %}
+    
+    <div class="leasback_step_block" style="background-color: white; padding: 20px 0 0;">
+        <div class="controller container-fluid">
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-primary js_save" data-type="open" data-leasback_id="{{ leasback.id }}" data-step="direktannahme">Fertig</button>
+                <button type="button" class="btn btn-danger js_save" data-type="close" data-leasback_id="{{ leasback.id }}" data-step="direktannahme">Ablehnen</button>
+            </div>
+        </div>
+        
+        <div role="tabpanel" class="tab-pane container-fluid active">
+            <div class="panel panel-default main_panel">
+                <div class="panel-heading">Schäden</div>
+                <div class="panel-body">
+                    <div class="panel-collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    <div class="damage_block">
+                                        <img class="damage-map-image" src="/img/acceptance-upper-body2.svg" alt="car" style="height:569px">
+                                            {% set i = 0 %}
+                                            {% for v in steps_data.direktannahme.schaden %}
+                                                {% set i = i + 1 %}
+                                                <div class="tag {{ v.tag }} js_direktannahme_tag {{ i == 1 ? 'active': '' }}" data-tag="{{ v.tag }}" data-leasback_id="{{ leasback.id }}" data-type="schaden"></div>
+                                            {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-xs-7">
+                                    <div id="schaden_view" class="panel panel-default">
+                                        {% include 'leasback/part/direktannahme/tag_view.twig' with {'tag': steps_data.direktannahme.schaden.first(), 'leasback_id': leasback.id, 'step': 'direktannahme'} %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+            <div class="panel panel-default main_panel">
+                <div class="panel-heading">Vorschäden</div>
+                <div class="panel-body">
+                  <div class="panel-collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    <div class="damage_block">
+                                        <img class="damage-map-image" src="/img/acceptance-upper-body2.svg" alt="car" style="height:569px">
+                                            {% set i = 0 %}
+                                            {% for v in steps_data.direktannahme.schaden %}
+                                                {% set i = i + 1 %}
+                                                <div class="tag {{ v.tag }} js_direktannahme_tag {{ i == 1 ? 'active': '' }}" data-tag="{{ v.tag }}" data-leasback_id="{{ leasback.id }}" data-type="vorschaden"></div>
+                                            {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-xs-7">
+                                    <div id="vorschaden_view" class="panel panel-default">
+                                        {% include 'leasback/part/direktannahme/tag_view.twig' with {'tag': steps_data.direktannahme.vorschaden.first(), 'leasback_id': leasback.id, 'step': 'direktannahme'} %}
+                                    </div>   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>                 
+                
+            <div class="panel panel-default main_panel">
+                <div class="panel-heading">Inspektion</div>
+                <div class="panel-body">
+                  <div class="panel-collapse">
+                        <div class="panel-body">
+                            <div id="inspektion_select" class="switch_button btn-group btn-group-justified">
+                                <button class="btn pick1 {{ steps_data.direktannahme.inspektion.type == 'Wartungfrei' ? 'btn-primary' : 'btn-default' }} btn-primary btn-sm js_inspektion" data-leasback_id="{{ leasback.id }}" data-pick="Wartungfrei" style="width: auto;">Wartungfrei</button>
+                                <button class="btn pick2 {{ steps_data.direktannahme.inspektion.type == 'Zusätzliche Kosten' ? 'btn-primary' : 'btn-default' }} btn-sm js_inspektion" data-leasback_id="{{ leasback.id }}" data-pick="Zusätzliche Kosten" style="width: auto;">Zusätzliche Kosten</button>
+                            </div>
+                            <div class="kosten_block">
+                                {% if steps_data.direktannahme.inspektion.type == 'Zusätzliche Kosten' %}
+                                    {% include 'leasback/part/direktannahme/inspektion.twig' with {'inspektion': steps_data.direktannahme.inspektion} %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}        

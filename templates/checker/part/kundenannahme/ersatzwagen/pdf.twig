@@ -1,0 +1,22 @@
+<html>
+<head>
+</head>
+<body>
+<img src="http://lessing.p7.de:82/img/AL_RGB.png" alt="">
+<p><h1>Autos</h1></p>
+{% for item in trips %}
+    <hr>
+    <p><b>Fin:</b><br>{{ item.fin }}</p>
+    <p><b>Polkennzeichen:</b><br>{{ item.polkennzeichen }}</p>
+    <p><b>Kundenr:</b><br>{{ item.kundenr }}</p>
+    <p><b>Data:</b></p>
+    <ul>
+        <li><u>Glazing damage</u> - {{ item.data.glazing_damage.text }}</li>
+        <li><u>Visual defects</u> - {{ item.data.visual_defects.text }}</li>
+        <li><u>Condition clean</u> - {{ item.data.condition_clean.text }}</li>
+        <li><u>Vehicle condition</u> - {{ item.data.vehicle_condition.text }}</li>
+        <li><u>Fluid levels</u> - {{ item.data.fluid_levels.text }}</li>
+        <li><u>Accessories</u> - {{ item.data.accessories.text }}</li>
+    </ul>   
+{% endfor %}
+</html>

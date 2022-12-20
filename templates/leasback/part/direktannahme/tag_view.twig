@@ -1,0 +1,48 @@
+<div class="panel-heading">Element - <b>{{ tag.tag }}</b>
+</div>
+<div class="panel-body">
+    {% if tag.status == 'yes' %}
+    <p>Weisen Sie auf den Problembereich hin:
+        <button type="button" class="btn btn-danger btn-xs js_tag_keine" data-tag="{{ tag.tag }}" data-leasback_id="{{ leasback_id }}" data-type="{{ tag.type }}">Keine</button>
+    </p>
+    {% else %}
+        <p>kein problem</p>
+    {% endif %}
+
+    {% if tag.status == 'yes' %}
+    <form action="{{ tag.type == 'schaden' ? path_for('leasback.direktannahme.schaden.form') : path_for('leasback.direktannahme.vorschaden.form') }}" class="panel panel-default" method="post">
+        <input type="hidden" name="leasback_id" value="{{ leasback_id }}">
+        <input type="hidden" name="type" value="{{ tag.type }}">
+        <input type="hidden" name="tag" value="{{ tag.tag }}">
+        <input type="hidden" name="step" value="{{ step }}">
+        
+        <div class="panel-body">
+            <div class="filemanager_insert">
+                <button type="button" class="btn btn-default filemanager_open" data-basic_id="{{ tag.type }}_{{ tag.tag }}" data-model="\App\Models\Leasback\Filemanager" data-path="files/leasback/files" data-insert_page="file">Bild hinzufügen</button>
+                <div id="filemanager_insert_info_{{ tag.type }}_{{ tag.tag }}" style="margin-top: 10px" class="filemanager_info"></div>
+                <input id="filemanager_insert_pick_{{ tag.type }}_{{ tag.tag }}" type="hidden" name="file" value="">
+            </div>
+
+            {% if tag.type == 'vorschaden' %}
+            <div class="form-group">
+                <label>Dicke (mm)</label>
+                <input type="number" name="thickness" class="form-control" value="{{ tag.thickness }}">
+              </div>
+            {% endif %}
+            
+            {% if tag.image is not empty %}
+                <p style="margin-top: 20px"><img src="{{ tag.image }}" alt="{{ tag.tag }}" class="img-thumbnail" style="height: 500px"></p>
+            {% else %}
+                <p style="margin-top: 20px">Bild nicht angegeben</p>
+            {% endif %}
+        </div>
+        <div class="panel-footer flex_between">
+            <div></div>
+            <button type="submit" class="btn btn-primary btn-sm">
+                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> 
+                Aktualisieren
+            </button>
+        </div>
+    </form>
+    {% endif %}
+</div>

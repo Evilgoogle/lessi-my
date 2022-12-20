@@ -1,0 +1,26 @@
+{% for item in items %}
+    <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.positionstype }}</td>
+        <td>{{ item.nummer }}</td>
+        <td>{{ item.bezeichnung }}</td>
+        <td>{{ item.typ }}</td>
+        <td>{{ item.menge }}</td>
+        <td>{{ item.preis }}</td>
+        <td>{{ item.betrag }}</td>
+        <td>{{ item.status_a }}</td>
+        <td>{{ item.bemerkung }}</td>
+        <td>{{ item.anteil }}</td>
+        <td class="action_b">
+            {% if type == 'abnahme' %}
+                <button type="button" class="btn btn-default btn-sm js_abnahme_set" data-id="{{ item.id }}">
+                    {{ item.status_abnahme == 'success' ? '<i class="fa fa-check"></i>&nbsp;<span> abgeschlossen</span>' : '<i class="fa fa-times"></i>&nbsp;<span> nicht abgeschlossen</span>' }}
+                </button>
+            {% else %}
+                <button type="button" class="btn btn-default btn-sm js_auftragspositionen_set" data-id="{{ item.id }}">
+                    {{ item.status == 'success' ? '<i class="fa fa-check"></i>&nbsp;<span> abgeschlossen</span>' : '<i class="fa fa-times"></i>&nbsp;<span> nicht abgeschlossen</span>' }}
+                </button>
+            {% endif %}
+        </td>
+    </tr>
+{% endfor %}

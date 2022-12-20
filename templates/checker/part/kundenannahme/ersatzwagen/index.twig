@@ -1,0 +1,30 @@
+<div class="item panel panel-default">
+    <div class="panel-heading">Mietvertrag</div>
+    <table class="panel-body table table-condensed">
+	<thead>
+	    <tr>
+		<th>von</th>
+		<th>bis</th>
+		<th>FIN</th>
+		<th></th>
+		<th>ModellText</th>
+	    </tr>
+	</thead>
+	<tbody>
+	    {% for vtg in auftrag.MACSKunde.mietVertrag if auftrag_m.LEIHWAGEN == 1 and vtg.MIETSTATUSID == 1 and vtg.MIETDAUERVON>=auftrag.date %}
+		<tr>
+
+		    <td>{{ vtg.MIETDAUERVON|date('d-m-Y H:m') }}</td>
+		    <td>{{ vtg.MIETDAUERBIS|date('d-m-Y H:m') }}</td>
+		    <td>{{ vtg.wagen.fahrzeug.FAHRGESTELLNUMMER }}</td>
+		    <td>{{ vtg.MVPOLKENNZEICHEN }}</td>
+		    <td>{{ vtg.wagen.fahrzeug.MODELLTEXT|mb_convert_encoding }}</td>
+		</tr>
+	    {% else %}
+		<tr>
+		    <td colspan="3">Es liegt kein Mietvertrag vor</td>
+		</tr>
+	    {% endfor %}
+	</tbody>
+    </table>
+</div>

@@ -1,0 +1,165 @@
+{% extends "lead_autos/base.twig" %}
+{% set title = 'Leads Leader | '~type~' Leads' %}
+
+{% block wrapper %}
+
+    <!--<ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#t1" aria-controls="t1" role="tab" data-toggle="tab">Alle [{{ counts.total ? counts.total : 0 }}]</a></li>
+            {% for r in sources %}
+            <li role="presentation"><a href="#tp-{{ r.id }}" aria-controls="tp-{{ r.id }}" role="tab" data-toggle="tab">{{ r.name }} [{{ counts[r.id] ? counts[r.id] : 0 }}]</a></li>
+            {% endfor %}
+    </ul>-->
+
+    <div class="tab-content" id="myTabContent">
+
+        <div role="tabpanel" class="tab-pane active" id="t1">
+            <table class="table table-condensed table-bordered">
+                <thead>
+                    <tr>
+                        <th>Quelle</th>
+                        <th>User</th>
+                        <th width="30%">Kommunikation</th>
+                        <th>Kd. Nr.</th>
+                        <th>Anrufe</th>
+                        <th>E-Mails</th>
+
+                        <th width='150' colspan='2'>Antwortzeit</th>
+
+                        <th>Aufträge</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for row in leads %}
+                        {% set size_call,size_mail =0,0 %}
+                        {% set ans_call,ans_mail =null,null %}
+                        {% for activity in row.activity%}
+                            {% if  activity.type=='call' %}
+                                {% set size_call=size_call+1 %}
+                            {% elseif activity.type=='mail' %}
+                                {% set size_mail=size_mail+1 %}
+                            {% endif %}
+                        {% endfor %}
+                        <tr data-id="{{ row.id }}" class='{{ row.complete == 'not completed' ? 'danger' : ''}}'>
+                            <td>
+                                {% for r in sources %}
+                                    {{ r.id==row.src?r.name:'' }}
+                                {% endfor %}
+                            </td>
+                            <td>{{ row.user2lead.user_id }}</td>
+                            <td>
+                                {% for i,v in row.contacts %}
+                                    {{ (v.type=='phone'?'0'~v.value:v.value)~(i==row.contacts|length-1?'':', ') }}
+                                {% endfor %}
+                            </td>
+                            <td>{{ row.kunde_nr?row.kunde_nr: '<i class="fa fa-times"></i>'}}</td>
+                            <td>{{ size_call }}</td> 
+                            <td>{{ size_mail }}</td> 
+                            <td>{{ row.answer_status==1?'':'<i class="fa fa-times"></i>' }}</td>
+                            <td>
+                                {{ row.answer_time ==0
+                                        ? (row.answer_status==0?'Nicht bearbeitet':'<i class="fa fa-check"></i>')
+                                        :row.answer_time|date('H:i:s', '+00:00 GMT')
+                                }}</td> 
+                            <td>
+                                {% for i,order in row.orders %}
+                                    {{ order.nr }} von {{ order.date_time|date('d-m-Y') }}{{ i==row.orders|length-1?'':', ' }}
+                                {% endfor %}
+                            </td> 
+                            <td width="130">
+                                <div class='btn-group btn-group-xs'>
+                                    <a href="/leads-auto/show/{{ row.id }}" target="_blank" class='btn btn-default btn-xs' title='Detail'><i class='glyphicon glyphicon-list'></i> Details</a> 
+                                </div>
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+
+
+        {% for r in sources %}
+            <div role="tabpanel" class="tab-pane" id="tp-{{r.id}}">
+                <table class="table table-condensed table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="30%">Kommunikation</th>
+                            <th>Kunde Nr</th>
+                            <th>Kunde Name</th>
+                            <th>Calls</th>
+                            <th>Mails</th>
+
+                            <th width='150' colspan='2'>Antwortzeit</th>
+
+                            <th>Auftrag</th>
+                            <th>Mitarbeiter</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in data if row.src==r.id %}
+                            {% set size_call,size_mail =0,0 %}
+                            {% set ans_call,ans_mail =null,null %}
+                            {% for activity in row.activity%}
+                                {% if  activity.type=='call' %}
+                                    {% set size_call=size_call+1 %}
+                                {% elseif activity.type=='mail' %}
+                                    {% set size_mail=size_mail+1 %}
+                                {% endif %}
+                            {% endfor %}
+                            <tr data-id="{{ row.id }}" class='{{ row.custom_status==1?'success':row.custom_status==2?'warning':row.custom_status==3?'danger':''}}'>
+
+                                <td>
+                                    {% for i,v in row.contacts %}
+                                        {{ (v.type=='phone'?'0'~v.value:v.value)~(i==row.contacts|length-1?'':', ') }}
+                                    {% endfor %}
+                                </td>
+                                <td>{{ row.kunde_nr?row.kunde_nr: '<i class="fa fa-times"></i>'}}</td>
+                                <td>{{ row.name}}</td>
+                                <td>{{ size_call }}</td> 
+                                <td>{{ size_mail }}</td> 
+                                <td>{{ row.answer_status==1?'':'<i class="fa fa-times"></i>' }}</td>
+                                <td>
+                                    {{ row.answer_time ==0
+                                        ? (row.answer_status==0?'Nicht bearbeitet':'<i class="fa fa-check"></i>')
+                                        :row.answer_time|date('H:i:s', '+00:00 GMT')
+                                    }}</td> 
+
+
+                                <td>
+                                    {% for i,order in row.orders %}
+                                        {{ order.nr }} von {{ order.date_time|date('d-m-Y') }}{{ i==row.orders|length-1?'':', ' }}
+                                    {% endfor %}
+                                </td> 
+                                <td>
+                                    {% for worker in row.workers %} 
+                                        {{ worker~'; ' }}
+                                    {% endfor %}
+                                </td>
+                                <td width="125">
+                                    <div class='btn-group btn-group-xs'>
+                                        <a href="/leads-auto/all-leads/show/{{ row.id }}" target="_blank" class='btn btn-default btn-xs' title='Details'><i class='glyphicon glyphicon-list'></i> Details</a> 
+                                    </div> 
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        {% endfor %}
+        <div role="tabpanel" class="tab-pane" id="t3">...</div>
+    </div>
+    <script>
+        $('#datepicker, #datepicker2').datetimepicker({
+            format: 'DD.MM.YYYY'
+        });
+    </script>
+    
+{% endblock %}
+
+

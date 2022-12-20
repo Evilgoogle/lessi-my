@@ -1,0 +1,42 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Fahrzeug</div>
+    <table class="panel-body table table-condensed">
+	<tbody class="head_data">
+            <tr>
+		<th>Mark</th>
+		<td>{{ auftrag.fahrzeug.mark }}</td>
+	    </tr>
+	    <tr>
+		<th>FIN</th>
+		<td>{{ auftrag.fahrzeug.vin }}</td>
+	    </tr>
+            <tr>
+                <td colspan="2">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse_fahrzeug" aria-expanded="false" aria-controls="collapseExample">Details</button>
+                    <div id="collapse_fahrzeug" class="collapse">
+                        <table class="table table-condensed table-bordered" style="margin: 10px 0 0 0;">
+                            <tbody>
+                                <tr>
+                                    <th>Model</th>
+                                    <td>{{ auftrag.fahrzeug.model }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Fabre</th>
+                                    <td>{{ auftrag.fahrzeug.fabre }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Jahr</th>
+                                    <td>{{ auftrag.fahrzeug.year | date("d.m.Y") }}</td>
+                                </tr>
+                                <tr>
+                                    <th>KM-stand</th>
+                                    <td>{{ auftrag.fahrzeug.kmstand }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>                    
+            </tr>
+	</tbody>
+    </table>
+</div>

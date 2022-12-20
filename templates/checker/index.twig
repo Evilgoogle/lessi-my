@@ -1,0 +1,326 @@
+{% extends "checker/base.twig" %}
+{% set title = 'Checker: '~(auftrage|length) %}
+
+{% block wrapper %}
+<link rel="stylesheet" href="/static/css/checker/main.css">
+<link rel="stylesheet" href="/static/css/sales.css">
+
+<div class="col-xs-12 search_auftrag">
+    <div class="row">
+        <form action="{{ path_for('checker.insert.add') }}" class="panel panel-default" method="post">
+            <div class="panel-heading">Auftrag | search and add from MACS</div>
+            <div class="panel-body">
+                <div class="relative">
+                    <input id="search-input" type="text" name="string" class="form-control" autocomplete="off">
+                    <input id="search-input-hidden" type="hidden" name="attach_id">
+                    <div id="search-loader" class="loader" style="display: none;"></div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button type="submit" class="btn btn-primary btn-sm">Hinzufügen</button>
+                <br><br>
+                {% if notice.success is not null %}
+                <div class="alert alert-success" role="alert">{{ notice.success }}</div>
+                {% endif %}
+                {% if notice.is_numeric is not null %}
+                    <div class="alert alert-danger" role="alert">{{ notice.is_numeric }}</div>
+                {% endif %}
+                {% if notice.not_found is not null %}
+                    <div class="alert alert-danger" role="alert">{{ notice.not_found }}</div>
+                {% endif %}
+                {% if notice.exists is not null %}
+                    <div class="alert alert-danger" role="alert">{{ notice.exists }}</div>
+                {% endif %}
+                {% if notice.fahrzeug_not_found is not null %}
+                    <div class="alert alert-danger" role="alert">{{ notice.fahrzeug_not_found }}</div>
+                {% endif %}
+            </div>
+        </form>
+
+        <form class="panel panel-default">
+                <div class="panel-heading">Filter</div>
+                <div class="panel-body">
+                    <div class="col-xs-6">
+                        <div class="form-group form-group-sm">
+                            <label for="search">Suchen</label>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <select class="form-control" name="search_field"
+                                            onchange="$('[name=search]').focus()">
+                                        <option value="fin" {{ params.search_field=='fin'?'selected':'' }}>FIN</option>
+                                        <option value="auftragsnr" {{ params.search_field=='auftragsnr'?'selected':'' }}>
+                                            AuftragsNR
+                                        </option>
+                                        <option value="kundennr" {{ params.search_field=='kundennr'?'selected':'' }}>
+                                            KundenNR
+                                        </option>
+                                        <option value="kunde" {{ params.search_field=='kunde'?'selected':'' }}>Kunde
+                                        </option>
+                                        <option value="verkaufberater" {{ params.search_field=='verkaufberater'?'selected':'' }}>
+                                            Verkaufsberater
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-8">
+                                    <input name="search" class="form-control" value="{{ params.search }}"
+                                           autocomplete="off"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        <div class="form-group form-group-sm">
+                            <label for="exampleInputName2">FILIALE</label>
+                            <select name="filial" class="form-control">
+                                <option value="0">Alle</option>
+                                <option value="1" {{ params.filial==1?'selected':'' }}>Oberhausen</option>
+                                <option value="2" {{ params.filial==2?'selected':'' }}>Coesfeld</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        <div class="form-group form-group-sm">
+                            <label for="exampleInputName2">Status</label>
+                            <select name="status" class="form-control">
+                                <option value="-1" {{ params.status<1?'selected':'' }} >Alle</option>
+                                <option value="1" {{ params.status==1?'selected':'' }}>Bestellt / Vorlauf</option>
+                                <option value="2" {{ params.status==2?'selected':'' }}>im Bestand</option>
+                                <option value="3" {{ params.status==3?'selected':'' }}>nicht im Bestand</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    {# <div class="col-xs-2"> #}
+                        {# <div class="form-group form-group-sm"> #}
+                            {# <label for="exampleInputName2">Hersteller</label> #}
+                            {# <select name="hersteller" class="form-control"> #}
+                                {# <option value="0">Alle</option> #}
+                                {# {% for item in hersteller %} #}
+                                {# <option value="{{ item.HERSTELLERID }}">{{ item.HERSTELLERNAME|mb_convert_encoding }}</option> #}
+                                {# {% endfor %} #}
+                                {# </select> #}
+                            {# </div> #}
+                        {# </div> #}
+
+                </div>
+                <div class="panel-footer">
+                    <button type="submit" class="btn btn-primary btn-sm">Suchen</button>
+                </div>
+            </form>
+    </div>
+    <div class="tabs-container">
+        <ul class="nav nav-tabs" >
+            <li {{'main' in route.name?'class="active"':''}}><a href="{{ path_for('dispo.main') }}"  >Aktiv</a></li>
+            <li {{'archive' in route.name?'class="active"':''}}><a href="{{ path_for('dispo.archive') }}" >Archiv</a></li>
+        </ul>
+        <div class="tab-content white-bg">
+            <div class="tab-pane active" style="padding:15px 10px;">
+
+                {% set fkey='kundenannahme' %}
+
+                {% for auftrag in auftrage %}
+
+                {% set item=auftrag.MACSFahrzeug %}
+                <div class="sales_item " data-id="{{ auftrag.AUFTRAGID }}">
+                    <div class="sales_top_block">
+                        <div class="sales_title">
+                            <h3>
+                                <span class="callback-chat btn btn-primary btn-xs" data-toggle="modal" data-target="#comment_modal">
+                                    <i class="glyphicon glyphicon-edit"></i> 
+                                    [<span class="commentsCount">{{ auftrag.cockpitComments.count() }}</span>] Kommentar
+                                </span>
+                                <a href='{{ path_for('checker.step',{'id':auftrag.id,'step':fkey}) }}'>
+                                    {{ auftrag.auftragnr }}
+                                    / {{ item.MODELLTEXT|mb_convert_encoding }}
+                                </a>
+                                <div class="termin_icons">
+                                    {% for termin in auftrag.termin %}
+                                        {% if termin.type == 'vip' %}
+                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="VIP"><i class="fas fa-crown"></i></button>
+                                        {% elseif termin.type == 'app' %}
+                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="APP"><i class="fas fa-tablet-alt"></i></button>
+                                        {% endif %}
+                                        
+                                        {% if termin.type_contact == 'email' %}
+                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="EMAIL"><i class="fas fa-envelope"></i></button>
+                                        {% elseif termin.type_contact == 'sms' %}
+                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="SMS"><i class="fas fa-sms"></i></button>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </h3>
+                            <div class="percent_wrap">
+                                {% for step in auftrag.stepStatus %}
+                                    <a 
+                                        href='{{ path_for('checker.step',{'id':auftrag.id,'step':step.step}) }}'
+                                        class="percent_round {{ step.status == 'success' ? 'pr-green' : 'pr-white' }}"
+                                    >
+                                        {{ loop.index }} : {{ step.title }}
+                                        {% if key=='ws_durch' and auftrag.innerAuftrage.count() %}
+                                        ({{ auftrag.innerAuftrage|filter(i=>i.active_status==3)|length }} /{{ auftrag.innerAuftrage.count() }})
+                                        {% endif %}
+                                    </a>
+                                {% endfor %}
+                            </div>
+                            Typ: {{ auftrag.type }}
+                            Status: {{ item.status.FZSTATUSTEXT }}
+                            | Art: {{ item.fzh_actuell.art.FAHRZEUGARTTEXT|mb_convert_encoding }}
+                            | FZ Lieferdat: {{ item.fzh_actuell.LIEFERDAT|date('d.m.Y') }}
+                            | <b>Auslieferungtermin: {{ auftrag.dispoAuftrag.liefertermin?auftrag.dispoAuftrag.liefertermin|date('d.m.Y'):(auftrag.GEWLIEFERDATKD?auftrag.GEWLIEFERDATKD|date('d.m.Y'):'nicht bestimmt') }}</b>
+                            | <b>Zulassungstermin: {{ auftrag.dispoZulassung.z_geplant?auftrag.dispoZulassung.z_geplant|date('d.m.Y'):'nicht bestimmt' }}</b>
+                            | <b>Auftragsdatum: {{ auftrag.ANLAGEDAT?auftrag.ANLAGEDAT|date('d.m.Y'):'nicht bestimmt' }}</b>
+                            <div>{{ auftrag.hersteller.HERSTELLERNAME }} {{ item.SERIE }}<span
+                                    class="sales_gray"> FIN: {{ auftrag.fahrzeug.vin }}</span>
+                                {% if shopdata %}
+                                <a href="https://suchen.mobile.de/fahrzeuge/details.html?id={{ shopdata.mobile_ad_id }}"
+                                   target="_blank">mobile.de</a>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="sales_attr" style=" display: flex;margin-top:10px;">
+                            <div>
+                                <div class="sales_gray"><i class="fas fa-map-marker-alt"></i> Filiale / Standort</div>
+                                <div style="text-align: center;">  {{ auftrag.filiale.FILIALENR }}
+                                    /{{ item.fzh_actuell.standort.STANDORT }}</div>
+                            </div>
+                            <div>
+                                <div class="sales_gray"><i class="fas fa-tachometer-alt"></i> LL in km</div>
+                                <div style="text-align: center;">  {{ item.fzh_actuell.KMSTAND }}</div>
+                            </div>
+                            <div>
+                                <div class="sales_gray"><i class="fas fa-file-alt"></i> Datum EZ</div>
+                                <div style="text-align: center;">  {{ item.ERSTZULASSUNG|date('m/y') }}</div>
+                            </div>
+                            <div>
+                                <div class="sales_gray">Standtage</div>
+                                <div style="text-align: center;">  {{ date('now').diff(date(item.fzh_actuell.LIEFERDAT)).days }}</div>
+                            </div>
+                            <div>
+                                <div class="sales_gray">Kunde</div>
+                                <div style="text-align: center;">  {{ auftrag.kunde.adresse.NAME1|mb_convert_encoding }}
+                                    <br/>
+                                    [{{ auftrag.kunde.KUNDENNR }} - {{ auftrag.kunde.adresse.KURZNAME|mb_convert_encoding }}]
+                                </div>
+                            </div>
+                            <div>
+                                <div class="sales_gray"><b>Verkaufsberater </b></div>
+                                <div style="text-align: center;">{{ auftrag.mitarbeiter.adresse.KURZNAME|mb_convert_encoding }}
+                                    <br/>
+                                    {{ auftrag.mitarbeiter.adresse.NAME1|mb_convert_encoding }}</div>
+                            </div>
+                            <div>
+                                <div class="sales_gray"><i class="fas fa-file-alt"></i> Letzte Aktualisierung</div>
+                                <div style="text-align: center;">  {{ auftrag.dispoAuftrag.updated_at?auftrag.dispoAuftrag.updated_at|date('Y-m-d H:i:s') }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="comment_modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <ul id="comment_wrapper"></ul>
+                <hr>
+                <textarea name="comment" class="form-control"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary sent_comment" data-dismiss="modal">Notiz hinzufügen</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<script src="/static/js/bootstrap3-typeahead.min.js"></script>
+<script>
+    $(document).on('click', '.callback-chat', function (e) {
+            var id = $(this).closest('.sales_item').data('id')
+            var title = $(this).next('.mainLink').text()
+
+            $('.sent_comment').data('id', id)
+            $('#comment_modal .modal-title').html(title)
+
+
+            $.post('/cockpit/js/getComments', {id: id}, function (comments) {
+                {#		console.log(comments)#}
+                comments = JSON.parse(comments)
+                $('ul#comment_wrapper').html('')
+                if (comments.length == 0) {
+                    $li = $('<li/>');
+                    $li.html('<div class="text-center">Keine Notiz vorhanden </div>')
+                    $('ul#comment_wrapper').append($li)
+                } else {
+                    $.map(comments, (comment) => {
+                        $li = $('<li/>');
+                        $li.html('<b>' + comment.user.name + ' ' + comment.user.surname + '</b> ' + moment(comment.date_time).format('DD.MM.YYYY, HH:mm') + '<br/>' + comment.text)
+                        $('ul#comment_wrapper').append($li)
+                    })
+                }
+            }, 'json');
+
+
+        }
+    )
+    $(document).on('click', '.sent_comment', function (e) {
+            var id = $(this).data('id')
+            var text = $('textarea[name=comment]').val()
+            $.post('/cockpit/js/addComment', {id: id, text: text}, function (r) {
+
+                $('textarea[name=comment]').val('')
+
+                $.post('/cockpit/js/getComments', {id: id}, function (comments) {
+                    comments = JSON.parse(comments)
+                    $('.sales_item[data-id=' + id + '] .commentsCount').text(comments.length)
+                }, 'json');
+            });
+        }
+    )
+
+    // Search Auftrag
+    var searchLoader = $('#search-loader');
+    $('#search-input').typeahead({
+        autoSelect: true,
+        minLength: 1,
+        delay: 400,
+        source: function (query, process) {
+            searchLoader.show();
+            $.ajax({
+                url: "{{ path_for('checker.insert.search') }}",
+                data: {string: query},
+                dataType: 'json'
+            })
+            .done(function (response) {
+                searchLoader.hide();
+
+                var arr = [];
+                response.forEach(function (el, t) {
+                    arr.push(
+                        {
+                            id: t,
+                            name: 'Auftrag: '+el.AUFTRAGSNR+', Name: '+el.NAME1+', Vin: '+el.FAHRGESTELLNUMMER,
+                            attach_id: el.AUFTRAGSNR
+                        }
+                    );
+                });
+                
+                return process(arr);
+            });
+        }
+    });
+    $('#search-input').change(function () {
+        var current = $('#search-input').typeahead("getActive");
+        $('#search-input-hidden').val(current.attach_id);
+    });
+</script>
+
+{% endblock %}

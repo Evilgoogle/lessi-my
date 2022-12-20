@@ -1,0 +1,109 @@
+{#<div class="panel panel-default main_panel">
+    <div class="panel-heading">Customer</div>
+    <div class="block">
+        <table class="panel-body table table-condensed">
+            <tbody class="head_data">
+                <tr>
+                    <td>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>Name</th>
+                                    <td class="text_right">{{ leasback.lb.name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td class="text_right">{{ leasback.lb.email }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Phone</th>
+                                    <td class="text_right">{{ leasback.lb.phone }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>Source</th>
+                                    <td class="text_right">{{ leasback.lb.leasing_from_site }}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Date</th>
+                                    <td class="text_right">{{ leasback.lb.dt }}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Interested</th>
+                                    <td class="text_right">{{ leasback.lb.interested }}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Number&nbsp;of&nbsp;the&nbsp;car</th>
+                                    <td class="text_right">{{ leasback.lb.mark }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>#}
+
+<div class="panel panel-default main_panel">
+    <div class="panel-heading">Kunde</div>
+    <div class="block">
+        <table class="panel-body table table-condensed">
+            <tbody class="head_data">
+                <tr>
+                    <td>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>Name</th>
+                                    <td class="text_right">{{ customer.name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td class="text_right">{{ customer.email }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Phone</th>
+                                    <td class="text_right">{{ customer.phone }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>Source</th>
+                                    <td class="text_right">{{ customer.leasing_from_site }}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Date</th>
+                                    <td class="text_right">{{ customer.dt }}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Interested</th>
+                                    <td class="text_right">{{ customer.interested }}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Number&nbsp;of&nbsp;the&nbsp;car</th>
+                                    <td class="text_right">{{ customer.mark }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

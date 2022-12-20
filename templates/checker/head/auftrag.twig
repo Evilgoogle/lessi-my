@@ -1,0 +1,221 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Werkstatt Auftrag</div>
+    <div class="panel-body">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingFirst">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFirst" aria-expanded="true" aria-controls="collapseFirst">
+                            Hautp Autftrag
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseFirst" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFirst">
+                    <table class="panel-body table table-condensed">
+                        <tbody class="head_data">
+                            <tr>
+                                <th>Auftragsnummer</th>
+                                <td>{{ auftrag.auftragnr }}</td>
+                            </tr>
+                            <tr>
+                                <th>Datum</th>
+                                <td>{{ auftrag.date?auftrag.date|date('d.m.Y'):'--' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Typ</th>
+                                <td>{{ auftrag.type|capitalize }}</td>
+                            </tr>
+                            <tr>
+                                <th>Geplant</th>
+                                <td>{{ auftrag.geplant?auftrag.geplant|date('d.m.Y'):'--' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Fahrzeuganlieferung</th>
+                                <td>{{ auftrag.anlieferung?auftrag.anlieferung|date('d.m.Y'):'--' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Fertigstellung</th>
+                                <td>{{ auftrag.fertigstellung?auftrag.fertigstellung|date('d.m.Y'):'--' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Betrag</th>
+                                <td>{{ auftrag.betrag_sum() }}</td>
+                            </tr>
+                            <tr>
+                                <th>Reparatur Art</th>
+                                <td>{{ auftrag.MACSreparaturArt() }}</td>
+                            </tr>
+                            <tr>
+                                <th>Anzahl der Aufträge</th>
+                                <td>
+                                    {{ auftrag.fahrzeug.auftrag_count }}
+                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal_Fahrzeug_viewAuftrage">Details</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Werkstattpakete</th>
+                                <td>
+                                    {% for name in auftrag.wspakets() %}
+                                        <p>{{ name | mb_convert_encoding }}</p>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% for ad in auftrag.addon %}
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading{{ ad.id }}">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ ad.id }}" aria-expanded="false" aria-controls="collapse{{ ad.id }}">
+                            Neben Auftrag: {{ ad.auftragnr }}
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse{{ ad.id }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ ad.id }}">
+                    <div class="panel-body">
+                        <table class="panel-body table table-condensed">
+                            <tbody class="head_data">
+                                <tr>
+                                    <th>Auftragsnummer</th>
+                                    <td>{{ ad.auftragnr }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Datum</th>
+                                    <td>{{ ad.date?auftrag.date|date('d.m.Y'):'--' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Typ</th>
+                                    <td>{{ ad.type|capitalize }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Geplant</th>
+                                    <td>{{ ad.geplant?ad.geplant|date('d.m.Y'):'--' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Fahrzeuganlieferung</th>
+                                    <td>{{ ad.anlieferung?auftrag.anlieferung|date('d.m.Y'):'--' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Fertigstellung</th>
+                                    <td>{{ ad.fertigstellung?auftrag.fertigstellung|date('d.m.Y'):'--' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Betrag</th>
+                                    <td>{{ ad.betrag_sum() }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Reparatur Art</th>
+                                    <td>{{ ad.MACSreparaturArt() }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Anzahl der Aufträge</th>
+                                    <td>
+                                        {{ ad.fahrzeug.auftrag_count }}
+                                        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal_Fahrzeug_viewAuftrage">Details</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Werkstattpakete</th>
+                                    <td>
+                                        {% for name in ad.wspakets() %}
+                                            <p>{{ name | mb_convert_encoding }}</p>
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+            
+<div class="modal fade" id="modal_Fahrzeug_viewAuftrage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Auftrage Info</h4>
+        </div>
+        <div class="modal-body">
+            {% if fahrzeug_auftrags.count() %}
+                <table class='table panel-body table-condensed table-bordered'>
+                    <thead>
+                        <tr>
+                            <th>Datum</th>
+                            <th>AuftragsNR</th>
+                            <th>Typ</th>
+                            <th>Vermerk</th>
+                            <th>Netto</th>
+                            <th>Brutto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% set nettobetrag = 0 %}
+                        {% set bruttobetrag = 0 %}
+
+                        {% for a in fahrzeug_auftrags %}
+                            <tr>
+                                <td>{{ a.ANLAGEDAT|date('d.m.Y') }}</td>
+                                <td><a href="/auftragpdf/{{ a.AUFTRAGID }}"
+                                       target="_blank">{{ a.AUFTRAGSNR }} ({{  a.status.BEZEICHNUNG|mb_convert_encoding }})<a/></td>
+                                <td>{{ a.typ.BEZEICHNUNG|mb_convert_encoding }}</td>
+                                <td>{{ a.VERMERK|mb_convert_encoding }}</td>
+                                <td>
+                                    {% for rech in a.rechnungs|default([])|filter(i => i.TYP == a.TYP) %}
+                                        {{ rech.NETTOBETRAG|number_format(2,',','.') }}
+                                        {% set nettobetrag= nettobetrag+rech.NETTOBETRAG %}
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {% for rech in a.rechnungs|default([])|filter(i => i.TYP == a.TYP) %}
+                                        {{ rech.BRUTTOBETRAG|number_format(2,',','.') }}
+                                        {% set bruttobetrag= bruttobetrag+rech.BRUTTOBETRAG %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% if a.NOTIZ %}
+                                <tr>
+                                    <th>Notiz</th>
+                                    <td colspan="6">{{ a.NOTIZ|mb_convert_encoding|nl2br }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <th>Notiz</th>
+                                    <td colspan="6">Keine Notiz</td>
+                                </tr>
+                            {% endif %}
+                            {% if  a.reparatur_plan.count() >0 %}
+                                <tr  id="rplanlist_{{a.AUFTRAGID}}" >
+                                    <td colspan="8">
+                                        <table class="table table-condensed" style="margin:0;">
+                                            {% for planRow in a.reparatur_plan%}
+                                                <tr>
+                                                    <td>Rep. Umfang</td> <td>{{ planRow.DATUM|date('d-m-Y') }}</td>
+                                                    <td>{{ planRow.gruppe.WSGRUPPETEXT|mb_convert_encoding  }}</td>
+                                                    <td>{{ planRow.BEZEICHNUNG|mb_convert_encoding }}</td>
+                                                    <td>{{ planRow.ANZSTD|number_format(2,',','.') }} Std.</td>
+
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {%  endfor %}    
+                    </tbody>
+                </table>
+            {% else %}
+                
+            {% endif %}    
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>

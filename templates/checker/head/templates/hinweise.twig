@@ -1,0 +1,18 @@
+<table class='table panel-body table-condensed table-bordered'>
+    <thead>
+        <tr>
+            <th>Kundehinweise</th>
+            <th>Eine Aufgabe</th>
+            <th>Nachricht</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for item in items %}
+        <tr>
+            <td>{{ item.kundenhinweise_title }}</td>
+            <td>{{ item.task }}</td>
+            <td>{{ item.message }}</td>
+        </tr>
+    {%  endfor %}
+    </tbody>
+</table>

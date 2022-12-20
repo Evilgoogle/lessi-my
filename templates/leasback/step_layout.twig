@@ -1,0 +1,71 @@
+{% extends "checker/base.twig" %}
+{% set title = 'LeasBack - '~current.title %}
+
+{% block wrapper %}
+    <link rel="stylesheet" href="/static/libs/cropperjs/dist/cropper.min.css">
+    <link rel="stylesheet" href="/static/libs/filemanager/css/filemanager.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/static/css/leasback/main.css">
+    <link rel="stylesheet" href="/static/css/style_evilgoogle.css">
+    
+
+    <div class="leasback">
+
+        <div class="row mb-4">
+            <div class="col-md-6">
+                {% include 'leasback/templates/blocks/customer.twig' with {customer: leasback} %}
+            </div>
+
+            <div class="col-md-6">
+                {% include 'leasback/templates/blocks/fahrzeug.twig' with {fahrzeug: fahrzeug.item, autfrag: fahrzeug.autfrag, customer: leasback} %}
+            </div>
+            
+            <div class="col-md-6">
+                {% include 'leasback/templates/blocks/auftrag.twig' with {auftrag: auftrags, customer: leasback} %}
+            </div>
+            
+            <div class="col-md-6">
+                {% include 'leasback/templates/blocks/fahrzeug_junge.twig' with {fahrzeug: fahrzeug_junge, customer: leasback} %}
+            </div>
+        </div>
+                    
+    </div>
+    <nav id="navPageMenu">
+        <ul class="nav nav-tabs" id="auf_tabs">
+            <div class="percent_wrap" style="margin: 10px;">
+                {% set s = 0 %}
+                {% for step in steps %}
+                    {% set s = s + 1 %}
+                    <a href="/leasback/{{ step.leasback_id }}/{{ step.step }}" class="percent {{ step.status == 'success' ? 'success' : '' }} {{ step.step == current.step ? 'active' : '' }}">
+                        <span class="border">
+                            <span class="top">
+                                <i class="fa fa-times"></i>
+                                <span class="title">{{ s }}: {{ step.title }}</span>
+                            </span>
+
+                            {% if step.status == 'success' %}
+                                <span class="time">{{ step.success_time | date('d.m.Y h:i') }}</span>
+                            {% endif %}
+                        </span>
+                    </a>
+                {% endfor %}
+            </div>
+        </ul>
+    </nav>
+            
+    <div role="tabpanel" class="tab-pane container-fluid">
+        {% block step %}{% endblock %}
+    </div>
+   
+    {% include 'filemanager/modal.twig' %}
+    {% include 'leasback/modals/auftrag.twig' %}
+    {% include 'leasback/modals/create.twig' %}
+    {% include 'leasback/modals/fahrzeug.twig' %}
+    
+    <script src="/static/libs/cropperjs/dist/cropper.min.js"></script>
+    <script src="/static/libs/filemanager/js/start.js" type="module"></script>
+    <script src="/static/js/bootstrap3-typeahead.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/i18n/jquery-ui-i18n.min.js"></script>
+    <script src="/static/js/leasback/main.js"></script>
+{% endblock %}

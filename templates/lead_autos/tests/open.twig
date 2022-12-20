@@ -1,0 +1,184 @@
+{% extends "lead_autos/base.twig" %}
+{% set title = 'Leads Leader | TEST Hot' %}
+
+{% block wrapper %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                {% if hot is not null %}
+                <div class="open panel panel-default">
+                    <div class="header panel-heading flex-between">
+                        <p>New Lead - ID: {{ hot.id }}</p>
+                        {% if time != 0 %}
+                            <div class="timer">
+                                <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                                <span id="timer" data-time="{{ time | json_encode() }}">
+                                    <span class="hours"></span> :
+                                    <span class="minutes"></span> :
+                                    <span class="seconds"></span>
+                                </span>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="panel-body">
+                        <div class="block panel panel-default">
+                            <div class="block_title panel-heading">Daten</div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <div class="item panel panel-default">
+                                            <div class="panel-heading">Kontakte</div>
+                                            <div class="panel-body">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Typ</th>
+                                                            <th>Kontakt</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for item in hot.contacts %}
+                                                        <tr>
+                                                            <td>
+                                                                {% if item.type == 'phone' %}
+                                                                    <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                                                                {% elseif item.type == 'email' %}
+                                                                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                                                                {% endif %}
+                                                            </td>
+                                                            <td>{{ item.value }}</td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <div class="item panel panel-default">
+                                            <div class="panel-heading">Verlauf</div>
+                                            <div class="panel-body">
+                                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse_verlauf" aria-expanded="false" aria-controls="collapseExample">Details</button>
+                                                <div id="collapse_verlauf" class="collapse {{ hot.activity | length > 3 ? '' : 'in' }}" style="margin-top: 10px">
+                                                <table class="table table-condensed table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Typ</th>
+                                                            <th>Ablauf</th>
+                                                            <th>Datum</th>
+                                                            <th>Mitarbeiter</th>
+                                                            <th>Status</th>
+                                                            <th>Endpunkt</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for item in hot.activity %}
+                                                            {% set  ans_call = item.answer_time %}
+
+                                                            <tr data-id="{{ item.id}}" data-extid="{{ item.external_id }}">
+                                                                <td>{{ item.type=='hws'?'MACS':(item.type=='eastwood'?'HWS':(item.type=='call'?'Anruf':item.type)) }}</td>
+                                                                <td>Out</td>
+                                                                <td>{{ item.date_time|date('d-m-Y H:i:s') }}</td>
+                                                                <td>{{ item.mitarbeiter }}</td>
+
+                                                                <td>{{ item.status?'<i class="fa fa-check"></i>':'<i class="fa fa-times"></i>' }}</td>
+                                                                <td>
+                                                                    {% if item.type=='macs'  %}
+                                                                        {{ item.note|convert_encoding('UTF-8', 'ISO-8859-1')|nl2br }}
+                                                                    {% elseif item.type=='hws' %}
+                                                                        {{ item.note|raw }}
+                                                                    {% elseif item.type=='call' %}
+
+                                                                        {% for exti in item.external.abonents if exti.success%}
+                                                                            {{ exti.destination~' - '~exti.description~'; ' }}
+                                                                        {% endfor %}
+                                                                    {% elseif item.type=='mail' %}
+                                                                        {% if item.source==5 %}
+                                                                            {{ item.note|raw }}<br/>
+                                                                        {% endif %}
+                                                                        here will be a link if there is mail
+                                                                    {% endif %}
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block panel panel-default">
+                            <div class="block_title panel-heading">Autos gefunden</div>
+                            <div class="panel-body data">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Bild</th>
+                                            <th>Fahrzeug</th>
+                                            <!--<th>Kunde</th>-->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in hot.fahrzeug %}
+                                            <tr>
+                                                <td>
+                                                    <img class="media-object" src="/static/img/user.png" alt="...">
+                                                </td>
+                                                <td>
+                                                    <h4 class="media-heading">{{ item.fahrname }}</h4>
+                                                    <small><span class="label label-info">Nummer: </span>&nbsp; {{ item.fahrgestellnummer }}</small>
+                                                </td>
+                                                <!--<td>
+                                                    <h4 class="media-heading">{{ item.kundename }}</h4>
+                                                    <small><span class="label label-info">Kundennr: </span>&nbsp;{{ item.kundennr }}</small>
+                                                </td>-->
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="page-header">
+                            <h2 style="text-align: center">Einstufung</h2>
+                        </div>
+                        <form action="{{ path_for('leads_auto.test.classification') }}" method="post">
+                            <input type="hidden" name="lead_id" value="{{ hot.id }}">
+                            <div class="classification">
+                                <input id="rad1" type="radio" name="pick" value="lead" checked>
+                                <label for="rad1">
+                                    <span>Lead</span>
+                                    <i></i>
+                                </label>
+                                <input id="rad2" type="radio" name="pick" value="service">
+                                <label for="rad2">
+                                    <span>Service</span>
+                                    <i></i>
+                                </label>
+                                <input id="rad3" type="radio" name="pick" value="spam">
+                                <label for="rad3">
+                                    <span>Spam</span>
+                                    <i></i>
+                                </label>
+                            </div>
+                            <div class="flex_center">
+                                <button type="submit" class="btn btn-primary btn-lg">bestätigen Sie</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="p_footer panel-footer">{{ hot.created_at | date('d.m.Y H:i') }}</div>
+                </div>
+                {% else %}
+                    <div class="open panel panel-default">
+                        <div class="panel-body"><strong>Keine Lead</strong></div>
+                    </div>
+                {% endif %}    
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

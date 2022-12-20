@@ -1,0 +1,205 @@
+{%extends "layout.twig"%}
+
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/static/libs/cropperjs/dist/cropper.min.css">
+    <link rel="stylesheet" href="/static/libs/filemanager/css/filemanager.css">
+    <link rel="stylesheet" href="/static/admin/css/main.css">
+    <link rel="stylesheet" href="/static/css/dispo.css">
+    <link rel="stylesheet" href="/static/css/faq/style.css">
+{% endblock %}
+
+{% block content %}
+
+    <div id="wrapper">
+
+        {% include 'partial/main_menu.twig' %}
+        
+        <div id="page-wrapper" class="gray-bg">
+            {% include 'partial/top_menu.twig' %}
+
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>{{ title }}</h2>
+                </div>
+            </div>
+
+            <div class="wrapper wrapper-content animated fadeIn">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="tabs-container">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="users">
+                                    <div class="panel-body">
+                                        <div style="margin-top: 30px">
+                                            {% block wrapper %}{% endblock %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    
+        {% include 'filemanager/modal.twig' %}
+                   
+        <script src="/static/js/bootstrap3-typeahead.min.js"></script>
+        <script src="/static/libs/cropperjs/dist/cropper.min.js"></script>
+        <script src="/static/libs/filemanager/js/start.js" type="module"></script>                        
+        <script src="/static/js/ckeditor/ckeditor.js"></script>
+        <script src='/static/js/checker/main.js'></script>
+        <script src='/static/js/faq/tag.js'></script>
+
+        <script>
+            $(document).ready(function() {
+                $(window).keydown(function(event){
+                    if(event.keyCode == 13) {
+                        event.preventDefault();
+                        return false;
+                    }
+                });
+            });
+
+            $(document).on('click', '.js_spoiler', function(e) {
+                let spoiler = $(e.target).closest('.item').find('.spoiler');
+                
+                if(spoiler.css('display') == 'block') {
+                    $(e.target).removeClass('active_button');
+                    spoiler.slideUp(300);
+                } else if(spoiler.css('display') == 'none') {
+                    $(e.target).addClass('active_button');
+                    spoiler.slideDown(300);
+                }
+            });
+            
+            $(document).on('click', '.js_kontakt', function(e) {
+                var article_id = e.target.dataset.id;
+                var that = $(e.target);
+                
+                $.ajax({
+                    type : 'post',
+                    url : '/faqs/articles/comments/'+article_id+'/add',
+                    data: { 'article_id': article_id },
+                    success:function(msg) {
+                        that.closest('.form').find('.insert').html(msg);
+                    }
+                });
+            });
+
+            $(document).on('submit', '#comment_form', function(e) {
+                e.preventDefault();
+
+                var button = $(e.target).find('button');
+
+                var article_id = $(e.target).find('input[name="article_id"]').val();
+                var user_id = $(e.target).find('input[name="user_id"]').val();
+                var name = $(e.target).find('input[name="name"]').val();
+                var email = $(e.target).find('input[name="email"]').val();
+                var comment = $(e.target).find('textarea[name="comment"]').val();
+
+                $.ajax({
+                    url: '/faqs/articles/comments/'+article_id+'/create',
+                    type: 'POST',
+                    data: { 'article_id': article_id, 'user_id': user_id, 'name': name, 'email': email, 'comment': comment },
+                    beforeSend: function() {
+                        button.html('<span class="loader"></span>');
+                    },
+                    success: function(msg) {
+                        $('.form .insert').html('<div class="alert alert-success" role="alert">Kommentar hinzugefügt</div>');
+                        $('#comments .insert').prepend(msg);
+                        
+                        button.text('Senden');
+                    },
+                    error: function (data) {
+                        var errors = JSON.parse(data.responseJSON);
+                        
+                        if('name' in errors) {
+                            $('.erorr_name').closest('.form-group').addClass('has-error');
+                            $('.erorr_name').html('<span class="help-block">'+errors.name+'</span>');
+                        } else {
+                            $('.erorr_name').closest('.form-group').removeClass('has-error');
+                            $('.erorr_name').empty();
+                        }
+                        
+                        if('email' in errors) {
+                            $('.erorr_email').closest('.form-group').addClass('has-error');
+                            $('.erorr_email').html('<span class="help-block">'+errors.email+'</span>');
+                        } else {
+                            $('.erorr_email').closest('.form-group').removeClass('has-error');
+                            $('.erorr_email').empty();
+                        }
+                        
+                        if('comment' in errors) {
+                            $('.erorr_comment').closest('.form-group').addClass('has-error');
+                            $('.erorr_comment').html('<span class="help-block">'+errors.comment+'</span>');
+                        } else {
+                            $('.erorr_comment').closest('.form-group').removeClass('has-error');
+                            $('.erorr_comment').empty();
+                        }
+                        
+                        button.text('Senden');
+                    }
+                });
+            });
+            
+            var searchLoader = $('#search_loader');
+            $('#search_input').typeahead({
+                autoSelect: true,
+                minLength: 1,
+                delay: 400,
+                source: function (query, process) {
+                    searchLoader.show();
+                    $.ajax({
+                        url: "{{ path_for('faqs.search') }}",
+                        data: {string: query},
+                        dataType: 'json'
+                    })
+                    .done(function (response) {
+                        searchLoader.hide();
+
+                        var arr = [];
+                        response.forEach(function (el, t) {
+                            arr.push(
+                                {
+                                    id: el.id,
+                                    name: 'Faq: '+el.title
+                                }
+                            );
+                        });
+
+                        return process(arr);
+                    });
+                }
+            });
+            $('#search_input').change(function () {
+                var current = $('#search_input').typeahead("getActive");
+                $('#search_input_hidden').val(current.id);
+            });
+            
+           $(document).on('click', '.js_isLiked', function(e) {
+               var is_liked = e.target.dataset.like;
+               var article_id = e.target.dataset.article_id;
+               
+               $.ajax({
+                   type : 'get',
+                   url : '/faqs/articles/is-liked',
+                   data:{
+                       'is_liked': is_liked,
+                       'article_id': article_id
+                   },
+                   success:function(data) {
+                       $('.like_block button').removeClass('selected');
+                       
+                        if(data == 1) {
+                            $('.like_block .vote-up').addClass('selected');
+                        } else {
+                            $('.like_block .vote-down').addClass('selected');
+                        }
+                   }
+               });
+           });
+        </script>
+    </div>    
+{% endblock %}

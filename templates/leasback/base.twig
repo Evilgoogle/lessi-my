@@ -1,0 +1,69 @@
+{%extends "layout.twig"%}
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/static/admin/css/main.css">
+{% endblock %}
+
+{% block content %}
+
+    <div id="wrapper">
+
+        {% include 'partial/main_menu.twig' %}
+
+        <div id="page-wrapper" class="gray-bg" style="padding-bottom: 200px;">
+            {% include 'partial/top_menu.twig' %}
+
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>{{title}}</h2>
+                </div>
+            </div>
+
+            <div class="wrapper wrapper-content animated fadeIn">
+                <div class="row">
+
+                    {% block wrapper %}{% endblock %}
+
+                </div>
+            </div>
+
+
+            {#   <div class="dispo_chat_toggle" onclick="chat_toggle()">Toggle</div>
+	       <div id='fixed_bottom' class="container" style="display: none">
+		   <div class='row'>
+		       <div class='col-xs-6'>
+			   <div class='well well-sm' style='margin-bottom: 5px; height: 141px;'>
+			       <div id="chat_wrap"></div>
+			   </div>
+			   <div class="input-group">
+			       <input class='form-control' name='chat_text'/>
+			       <span class="input-group-btn">
+				   <input type='button' class='btn btn-default' name='chat_send' value='Send'/>
+			       </span>
+
+			   </div>
+		       </div>
+		       <div class='col-xs-6'>
+			   <div class='well well-sm' style='height: 180px;'>
+			       <div id="news_wrap"></div>
+			   </div>
+		       </div>
+		   </div>
+	       </div>#}
+        </div>
+
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="loader"></div>
+                    <img src="/static/img/loader2.gif"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

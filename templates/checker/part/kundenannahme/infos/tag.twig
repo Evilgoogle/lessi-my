@@ -1,0 +1,24 @@
+<div id="kundenannahme_infos_{{ item.id }}" class="tag">
+    <div class="box">
+        <div class="item panel panel-default">
+            {% if sonstige == false %}
+            <div class="panel-heading">
+                {{ item.tag }}   
+            </div>
+            {% endif %}
+
+            {% if sonstige == true %}
+                <div class="panel-body sonstige">
+                    <p>{{ item.desc }}</p>
+                    <button type="button" class="btn btn-danger btn-sm js_kundenannahme_sonstige_remove" data-id="{{ item.id }}">-</button>
+                </div>
+            {% else %}
+                {% if item.tag == 'Wartekunde' %}
+                    <div class="panel-body">Die Anschrift: {{ item.desc }}</div>
+                {% elseif item.tag == 'Verkaufsberatung erwünscht' %}
+                    <div class="panel-body">{{ item.desc }}</div>
+                {% endif %}
+            {% endif %}    
+        </div>
+    </div>
+</div>

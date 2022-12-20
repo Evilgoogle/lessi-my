@@ -1,0 +1,93 @@
+<div id="kundenhinweise_item_{{ method }}_{{ (method == 'edit') ? item.id : '' }}" class="item panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+            {% if method == 'edit' %}
+                {#<div class="col-xs-10">
+                    <div class="row">
+                        <div class="form-group {% if item.type is null or item.type is empty %} has-error {% endif %}">
+                            {% if item.type is null or item.type is empty %}
+                                <div class="col-xs-12 select_info" style="color: #cb6c6c; font-weight: bold">Bitte auswählen: </div>
+                            {% endif %}
+                            <form class="col-xs-6 col-lg-4 js_kundenhinweise_select_type" data-id="{{ item.id }}" data-method="{{ method }}">
+                                <select class="form-control">
+                                    <option valuu="0">-----</option>
+                                    <option value="angebot" {{ (item.type == 'angebot') ? 'selected' : '' }}>Angebot</option>
+                                    <option value="technische" {{ (item.type == 'technische') ? 'selected' : '' }}>Technische Hinweise</option>
+                                    <option value="fahrzeugnutzung" {{ (item.type == 'fahrzeugnutzung') ? 'selected' : '' }}>Hinweise zum Fahrzeugnutzung</option>
+                                    <option value="serviceberater" {{ (item.type == 'serviceberater') ? 'selected' : '' }}>SB Hinweis</option>
+                                </select>
+                                <button type="submit" class="btn {% if item.type is null or item.type is empty %} btn-danger {% else %} btn-primary {% endif %}">ОК</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-2 flex_right">
+                    {% if item.from_macs == 0 %}
+                        <button type="button" class="btn btn-danger js_remove_kundenhinweise_f" data-id="{{ item.id }}">-</button>
+                    {% endif %}
+                </div>#}
+                {% include 'checker/part/fahrzeugannahme/kundenhinweise/template/blocks/head/edit.twig' with {'item': item} %}
+            {% elseif method == 'insert' %}
+                <div class="col-xs-10">
+                    <div class="row">
+                        <div class="form-group has-error">
+                            {#<div class="col-xs-12 select_info" style="color: #cb6c6c; font-weight: bold">Neue kundenhinweise: </div>#}
+                            <div class="col-xs-10">Neu Kundenhinweise</div>
+                            
+                            {#<form class="col-xs-6 col-lg-4 select_type" data-method="{{ method }}">
+                                <select class="form-control">
+                                    <option value="0">-----</option>
+                                    <option value="angebot">Angebot</option>
+                                    <option value="technische">Technische Hinweise</option>
+                                    <option value="fahrzeugnutzung">Hinweise zum Fahrzeugnutzung</option>
+                                    <option value="serviceberater">SB Hinweis</option>
+                                </select>
+                            </form>#}
+                            <form class="col-xs-6 col-lg-4 select_type" data-method="{{ method }}">
+                                <select class="form-control" hidden>
+                                    <option value="technische" selected>Technische Hinweise</option>
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-2 flex_right">
+                    <button type="button" class="btn btn-danger js_remove_kundenhinweise_f" data-first_create="ok">-</button>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="panel-body">
+        {% if method == 'edit' %}
+            {% if item.type is null or item.type is empty  %}
+                <div class="no_active">
+                    <div class="title">{{ item.title }}</div>
+                </div>
+            {% else %}
+                {% include 'checker/part/fahrzeugannahme/kundenhinweise/template/'~item.type~'.twig' %}
+            {% endif %}
+        {% elseif method == 'insert' %}
+            <form id="js_kundenhinweise_add_complete_f" class="form-inline">
+                <input type="text" class="form-control" style="width: 50%" placeholder="Bemerkungen" required>
+                <input type="hidden" name="step" value="{{ step }}">
+                <button type="submit" class="btn btn-primary">erstellen</button>
+            </form>
+        {% endif %}
+    </div>
+    <div class="panel-footer {{ item.status == 'success' ? 'not_success_hinweise' : 'not_notcompleted_hinweise' }}">
+        <div class="status_block">
+            {% if method == 'edit' %}
+                status
+                {% if item.status == 'success' %}
+                    <div class="label label-default">
+                        <i class="fa fa-check"></i>&nbsp;<span> abgeschlossen</span>
+                    </div>
+                {% else %}
+                    <div class="label label-default">
+                        <i class="fa fa-times"></i>&nbsp;<span> nicht abgeschlossen</span>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>

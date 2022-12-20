@@ -1,0 +1,388 @@
+{% extends "lead_autos/base.twig" %}
+{% set title = 'Leads Leader | TEST Show' %}
+
+{% block wrapper %}
+
+    <script src="/static/js/bootstrap3-typeahead.min.js"></script>
+    
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="show panel panel-default">
+                    <div class="header panel-heading flex-between {{ lead.complete == 'not completed' ? 'red' : ''}}">
+                        <p>New Lead - ID: {{ lead.id }}</p>
+                        {% if time != 0 %}
+                            <div class="timer">
+                                <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                                <span id="timer" data-time="{{ time | json_encode() }}">
+                                    <span class="hours"></span> :
+                                    <span class="minutes"></span> :
+                                    <span class="seconds"></span>
+                                </span>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-2 panel">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading block_title">Navigation</div>
+                                    <div class="panel-body">
+                                        <button type="button" class="btn btn-primary js_type" data-type="start">
+                                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                                            <span>Start</span>
+                                        </button>
+                                        {% for isset in isset_contact %}
+                                            {% if isset == 'phone' %}
+                                                <button type="button" class="btn btn-primary js_type" data-type="anufren">
+                                                    <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                                                    <span>Anufren</span>
+                                                </button>
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% for isset in isset_contact %}
+                                            {% if isset == 'email' %}
+                                                <button type="button" class="btn btn-primary js_type" data-type="mail">
+                                                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                                                    <span>E-mail</span>
+                                                </button>
+                                            {% endif %}
+                                        {% endfor %}
+                                        <hr>
+                                        <p><strong>Status</strong></p>
+                                        {% for isset in isset_contact %}
+                                            {% if isset == 'phone' %}
+                                                <div id="status_phone">
+                                                    {% if lead.called %}
+                                                        <div class="alert alert-success" role="alert">
+                                                            <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>&nbsp;
+                                                            <span>completed</span>
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="alert alert-danger" role="alert">
+                                                            <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>&nbsp;
+                                                            <span>not completed</span>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            {% elseif isset == 'email' %}
+                                                <div id="status_email">
+                                                    {% if lead.written %}
+                                                        <div class="alert alert-success" role="alert">
+                                                            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;
+                                                            <span>completed</span>
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="alert alert-danger" role="alert">
+                                                            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;
+                                                            <span>not completed</span>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                        <button type="button" class="btn btn-danger js_commplete_test" data-lead_id="{{ lead.id }}">
+                                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                            <span>Ausführen</span>
+                                        </button>
+                                        <hr>
+                                        <p>Zweck "Follow-up"</p>
+                                        <button type="button" class="btn btn-info js_follow_up" data-lead_id="{{ lead.id }}">
+                                            <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                                            <span>Ernennen</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-7 content">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading block_title">Info</div>
+                                    <div class="panel-body">
+                                        <div class="block_phone top_block">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">Form Phone</div>
+                                                <div class="panel-body">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Telefon</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for k in lead.contacts if k.type == 'phone' %}
+                                                                <tr>
+                                                                    <td>
+                                                                        <p>{{ k.value }}</p>
+                                                                        <div class="call_wait">
+                                                                            <div class="block_f">
+                                                                                <div class="phone">Calling ...</div>
+                                                                                <div class="flex">
+                                                                                    <div class="load"></div>
+                                                                                    <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="block_f down">
+                                                                                <div class="phone"></div>
+                                                                                <div class="flex">
+                                                                                    <div></div>
+                                                                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <button class="btn btn-primary js_call_test" data-agent="{{ Auth.user.external_phone }}" data-to="{{ k.value }}" data-lead_id="{{ lead.id }}">
+                                                                            <span class="glyphicon glyphicon-earphone"></span>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                    <div class="page-header">
+                                                        <h3 style="text-align: center">History</h3>
+                                                    </div>
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Ablauf</th>
+                                                                <th>Call Time</th>
+                                                                <th class="flex-between">
+                                                                    Datum 
+                                                                    <button type="button" class="btn btn-primary js_reload_history_test" data-lead_id="{{ lead.id }}">
+                                                                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                                                                    </button>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="call_history">
+                                                            {% for item in lead.activity %}
+                                                                {% if item.type == 'call' %}
+                                                                    <tr>
+                                                                        <td>{{ item.direction ? 'Outbound' : 'Inbound' }}</td>
+                                                                        <td>4:45</td>
+                                                                        <td>{{ item.date_time|date('d-m-Y H:i:s') }}</td>
+                                                                    </tr>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="block_email top_block">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">Form Email</div>
+                                                <div class="panel-body">
+                                                    <form class="row js_email_test" data-lead_id="{{ lead.id }}">
+                                                        <input type="hidden" name="email_from" class="form-control" id="input_email_von" value="{{ user.email }}">
+                                                        <div class="col-xs-9">
+                                                            <div class="form-horizontal">
+                                                                <div class="form-group">
+                                                                  <label for="input_email_title" class="col-sm-2 control-label">Titel</label>
+                                                                  <div class="col-xs-10">
+                                                                    <input type="text" name="email_title" class="form-control" id="input_email_title">
+                                                                  </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="input_email_an" class="col-sm-2 control-label">In</label>
+                                                                    <div class="col-xs-10">
+                                                                        <div class="tooltip_search">
+                                                                            <input id="input_email_an" type="text" name="email_to" class="form-control" autocomplete="off">
+                                                                            <div style="margin-top: 5px">
+                                                                                {% for e in lead.contacts if e.type == 'email' %}
+                                                                                    <button type="button" class="btn btn-link btn-sm js_select_email">{{ e.value }}</button>
+                                                                                {% endfor %}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <textarea name="email_text" id="text_email" class="form-control"></textarea>
+                                                            <script>
+                                                                window.onload = function() {
+                                                                    CKEDITOR.replace('text_email', {
+                                                                        customConfig: '/static/js/faq/ckeditor_config.js'
+                                                                    });
+                                                                }
+                                                            </script>
+                                                        </div>
+                                                        <div class="col-xs-3">
+                                                            <div class="panel panel-default">
+                                                                <div class="panel-body">
+                                                                    <div class="page-header">
+                                                                        <h4 style="text-align: center">Text for Email</h4>
+                                                                    </div>
+                                                                    <button type="button" class="js_email_type">Signature</button>
+                                                                </div>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary button_send" style="margin-top: 10px; width: 100%;">Senden</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="block_info">
+                                            <div class="panel panel-primary">
+                                                <div class="panel-heading">Daten</div>
+                                                <div class="panel-body">
+                                                    <div class="datas">
+                                                        <h4>Kontaktdaten</h4>
+                                                        <table class="table table-bordered table-condensed">
+                                                            {% for k in lead.contacts %}
+                                                                <tr>
+                                                                    <td>{{ k.type=='phone'?'Telefon':'E-Mail' }}</td>
+                                                                    <td>{{ k.type=='phone'? k.value : k.value }}</td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </table>
+                                                        <hr/>
+                                                        {{ lead.desc }}
+                                                        <hr/>
+
+                                                        <h4>Kunde</h4>
+                                                        <div class='bg-warning'><p style='padding:15px;'>Keine Kundendaten</p></div>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="activities">
+                                                        <h4>Verlauf</h4>
+
+                                                        <table class="table table-condensed table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Typ</th>
+                                                                    <th>Ablauf</th>
+                                                                    <th>Datum</th>
+                                                                    <th>Mitarbeiter</th>
+                                                                    <th>Status</th>
+                                                                    <th>Endpunkt</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+
+                                                                {% for item in lead.activity %}
+                                                                    {% set  ans_call = item.answer_time %}
+
+                                                                    <tr data-id="{{ item.id}}" data-extid="{{ item.external_id }}">
+                                                                        <td>{{ item.type=='hws'?'MACS':(item.type=='eastwood'?'HWS':(item.type=='call'?'Anruf':item.type)) }}</td>
+                                                                        <td>{{ item.direction?'out':'in' }}</td>
+                                                                        <td>{{ item.date_time|date('d-m-Y H:i:s') }}</td>
+                                                                        <td>{{ item.mitarbeiter }}</td>
+
+                                                                        <td>{{ item.status?'<i class="fa fa-check"></i>':'<i class="fa fa-times"></i>' }}</td>
+                                                                        <td>
+                                                                            {% if item.type=='macs'  %}
+                                                                                {{ item.note|convert_encoding('UTF-8', 'ISO-8859-1')|nl2br }}
+                                                                            {% elseif item.type=='hws' %}
+                                                                                {{ item.note|raw }}
+                                                                            {% elseif item.type=='call' %}
+
+                                                                                {% for exti in item.external.abonents if exti.success%}
+                                                                                    {{ exti.destination~' - '~exti.description~'; ' }}
+                                                                                {% endfor %}
+                                                                            {% elseif item.type=='mail' %}
+                                                                                {% if item.source==5 %}
+                                                                                    {{ item.note|raw }}<br/>
+                                                                                {% endif %}
+                                                                                here will be a link if there is mail
+                                                                            {% endif %}
+                                                                        </td>
+                                                                    </tr>
+                                                                {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="panel panel-default fahrzeug">
+                                    <div class="panel-heading block_title">Fahrzeug</div>
+                                    <div class="panel-body">
+                                        {% for f in lead.fahrzeug %}
+                                            <div class="item">
+                                                <img class="media-object" src="/static/img/user.png" alt="...">
+                                                <div class="info">
+                                                    <h3>{{ f.fahrname }}</h3>
+                                                    <div class="flex-between">
+                                                        <div class="green">{{ f.price }}</div>
+                                                        <div class="tiny">{{ f.fahrgestellnummer }}</div>
+                                                    </div>
+                                                    <div class="param">
+                                                        <p><span class="label label-default">Farbe aussen:</span> {{ f.farbeaussen }}</p>
+                                                        <p><span class="label label-default">Farbe innen:</span> {{ f.farbeinnen }}</p>
+                                                    </div>
+                                                    <a href="#" class="btn btn-primary">sehen</a>
+                                                </div>
+                                            </div>
+                                        {% endfor %}    
+                                    </div>
+                                </div>
+                                <p></p>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading block_title">Follow Up</div>
+                                    <div class="panel-body">
+                                        {% for f in follow_ups %}
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    {{ f.date | date('d.m.Y') }}
+                                                </div>
+                                            </div><br>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-footer {{ lead.complete == 'not completed' ? 'red' : ''}}">
+                        <div class="panel-body"><strong>{{ lead.complete == 'not completed' ? 'Not completed' : 'completed'}}</strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                
+    <div class="modal fade" id="follow_up_modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <form id="follow_up_form_test" class="modal-content">
+                <div class="insert_lead"></div>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">"Follow UP" und ausführen</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel panel-default">
+                        <div class="panel-heading block_title">Datum auswählen</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <button type="button" class="btn btn-default js_follow_day_select" data-date="{{ follow_up.tommorow }}">Morgen</button>
+                                </div>
+                                <div class="col-xs-4">
+                                    <button type="button" class="btn btn-default js_follow_day_select" data-date="{{ follow_up.day3 }}">Nach 3 Tagen</button>
+                                </div>
+                                <div class="col-xs-4">
+                                    <button type="button" class="btn btn-default js_follow_day_select" data-date="{{ follow_up.week }}">In einer Woche</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-inline">
+                        <div class="form-group">
+                          <label>Datum &nbsp;</label>
+                          <input type="text" class="form-control datepicker" name="date" required style="font-size: 16px">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
+                    <button type="submit" class="btn btn-primary">Ausführen</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

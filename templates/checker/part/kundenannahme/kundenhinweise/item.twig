@@ -1,0 +1,35 @@
+<div id="kundenhinweise_item_{{ method }}_{{ (method == 'edit') ? item.id : '' }}" class="item panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+            {% if method == 'edit' %}
+                {% include 'checker/part/kundenannahme/kundenhinweise/template/blocks/head/edit.twig' with {'item': item} %}
+            {% elseif method == 'insert' %}
+                <div class="col-xs-10">Neu Kundenhinweise</div>
+                <div class="col-xs-2 flex_right">
+                    <button type="button" class="btn btn-danger js_remove_kundenhinweise" data-first_create="ok">-</button>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="panel-body">
+        {% if method == 'edit' %}
+            <div class="work_block">
+                <div class="w_block">
+                    <div class="icon">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                    </div>
+                    <div class="title">{{ item.title }}</div>
+                </div>
+            </div>
+        {% elseif method == 'insert' %}
+            <form id="js_kundenhinweise_add_complete" class="form-inline">
+                {% if in_modal == 'true' %}
+                    <input type="hidden" name="in_modal" value="ok">
+                {% endif %}
+                <input type="text" class="form-control" style="width: 50%" placeholder="Bemerkungen" required>
+                <input type="hidden" name="step" value="{{ step }}">
+                <button type="submit" class="btn btn-primary">erstellen</button>
+            </form>
+        {% endif %}
+    </div>
+</div>

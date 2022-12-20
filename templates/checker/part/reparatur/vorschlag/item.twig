@@ -1,0 +1,11 @@
+<div id="vorschlag_item_{{ item.id }}" class="item panel panel-default">
+    <div class="panel-heading flex-between">
+        <button type="button" class="btn btn-warning js_vorschlag_set" data-id="{{ item.id }}">bestätigen Sie</button>
+    </div>
+    <div class="panel-body flex-between">
+        <span>{{ item.title }}</span>
+        <div class="label label-default">
+            {{ item.status == 'success' ? '<i class="fa fa-check"></i>&nbsp;<span> abgeschlossen</span>' : '<i class="fa fa-times"></i>&nbsp;<span> nicht abgeschlossen</span>' }}
+        </div>
+    </div>
+</div>

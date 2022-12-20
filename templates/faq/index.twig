@@ -1,0 +1,44 @@
+{% extends "faq/base.twig" %}
+{% set title = 'FAQs' %}
+
+{% block wrapper %}
+    <div class="page_faq">
+        <form action="{{ path_for('faqs.search-result') }}" class="searh_block" method="get">
+            <h2>Artikel suchen</h2>
+            <div class="row">
+                <div class="col-xs-2"></div>
+                <div class="col-xs-8">
+                    <div class="relative">
+                        <div id="search_loader" class="loader" style="display: none;"></div>
+                        <div class="input-group">
+                            <input id="search_input" type="text" class="form-control" autocomplete="off">
+                            <input id="search_input_hidden" type="hidden" name="id">
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-primary">suchen</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-2"></div>
+            </div>
+        </form>
+            
+        <small>Deutsches Ipsum Dolor sit amet, Die Toten Hosen adipiscing elit, sed do eiusmod Bier incididunt ut labore et dolore Bratwurst aliqua. Ut enim ad minim Schnaps quis nostrud exercitation ullamco laboris Grimms Märchen ut aliquip ex ea commodo Doppelscheren-Hubtischwagen Duis aute irure dolor in Knappwurst in voluptate velit esse cillum Lebensabschnittsgefährte eu fugiat nulla pariatur. Excepteur Helmut Kohl occaecat cupidatat non proident, sunt Deutsche Mark culpa qui officia deserunt mollit Apfelstrudel id est laborum</small>
+        <div class="block_80">
+            <div class="row">
+                <div class="col-sm-12">
+                    {% for item in categories %}
+                        <div class="col-xs-12 col-md-4">
+                            <div class="panel panel-default bn">
+                                <div class="panel-heading">
+                                    <div class="title">{{ item.title }}</div>
+                                    <a href="{{ path_for('faqs.categories', { id: item.id }) }}" class="btn btn-primary">Alle anzeigen</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

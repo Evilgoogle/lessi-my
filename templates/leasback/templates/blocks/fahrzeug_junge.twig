@@ -1,0 +1,131 @@
+{#<div class="panel panel-default main_panel">
+    <div class="panel-heading flex">
+        Kosyfa Daten
+        <button type="button" class="btn btn-primary btn-sm js_fahrzeug" data-id="{{ leasback.lb.id }}" data-db="junge">+</button>
+    </div>
+    <div class="block">
+        {% if leasback.attach_fahrzeug_junge is not null %}
+            <table class="panel-body table table-condensed">
+                <tbody class="head_data">
+                    <tr>
+                        <td>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>Seller</th>
+                                        <td class="text_right">{{ leasback.attach_fahrzeug_junge.seller }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Data</th>
+                                        <td class="text_right">
+                                            <span class="label label-default"><u>Mbg:</u> {{ leasback.attach_fahrzeug_junge.mbg }}</span>
+                                            <span class="label label-default"><u>Deposit:</u> {{ leasback.attach_fahrzeug_junge.deposit }}</span>
+                                            <span class="label label-default"><u>Residual:</u> {{ leasback.attach_fahrzeug_junge.residual }}</span>
+                                            <span class="label label-default"><u>Saldo:</u> {{ leasback.attach_fahrzeug_junge.saldo }}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Datum</th>
+                                        <td class="text_right">
+                                            <span class="label label-default"><u>Maturity:</u> {{ leasback.attach_fahrzeug_junge.final_maturity_at | date('d.m.Y') }}</span>
+                                            <span class="label label-default"><u>Approval:</u> {{ leasback.attach_fahrzeug_junge.approval_ln_at | date('d.m.Y') }}</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>Mark</th>
+                                        <td class="text_right">{{ leasback.attach_fahrzeug_junge.mark }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>FIN</th>
+                                        <td class="text_right">{{ leasback.attach_fahrzeug_junge.fin }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Customer</th>
+                                        <td class="text_right">
+                                            {{ leasback.attach_fahrzeug_junge.customer_type }}<br>
+                                            {{ leasback.attach_fahrzeug_junge.customer_name }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        {% else %}
+            <p style="padding: 10px;"><u>nicht gefunden</u></p>
+        {% endif %}
+    </div>
+</div>#}
+
+<div class="panel panel-default main_panel">
+    <div class="panel-heading flex_between">
+        Kosyfa Daten
+        <button type="button" class="btn btn-primary btn-sm js_fahrzeug" data-id="{{ customer.id }}" data-db="junge">+</button>
+    </div>
+    <div class="block">
+        {% if fahrzeug is not null %}
+            <table class="panel-body table table-condensed">
+                <tbody class="head_data">
+                    <tr>
+                        <td>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>Seller</th>
+                                        <td class="text_right">{{ fahrzeug.seller }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Data</th>
+                                        <td class="text_right">
+                                            <span class="label label-default"><u>Mbg:</u> {{ fahrzeug.mbg }}</span>
+                                            <span class="label label-default"><u>Deposit:</u> {{ fahrzeug.deposit }}</span>
+                                            <span class="label label-default"><u>Residual:</u> {{ fahrzeug.residual }}</span>
+                                            <span class="label label-default"><u>Saldo:</u> {{ fahrzeug.saldo }}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Datum</th>
+                                        <td class="text_right">
+                                            <span class="label label-default"><u>Maturity:</u> {{ fahrzeug.final_maturity_at | date('d.m.Y') }}</span>
+                                            <span class="label label-default"><u>Approval:</u> {{ fahrzeug.approval_ln_at | date('d.m.Y') }}</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>Mark</th>
+                                        <td class="text_right">{{ fahrzeug.mark }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>FIN</th>
+                                        <td class="text_right">{{ fahrzeug.fin }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Customer</th>
+                                        <td class="text_right">
+                                            {{ fahrzeug.customer_type }}<br>
+                                            {{ fahrzeug.customer_name }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        {% else %}
+            <p style="padding: 10px;"><u>nicht gefunden</u></p>
+        {% endif %}
+    </div>
+</div>

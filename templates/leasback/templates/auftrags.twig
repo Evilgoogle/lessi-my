@@ -1,0 +1,28 @@
+<table class="table">
+    <thead>
+	<tr>
+	    <th scope="col">Nummer</th>
+	    <th scope="col">Status</th>
+	    <th scope="col">Typ</th>
+	    <th scope="col">Anlieferung</th>
+	    <th scope="col">Annahme</th>
+	    <th scope="col">Vermerk</th>
+	    <th scope="col">Action</th>
+	</tr>
+    </thead>
+    <tbody>
+    {% for auft in auftrags %}
+	<tr>
+	    <td>{{ auft.AUFTRAGSNR }}</td>
+	    <td>{{ auft.status.BEZEICHNUNG }}</td>
+	    <td>{{ auft.typ.BEZEICHNUNG }}</td>
+	    <td>{{ auft.ANLIEFERUNG|date('d.m.Y') }}</td>
+	    <td>{{ auft.ANNAHME|date('d.m.Y') }}</td>
+	    <td>{{ auft.VERMERK|mb_convert_encoding }}</td>
+	    <td>
+		<button data-id="{{ auft.AUFTRAGSNR }}" type="button" class="btn btn-primary btn-xs lsBtn js_attach_auftrag" data-auftrag_id="{{ auft.AUFTRAGID }}">Attach</button>
+	    </td>
+	</tr>
+    {% endfor %}
+    </tbody>
+</table>

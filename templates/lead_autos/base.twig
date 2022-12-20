@@ -1,0 +1,50 @@
+{%extends "layout.twig"%}
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/static/admin/css/main.css">
+    <link rel="stylesheet" href="/static/css/dispo.css">
+    <link rel="stylesheet" href="/static/css/lead_autos/style.css">
+{% endblock %}
+
+{% block content %}
+    
+    <div id="wrapper">
+        {% include 'partial/main_menu.twig' %}
+
+        <div id="page-wrapper" class="gray-bg" style="padding-bottom: 200px;">
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-left">
+                    </ul>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <a href="/logout">
+                                <i class="fa fa-sign-out"></i> Log out
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>{{ title }}</h2>
+                </div>
+            </div>
+
+            <div class="wrapper wrapper-content animated fadeIn">
+                <div class="row">
+                    {% block wrapper %}{% endblock %}
+                </div>
+            </div>
+	</div>
+
+    </div>
+
+    <script src="/static/js/ckeditor/ckeditor.js"></script>
+    <script src='/static/js/lead_autos/main.js'></script>
+
+{% endblock %}

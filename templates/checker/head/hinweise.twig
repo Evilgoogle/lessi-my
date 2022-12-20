@@ -1,0 +1,83 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Aufgaben</div>
+    <div class="panel-body">
+        <div class="row hinweises_block">
+            {#<div class="col-xs-12">
+                <ul class="list-group">
+                    <li class="list-group-item main js_hinweise_head_more" data-type="angebot" data-auftragnr="{{ auftrag.auftragnr }}">
+                        <i class="fas fa-file-contract icon_hinweises"></i>
+                        <span class="badge">{{ hinweise_counts.angebot }}</span>
+                    </li>
+                </ul>
+            </div>#}
+            <div class="col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Technihe Hinweise</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="main js_quests_modal alert alert-success" role="alert" data-type="success" data-step="{{ step }}" data-auftragnr="{{ auftrag.auftragnr }}">
+                                    <i class="fas fa-cog icon_hinweises"></i>
+                                    <span class="badge">Abgeschlossen (<span id="head_hinweise_success">{{ auftrag.kundenhinweises().where('status', 'success').count }}</span>)</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="main js_quests_modal alert alert-danger" role="alert" data-type="notcompleted" data-step="{{ step }}" data-auftragnr="{{ auftrag.auftragnr }}">
+                                    <i class="fas fa-cog icon_hinweises"></i>
+                                    <span class="badge">Nicht abgeschlossen (<span id="head_hinweise_notcompleted">{{ auftrag.kundenhinweises().where('status', 'notcompleted').count }}</span>)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#<table class="panel-body table table-condensed">
+	<thead>
+	    <tr>
+		<th>Type</th>
+		<th>Count</th>
+		<th>Action</th>
+	    </tr>
+	</thead>
+	<tbody>
+            <tr>
+                <td>
+                    <i class="fas fa-file-contract icon_hinweises"></i>
+                </td>
+                <td>{{ hinweise_counts.angebot }}</td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-xs js_hinweise_head_more" data-type="angebot" data-auftragnr="{{ auftrag.auftragnr }}">more</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <i class="fas fa-cog icon_hinweises"></i>
+                </td>
+                <td>{{ hinweise_counts.technische }}</td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-xs js_hinweise_head_more" data-type="technische" data-auftragnr="{{ auftrag.auftragnr }}">more</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <i class="fas fa-info-circle icon_hinweises"></i>
+                </td>
+                <td>{{ hinweise_counts.fahrzeugnutzung }}</td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-xs js_hinweise_head_more" data-type="fahrzeugnutzung" data-auftragnr="{{ auftrag.auftragnr }}">more</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <i class="fas fa-user icon_hinweises"></i>
+                </td>
+                <td>{{ hinweise_counts.serviceberater }}</td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-xs js_hinweise_head_more" data-type="serviceberater" data-auftragnr="{{ auftrag.auftragnr }}">more</button>
+                </td>
+            </tr>
+	</tbody>
+    </table>#}
+</div>

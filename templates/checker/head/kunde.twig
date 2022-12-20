@@ -1,0 +1,141 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Kundeninfos</div>
+    <table class="panel-body table table-condensed">
+	<tbody class="head_data">
+	    <tr>
+		<th>NR</th>
+		<td>{{ auftrag.kunde.kundennr }}</td>
+	    </tr>
+	    <tr>
+		<th>Name</th>
+		<td>
+                    {{ auftrag.kunde.kurzname }}
+		    <br/>
+                    {{ auftrag.kunde.anrede }}
+                    {{ auftrag.kunde.name }}
+                </td>
+	    </tr>
+            <tr>
+                <th>Kontakt</th>
+                <td>
+                    <dl>
+                        {% for komm in auftrag.kunde.comm %}
+                            <dt>{{ komm.type }}</dt>
+                            <dd>
+                                {{ komm.val}}
+                                {% if komm.type_id<=4 %}
+                                    <span class="btn btn-default btn-xs"  onclick="click2contact.makeCall('{{ komm.val|trim}}', '{{Auth.user.external_phone}}')">Anruf</span>
+                                {% else %}
+                                    <span class="btn btn-default btn-xs"  onclick="click2contact.sendMail('{{ komm.val|trim}}')">Mail</span>
+                                {% endif %}
+                            </dd>
+                        {% endfor %}
+                        <br>
+                        <p>Kontakt erlaubt per: 
+                        {% for ter in auftrag.kunde.dse %}
+                            <u>{{ ter.type }}</u>
+                        {% else %}
+                            <u>DSGVO nicht unterschrieben</u>
+                        {% endfor %}
+                        <p>Datenshutz:
+                            {{ auftrag.kunde.datenshutz.brief ?'<i class="fa fa-envelope" title="Brief"></i>' : '' }}
+                            {{ auftrag.kunde.datenshutz.mail ? '<i class="fa fa-at" title="Mail"></i>' : '' }}
+                            {{ auftrag.kunde.datenshutz.sms ? '<i class="fa fa-sms" title="SMS"></i>' : '' }}
+                            {{ auftrag.kunde.datenshutz.telefon ? '<i class="fa fa-phone" title="Telefon"></i>' : '' }}
+                        </p>
+                    </dl>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse_kunde" aria-expanded="false" aria-controls="collapseExample">Details</button>
+                    <div id="collapse_kunde" class="collapse">
+                        <ul class="list-group kontakter_datenshutz">
+                            <li class="list-group-item head">
+                                Datenshutz
+                            </li>
+                            <li class="list-group-item">
+                                <table style="width: 100%; margin: 10px 0 10px 0;">
+                                    <tbody>
+                                        <tr>
+                                            <td>{{ auftrag.fahrzeug.mark  }}</td>
+                                            <td class="flex_right">
+                                                {{ auftrag.kunde.datenshutz.brief ?'<i class="fa fa-envelope" title="Brief"></i>' : '' }}
+                                                {{ auftrag.kunde.datenshutz.mail ? '<i class="fa fa-at" title="Mail"></i>' : '' }}
+                                                {{ auftrag.kunde.datenshutz.sms ? '<i class="fa fa-sms" title="SMS"></i>' : '' }}
+                                                {{ auftrag.kunde.datenshutz.telefon ? '<i class="fa fa-phone" title="Telefon"></i>' : '' }}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </li>
+                        </ul>
+                        <ul class="list-group kontakter_datenshutz">
+                            <li class="list-group-item head">
+                                Kontakter
+                            </li>
+                            <li class="list-group-item">
+                                <table style="width: 100%; margin: 10px 0 10px 0;">
+                                    <tr>
+                                        <td>
+                                            <table style="width:100%; margin:0;">
+                                                <tbody>
+                                                    {% for ter in auftrag.kunde.dse %}
+                                                        {# {% for ter in auftrag.kunde.kontaktTer %}#}
+                                                        <tr>
+                                                            <td>
+                                                                <table class="table table-condensed table-bordered" style="margin:0 0 10px 0;">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            {# <td>{{ ter.KONTAKTERLAUBNISHISTOID }}</td>#}
+                                                                            <td>{{ ter.date|date('d-m-Y H:i') }}</td>
+                                                                            {# <td>{{ ter.PERMISSIONS }}</td> #}
+                                                                            <td><i class="fa fa-{{ ter.val?'check':'times'}}"></i></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            {% if ter.type|trim=='DSE unterschrieben' %}
+                                                                                <td>DSGVO unterschrieben</td>
+                                                                            {% else %}
+                                                                                <td>{{ ter.type }}</td>
+                                                                            {% endif %}
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    {% else %}
+                                                        <tr class="danger">
+                                                            <td>
+                                                                <i class="fa fa-times"></i>
+                                                                DSGVO nicht unterschrieben
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                        </div>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <table class="table table-condensed table-bordered" style="width: 100%; margin:0;">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>Adresse</th>
+                                                        <td>
+                                                            {{ auftrag.kunde.address|raw }}
+                                                        </td>
+                                                    </tr>
+                                                 </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+	</tbody>
+    </table>
+</div>

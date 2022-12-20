@@ -1,0 +1,209 @@
+.percent_wrap {
+  display: flex;
+  height: 56px; }
+  .percent_wrap .percent {
+    width: 20%;
+    height: 100%;
+    color: #000;
+    padding: 0 2px;
+    filter: opacity(0.5);
+    font-size: 14px; }
+    .percent_wrap .percent .border {
+      height: 100%;
+      border: 1px solid #b5bbc9;
+      padding: 6px 12px;
+      display: block; }
+    .percent_wrap .percent .top {
+      display: flex;
+      align-items: center; }
+      .percent_wrap .percent .top i {
+        margin-right: 5px; }
+    .percent_wrap .percent .time {
+      display: block;
+      margin-top: 5px; }
+  .percent_wrap .success {
+    background: #0fc70f;
+    color: white; }
+  .percent_wrap .active {
+    filter: opacity(1); }
+
+.pr-red {
+  background: red;
+  color: white; }
+
+.pr-white {
+  background: white; }
+
+.text_right {
+  text-align: right; }
+
+.flex {
+  display: flex; }
+
+.flex_between {
+  display: flex;
+  justify-content: space-between; }
+
+.leasback {
+  border: 1px solid #cdcdcd;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.1); }
+  .leasback .main_panel .panel-heading {
+    height: 50px; }
+  .leasback .main_panel .block {
+    height: 170px; }
+    @media only screen and (max-width: 1919px) {
+      .leasback .main_panel .block {
+        height: 220px; } }
+    @media only screen and (max-width: 1919px) {
+      .leasback .main_panel .block {
+        height: 245px; } }
+    .leasback .main_panel .block table {
+      height: 100%; }
+      .leasback .main_panel .block table tbody {
+        height: 100%; }
+  .leasback .label {
+    font-size: 13px;
+    margin-bottom: 3px;
+    display: inline-block;
+    font-weight: normal; }
+
+.leas_info_params {
+  margin: 15px 0px; }
+  .leas_info_params div {
+    display: inline-block;
+    width: 45%; }
+
+.leasback_block {
+  border: 3px solid #ccc;
+  border-radius: 10px;
+  padding: 10px 20px; }
+
+.leasback_step_block .controller {
+  margin-bottom: 20px; }
+.leasback_step_block .damage_block {
+  width: 236px;
+  height: 100%;
+  position: relative; }
+  .leasback_step_block .damage_block .tag {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: .5; }
+    .leasback_step_block .damage_block .tag:hover {
+      background: gray; }
+    .leasback_step_block .damage_block .tag .detectDamage {
+      background: red; }
+  .leasback_step_block .damage_block .active {
+    background: red; }
+  .leasback_step_block .damage_block .p31-1 {
+    top: 55px;
+    left: 92px; }
+  .leasback_step_block .damage_block .p33-1 {
+    top: 284px;
+    left: 92px; }
+  .leasback_step_block .damage_block .p34-1 {
+    top: 508px;
+    left: 92px; }
+  .leasback_step_block .damage_block .s1-1 {
+    top: 171px;
+    left: 92px; }
+  .leasback_step_block .damage_block .s2-1 {
+    top: 255px;
+    left: 5px; }
+  .leasback_step_block .damage_block .s3-1 {
+    top: 328px;
+    left: 5px; }
+  .leasback_step_block .damage_block .s4-1 {
+    top: 435px;
+    left: 93px; }
+  .leasback_step_block .damage_block .s5-1 {
+    top: 328px;
+    right: 5px; }
+  .leasback_step_block .damage_block .s6-1 {
+    top: 255px;
+    right: 5px; }
+  .leasback_step_block .damage_block .p01-2 {
+    top: 57px;
+    right: 9px; }
+  .leasback_step_block .damage_block .p02-2 {
+    top: 502px;
+    left: 11px; }
+  .leasback_step_block .damage_block .p03-2 {
+    top: 5px;
+    left: 10px; }
+  .leasback_step_block .damage_block .p05-2 {
+    top: 219px;
+    left: 10px; }
+  .leasback_step_block .damage_block .p07-2 {
+    top: 348px;
+    left: 10px; }
+  .leasback_step_block .damage_block .p09-2 {
+    top: 125px;
+    right: 9px; }
+  .leasback_step_block .damage_block .p11-2 {
+    top: 440px;
+    left: 11px; }
+  .leasback_step_block .damage_block .p13-2 {
+    top: 194px;
+    right: 9px; }
+  .leasback_step_block .damage_block .p17-2 {
+    top: 415px;
+    right: 9px; }
+  .leasback_step_block .damage_block .p23-2 {
+    top: 282px;
+    left: 10px; }
+  .leasback_step_block .damage_block .p26-2 {
+    top: 516px;
+    right: 9px; }
+  .leasback_step_block .damage_block .p01-3 {
+    top: 57px;
+    left: 11px; }
+  .leasback_step_block .damage_block .p02-3 {
+    top: 502px;
+    right: 9px; }
+  .leasback_step_block .damage_block .p03-3 {
+    top: 5px;
+    right: 9px; }
+  .leasback_step_block .damage_block .p06-3 {
+    top: 219px;
+    right: 9px; }
+  .leasback_step_block .damage_block .p08-3 {
+    top: 348px;
+    right: 9px; }
+  .leasback_step_block .damage_block .p10-3 {
+    top: 124px;
+    left: 11px; }
+  .leasback_step_block .damage_block .p12-3 {
+    top: 440px;
+    right: 8px; }
+  .leasback_step_block .damage_block .p14-3 {
+    top: 194px;
+    left: 11px; }
+  .leasback_step_block .damage_block .p18-3 {
+    top: 414px;
+    left: 11px; }
+  .leasback_step_block .damage_block .p24-3 {
+    top: 282px;
+    right: 8px; }
+  .leasback_step_block .damage_block .p26-3 {
+    top: 516px;
+    left: 11px; }
+.leasback_step_block .kosten_block {
+  margin-top: 20px; }
+
+.filemanager_insert .filemanager_info img {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  object-fit: cover;
+  background-color: #eee;
+  border-radius: 10px;
+  padding: 5px;
+  border: 1px solid #ddd; }
+
+/*# sourceMappingURL=main.css.map */

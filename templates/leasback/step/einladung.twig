@@ -1,0 +1,24 @@
+{% extends "leasback/step_layout.twig" %}
+
+{% block step %}
+    
+    <div class="leasback_step_block" style="background-color: white; padding: 20px 0 0;">
+        <div class="controller container-fluid">
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-primary js_save" data-type="open" data-leasback_id="{{ leasback.id }}" data-step="einladung">Fertig</button>
+                <button type="button" class="btn btn-danger js_save" data-type="close" data-leasback_id="{{ leasback.id }}" data-step="einladung">Ablehnen</button>
+            </div>
+        </div>
+        
+        <div role="tabpanel" class="tab-pane container-fluid active">
+            <div class="panel panel-default main_panel">
+                <div class="panel-heading">E-Mail an den Kunden senden</div>
+                <div class="panel-body">
+                  <button type="button" class="btn btn-primary js_einladung_mail" data-leasback_id="{{ leasback.id }}">Senden</button>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}        

@@ -1,0 +1,117 @@
+{% extends "lead_autos/base.twig" %}
+{% set title = 'Leads Leader | Add Lead' %}
+
+{% block wrapper %}
+
+    <style>
+        .block {
+            margin-top: 10px;
+        }
+    </style>
+    
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <form action="{{ path_for('leads_auto.test.insert') }}" method="post">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary js_add_phone">+</button>
+                        <label>Phones</label>
+                        <div id="phones" class="block">
+                            <p style="display: flex;">
+                                <input type="text" class="form-control" name="phone[]" required>
+                                <button type="button" class="btn btn-danger js_minus_phone">-</button>
+                            </p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary js_add_email">+</button>
+                        <label>Emails</label>
+                        <div id="emails" class="block">
+                            <p style="display: flex;">
+                                <input type="text" class="form-control" name="email[]" required>
+                                <button type="button" class="btn btn-danger js_minus_email">-</button>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea name="desc" class="form-control"></textarea>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary js_add_fahrzeug">+</button>
+                        <label>Fahrzeug</label>
+                        <div id="fahrzeug" class="block"></div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary js_add_verlauf">+</button>
+                        <label>Verlauf</label>
+                        <div id="verlauf" class="block"></div>
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+                    
+    <script>
+        $('.js_add_phone').click(function() {
+            $('#phones').append('<p style="display: flex;">'+
+                '<input type="text" class="form-control" name="phone[]" required>'+
+                '<button type="button" class="btn btn-danger js_minus_phone">-</button>'+
+            '</p>');
+        });
+        $(document).on('click', '.js_minus_email', function(e) {
+            $(e.target).closest('p').remove();
+        });
+        
+        $('.js_add_email').click(function() {
+            $('#emails').append('<p style="display: flex;">'+
+                '<input type="text" class="form-control" name="email[]" required>'+
+                '<button type="button" class="btn btn-danger js_minus_email">-</button>'+
+            '</p>');
+        });
+        $(document).on('click', '.js_minus_phone', function(e) {
+            $(e.target).closest('p').remove();
+        });
+        
+        var i = 0;
+        $('.js_add_fahrzeug').click(function() {
+            i++;
+            $('#fahrzeug').append('<p style="padding: 10px;border: 1px solid#ddd;border-radius: 10px;">'+
+                '<input type="text" class="form-control" name="fahrzeug['+i+'][fahrname]" placeholder="fahrname" required>'+
+                '<input type="text" class="form-control" name="fahrzeug['+i+'][fahrgestellnummer]" placeholder="fahrgestellnummer" required>'+
+                '<button type="button" class="btn btn-danger js_minus_fahrzeug" style="margin-top: 10px">-</button>'+
+            '</p>');
+        });
+        $(document).on('click', '.js_minus_fahrzeug', function(e) {
+            $(e.target).closest('p').remove();
+        });
+
+        var v = 0;
+        $('.js_add_verlauf').click(function() {
+            v++;
+            var type = ['mail', 'call'];
+            var rand_type = Math.random()*type.length | 0;
+            var types = type[rand_type];
+
+            var datum = new Date().toString();
+
+            var mitarbeiter = ['Jone', 'Aizek', 'Tom', 'Kristy'];
+            var rand_mitarbeiter = Math.random()*mitarbeiter.length | 0;
+            var mitarbeiters = mitarbeiter[rand_mitarbeiter];
+
+            $('#verlauf').append('<p style="padding: 10px;border: 1px solid#ddd;border-radius: 10px;">'+
+                '<input type="text" class="form-control" name="verlauf['+v+'][type]" value="'+types+'">'+
+                '<input type="text" class="form-control" name="verlauf['+v+'][datum]" value="'+datum+'">'+
+                '<input type="text" class="form-control" name="verlauf['+v+'][mitarbeiter]" value="'+mitarbeiters+'">'+
+                '<button type="button" class="btn btn-danger js_minus_verlauf" style="margin-top: 10px">-</button>'+
+                '</p>');
+        });
+        $(document).on('click', '.js_minus_verlauf', function(e) {
+            $(e.target).closest('p').remove();
+        });
+    </script>
+{% endblock %}

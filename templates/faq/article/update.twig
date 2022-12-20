@@ -1,0 +1,126 @@
+{% extends "faq/base.twig" %}
+{% set title = 'Artikel aktualisieren' %}
+
+{% block wrapper %}
+    <div class="row">
+        <div class="col-lg-12 p-md">
+            <a href="{{ path_for('faqs.article.page') }}" class="backLink">
+                <i class="fa fa-arrow-left"></i> 
+                {{ lang.btn.back }}
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Artikel parameter</h5>
+                </div>
+                <div class="ibox-content">
+                    <form method="post" action="{{ path_for('faqs.article.update') }}" class="form-horizontal">
+                        <input type="hidden" name="id" value="{{ article.id }}">
+                        <div class="form-group {{ errors.category_id ? 'has-error' : '' }}">
+                            <label for="inputId" class="control-label col-xs-2">Category</label>
+                            <div class="col-xs-10">
+                                <select name="category" id="inputId" class="form-control">
+                                    <option value="">Please select</option>
+                                    {{ category | raw }}
+                                </select>
+                                {% if errors.category %}
+                                    <span class="help-block">{{ errors.category | first }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group {{ errors.title ? 'has-error' : '' }}">
+                            <label for="inputTitle" class="control-label col-xs-2">Titel</label>
+                            <div class="col-xs-10">
+                                <input name="title" id="inputTitle" class="form-control" value="{{ article.title }}" placeholder="Titel"  autofocus>
+                                {% if errors.title %}
+                                    <span class="help-block">{{ errors.title | first }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group {{ errors.description ? 'has-error' : '' }}">
+                            <label for="inputDescription" class="control-label col-xs-2">Bezeichnung</label>
+                            <div class="col-xs-10">
+                                <textarea name="description" id="text" class="form-control" value="{{ article.description }}" placeholder="Bezeichnung"  autofocus>{{ article.description | raw }}</textarea>
+                                <script>
+                                    window.onload = function() {
+                                        CKEDITOR.replace('text', {
+                                            customConfig: '/static/js/faq/ckeditor_config.js'
+                                        });
+                                    }
+                                </script>
+                                {% if errors.description %}
+                                    <span class="help-block">{{ errors.description|first }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <input type="hidden" id="tags" name="keywords" value="{{ keywords | join(',') }}">
+                        <div class="form-group {{ errors.keywords ? 'has-error' : '' }}">
+                            <label for="inputArticleKeywords" class="control-label col-xs-2">{{ lang.article.keyword }}</label>
+                            <div class="col-xs-10">
+                                <div class="tags-and-input">
+                                    {% for keyword in keywords %}
+                                        <span class="tag" data-value="{{ keyword }}">{{ keyword }}<i class="fas fa-times-circle"></i></span>
+                                    {% endfor %}
+                                    <input type="text" class="form-control input" id="inputArticleKeywords">
+                                </div>
+                                {% if errors.keywords %}
+                                    <span class="help-block">{{ errors.keywords|first }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                            
+                        {{ csrf.field | raw }}
+                        <button class="btn btn-primary " type="submit">{{ lang.btn.save }}</button>
+                    </form>
+                    
+                    <h4 style="margin-top: 30px">Artikel kommentare</h4>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in comments %}
+                            <tr data-id="{{ item.id }}">
+                                <td style="width: 25%">comment #{{ item.id }}</td>
+                                <td style="width: 25%">{{ item.getUserData().name }}</td>
+                                <td class="table-controls" >
+                                    <a href="/faqs/articles/comments/{{ article.id }}/edit/{{ item.id }}" class="btn btn-default" >{{ lang.btn.update }}</a>
+                                    <a href="/faqs/articles/comments/{{ article.id }}/delete/{{ item.id }}" class="btn btn-danger js_del">-</a>
+                                </td>
+                            </tr>
+                        {%endfor%}
+                        </tbody>
+                    </table>
+
+                    <script>
+                        $(document).on('click', '.js_del', function (e) {
+                            e.preventDefault();
+
+                            Swal.fire({
+                                title: 'Wirklich löschen?',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#1ab394',
+                                cancelButtonColor: '#f8ac59',
+                                confirmButtonText: 'Ja',
+                                cancelButtonText: 'Nein'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href = e.target.href;
+                                    }
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

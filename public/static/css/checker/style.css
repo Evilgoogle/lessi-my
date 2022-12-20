@@ -1,0 +1,444 @@
+@charset "UTF-8";
+.icon_hinweises {
+  font-size: 20px; }
+
+.form-control {
+  font-size: 16px; }
+  @media only screen and (max-width: 799px) {
+    .form-control {
+      font-size: 14px; } }
+
+.flex {
+  display: flex; }
+
+.flex_right {
+  display: flex;
+  justify-content: flex-end; }
+
+.flex-between {
+  display: flex;
+  justify-content: space-between; }
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end; }
+
+.flex-center {
+  display: flex;
+  justify-content: center; }
+
+.flex-align {
+  display: flex;
+  align-items: center; }
+
+.black_fon {
+  width: 100%;
+  height: 20px;
+  background-color: #e1e1e1;
+  display: block; }
+
+.white_fon {
+  background-color: #ffffff; }
+
+.btn i, .btn span {
+  pointer-events: none; }
+
+@keyframes spin {
+  0% {
+    transform: rotate(0); }
+  50% {
+    transform: rotate(180deg); }
+  100% {
+    transform: rotate(360deg); } }
+.kontakter_datenshutz {
+  padding-top: 20px; }
+  .kontakter_datenshutz .head {
+    background-color: #f7f8f9;
+    border-color: #e7eaec; }
+  .kontakter_datenshutz i {
+    font-size: 25px;
+    margin: 0 5px; }
+
+.not_notcompleted_hinweise {
+  background-color: #f15050 !important; }
+  .not_notcompleted_hinweise .status_block {
+    color: white; }
+
+.not_success_hinweise {
+  background-color: #71b5a7 !important; }
+  .not_success_hinweise .status_block {
+    color: white; }
+
+.hinweises_block .col-xs-12 {
+  margin: 5px 0; }
+.hinweises_block .list-group {
+  margin: 0; }
+.hinweises_block .main {
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer; }
+  .hinweises_block .main .icon_hinweises {
+    font-size: 25px; }
+  .hinweises_block .main span, .hinweises_block .main i {
+    pointer-events: none; }
+  .hinweises_block .main span {
+    font-size: 15px;
+    background-color: #ffffff; }
+.hinweises_block button {
+  width: 100%; }
+
+#auf_tabs {
+  display: flex; }
+  #auf_tabs li a {
+    height: 100%; }
+    #auf_tabs li a p {
+      margin: 0; }
+
+.checker_step_block .item .panel-heading {
+  background-color: #d2dce3;
+  border: 1px solid #fff; }
+.checker_step_block .switch_button button {
+  width: 50%;
+  display: inline-block; }
+.checker_step_block .switch_button3 button {
+  width: 33.3%;
+  display: inline-block; }
+.checker_step_block .execute {
+  display: flex; }
+  .checker_step_block .execute .label {
+    display: flex;
+    align-items: center; }
+  .checker_step_block .execute button {
+    width: 80px;
+    height: 30px;
+    margin-left: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+.checker_step_block .loader {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 3px solid #4a4a4a;
+  animation: spin 1s linear infinite;
+  display: block; }
+.checker_step_block .work_block {
+  display: flex;
+  align-items: flex-end; }
+  .checker_step_block .work_block .w_block {
+    width: calc(100% - 150px);
+    display: flex;
+    align-items: center;
+    padding-right: 20px; }
+    .checker_step_block .work_block .w_block .icon {
+      font-size: 40px;
+      margin-right: 15px; }
+  .checker_step_block .work_block button {
+    width: 150px; }
+.checker_step_block .kundenhinweise_block .item .panel-heading .select_info {
+  margin-bottom: 10px; }
+.checker_step_block .kundenhinweise_block .item .panel-heading .select_type, .checker_step_block .kundenhinweise_block .item .panel-heading .js_kundenhinweise_select_type {
+  display: flex; }
+.checker_step_block .kundenhinweise_block .item .panel-body .title {
+  font-size: 16px;
+  font-weight: bold; }
+  @media only screen and (max-width: 1279px) {
+    .checker_step_block .kundenhinweise_block .item .panel-body .title {
+      font-size: 14px; } }
+.checker_step_block .kundenhinweise_block .item .panel-body .no_active .title {
+  color: #c7c7c7; }
+.checker_step_block .kundenhinweise_block .item .panel-footer {
+  background-color: #fbfbfb; }
+  .checker_step_block .kundenhinweise_block .item .panel-footer .status_block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+.checker_step_block .infos_block .tag_buttons {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -5px; }
+  .checker_step_block .infos_block .tag_buttons .box {
+    width: 20%;
+    padding: 0 5px;
+    margin-bottom: 10px; }
+    @media only screen and (max-width: 1279px) {
+      .checker_step_block .infos_block .tag_buttons .box {
+        width: 25%; } }
+    @media only screen and (max-width: 1023px) {
+      .checker_step_block .infos_block .tag_buttons .box {
+        width: 33.3%; } }
+    .checker_step_block .infos_block .tag_buttons .box button {
+      width: 100%;
+      height: 100%;
+      white-space: normal;
+      line-height: 1.1;
+      word-wrap: break-word; }
+.checker_step_block .infos_block .insert_tags, .checker_step_block .infos_block .insert_sonstige {
+  display: flex;
+  flex-wrap: wrap; }
+  .checker_step_block .infos_block .insert_tags .tag, .checker_step_block .infos_block .insert_sonstige .tag {
+    width: 20%;
+    padding: 10px; }
+    @media only screen and (max-width: 1023px) {
+      .checker_step_block .infos_block .insert_tags .tag, .checker_step_block .infos_block .insert_sonstige .tag {
+        width: 33.3%; } }
+    .checker_step_block .infos_block .insert_tags .tag .box .sonstige, .checker_step_block .infos_block .insert_sonstige .tag .box .sonstige {
+      display: flex; }
+      .checker_step_block .infos_block .insert_tags .tag .box .sonstige p, .checker_step_block .infos_block .insert_sonstige .tag .box .sonstige p {
+        width: calc(100% - 40px + 10px); }
+      .checker_step_block .infos_block .insert_tags .tag .box .sonstige button, .checker_step_block .infos_block .insert_sonstige .tag .box .sonstige button {
+        width: 40px;
+        margin-left: 10px; }
+.checker_step_block .reparaturhinweise_block .item .panel-body {
+  white-space: pre-line; }
+.checker_step_block .auftragspositionen_block .action_b .label {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+.checker_step_block .auftragspositionen_block .action_b button {
+  margin-left: 5px; }
+  .checker_step_block .auftragspositionen_block .action_b button span {
+    pointer-events: none; }
+.checker_step_block .kundenbeanstandung_block .panel-default .panel-body {
+  display: flex; }
+  .checker_step_block .kundenbeanstandung_block .panel-default .panel-body .icon {
+    width: 50px;
+    height: 50px;
+    background: url("../../../static/img/checker/ico_kundenbeanstandung.png") no-repeat center;
+    background-size: contain;
+    margin-right: 10px; }
+.checker_step_block .vorschlag_block .panel-body:before, .checker_step_block .vorschlag_block .panel-body:after {
+  content: none; }
+.checker_step_block .vorschlag_block .panel-body .label {
+  height: 25px;
+  margin-left: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+.checker_step_block .dokumentation_block form button {
+  width: 200px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center; }
+.checker_step_block .statusmeldung_kundenhinweis_block .panel-body .flex {
+  align-items: center;
+  opacity: 0.8; }
+  .checker_step_block .statusmeldung_kundenhinweis_block .panel-body .flex .icon {
+    font-size: 25px; }
+  .checker_step_block .statusmeldung_kundenhinweis_block .panel-body .flex .title {
+    margin-left: 15px;
+    font-size: 17px; }
+.checker_step_block .statusmeldung_kundenhinweis_block .comments {
+  margin-top: 10px; }
+
+.aufgaben_head {
+  background-color: #8f8f8f; }
+  .aufgaben_head .item .task_panel .panel-heading {
+    background-color: #f5f5f5; }
+
+.checker_kinds .head {
+  background-color: #d2dce3;
+  border: 1px solid #fff; }
+.checker_kinds .body {
+  display: flex; }
+  .checker_kinds .body textarea {
+    width: calc(100% - (150px + 10px));
+    height: 100px;
+    margin-right: 10px; }
+  .checker_kinds .body .right {
+    width: 150px; }
+    .checker_kinds .body .right .label {
+      float: right; }
+.checker_kinds button {
+  width: 180px; }
+  .checker_kinds button span {
+    margin: auto; }
+
+.checkbox_flex {
+  max-width: 100%;
+  margin-bottom: 20px; }
+  .checkbox_flex label {
+    display: flex;
+    align-items: center; }
+  .checkbox_flex input {
+    width: 40px;
+    height: 40px;
+    display: block !important;
+    position: static !important;
+    margin: 0; }
+  .checkbox_flex span {
+    font-size: 17px;
+    margin-left: 10px; }
+
+.steps_block .panel-heading {
+  border-bottom: none; }
+.steps_block .panel-body {
+  border-top: 1px solid #e5c4a1;
+  border-bottom: 1px solid #e5c4a1; }
+  .steps_block .panel-body .item .panel-body {
+    border-top: 1px solid #d2dce3;
+    border-bottom: 1px solid #d2dce3; }
+.steps_block .panel-footer {
+  border-top: none; }
+
+.task_panel .bg_green {
+  background-color: #a0a3a2; }
+.task_panel .block_heading {
+  font-weight: bold; }
+.task_panel .execute button {
+  color: #000; }
+.task_panel .collapse_button {
+  margin-bottom: 15px; }
+.task_panel .breadcrumb {
+  margin-bottom: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5px 5px 1px; }
+  .task_panel .breadcrumb li {
+    width: 25%;
+    padding: 0 3px;
+    margin-bottom: 5px; }
+    .task_panel .breadcrumb li:before {
+      content: none; }
+    .task_panel .breadcrumb li .box {
+      padding: 5px 10px;
+      background-color: #f7f7f7;
+      border: 1px solid #ebebeb;
+      border-radius: 10px; }
+  .task_panel .breadcrumb .active .box {
+    background-color: aliceblue; }
+.task_panel .well {
+  background-color: #fbfbfb;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 16px;
+  margin-bottom: 15px; }
+  .task_panel .well .badge {
+    padding: 2px 8px 3px; }
+  .task_panel .well .i {
+    border: 1px dashed #e1e1e1;
+    padding: 3px 6px;
+    border-radius: 6px;
+    margin: 0 4px; }
+.task_panel .execute .main_status {
+  height: 31px;
+  background-color: #ffffff; }
+.task_panel .execute button {
+  color: #ffffff; }
+.task_panel .dashed {
+  border: 1px solid #e3e3e3;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: ghostwhite; }
+
+.termin .datas .form-inline {
+  display: flex;
+  justify-content: space-between; }
+  .termin .datas .form-inline .form-group {
+    width: calc(50% - 10px); }
+    .termin .datas .form-inline .form-group input {
+      width: 100%; }
+.termin .controller .action {
+  width: 100%;
+  display: flex !important; }
+  .termin .controller .action .item {
+    padding: 6px 8px;
+    background-color: #efefef;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 3px;
+    font-weight: normal;
+    cursor: pointer; }
+    .termin .controller .action .item input {
+      width: 18px;
+      height: 18px;
+      margin: 0 5px 0 0;
+      pointer-events: none; }
+  .termin .controller .action .loader {
+    width: 40px;
+    height: 32px;
+    padding: 6px 8px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 3px;
+    background-color: #f0ad4e;
+    color: #fff; }
+    .termin .controller .action .loader .load {
+      width: 20px;
+      height: 20px;
+      border: 3px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 3px solid #4a4a4a;
+      animation: spin 1s linear infinite;
+      display: block; }
+.termin .controller .selector {
+  width: 100% !important;
+  margin-top: 5px; }
+.termin .controller .bootstrap-select {
+  width: 100% !important; }
+
+.color_azure {
+  background-color: #f3f6f9 !important; }
+
+.history_block {
+  display: flex; }
+  .history_block .breadcrumb {
+    width: 100%; }
+
+.swal2-container {
+  z-index: 3000 !important; }
+
+.kundenfahrzeug {
+  font-size: 14px; }
+  .kundenfahrzeug .label_pick {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px; }
+    .kundenfahrzeug .label_pick input {
+      margin: 0 10px 0 0; }
+  .kundenfahrzeug .form-inline .form-group {
+    width: calc(100% - 40px); }
+    .kundenfahrzeug .form-inline .form-group input {
+      width: 100%; }
+  .kundenfahrzeug .form-inline button {
+    width: 40px; }
+
+.garantie_kulanzantrag .garantieträger {
+  width: 300px;
+  justify-content: space-between; }
+  .garantie_kulanzantrag .garantieträger label {
+    width: calc(50% - 2px);
+    display: flex;
+    align-items: center;
+    padding: 6px 10px;
+    border: 1px solid #d5d5d5;
+    background-color: #ffffff; }
+    .garantie_kulanzantrag .garantieträger label input {
+      margin: 0 10px 0 0; }
+  .garantie_kulanzantrag .garantieträger hr {
+    margin-top: 15px;
+    margin-bottom: 15px; }
+.garantie_kulanzantrag .filemanager_info > * {
+  display: table; }
+
+.genehmigt .garantieträger {
+  margin-bottom: 10px; }
+.genehmigt .block_g {
+  display: none; }
+.genehmigt .active {
+  display: block; }
+
+.garantieträger_block .block_g {
+  display: none; }
+.garantieträger_block .active {
+  display: block; }
+
+/*# sourceMappingURL=style.css.map */

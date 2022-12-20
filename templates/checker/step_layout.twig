@@ -1,0 +1,65 @@
+{% extends "checker/base.twig" %}
+{% set title = 'Checker' %}
+
+{% block wrapper %}
+    <link rel="stylesheet" href="/static/libs/cropperjs/dist/cropper.min.css">
+    <link rel="stylesheet" href="/static/libs/filemanager/css/filemanager.css">
+    <link rel="stylesheet" href="/static/css/checker/style.css">
+    
+    <input type="hidden" name="auftrag_id" value="{{ auftrag.id }}">
+    <input type="hidden" name="auftragnr" value="{{ auftrag.auftragnr }}">
+    <input type="hidden" name="step" value="{{ step }}">
+    <div class="row">
+    <div class="col-xs-6">
+        {% include 'checker/head/kunde.twig' %}
+        {% include 'checker/head/flatrate.twig' %}
+        {% include 'checker/head/fahrzeug.twig' %}
+            {% include 'checker/head/reparaturumfang.twig' %}
+            {% include 'checker/head/auftragsdaten.twig' %}
+    </div>
+    <div class="col-xs-6">
+        {% include 'checker/head/auftrag.twig' %}
+        {% include 'checker/head/hinweise.twig' %}
+        {% include 'checker/head/garantie_kulanzantrag.twig' %}
+        {% include 'checker/head/filemanager.twig' %}
+    </div>
+    </div>
+
+    <nav id="navPageMenu">
+    <ul class="nav nav-tabs" id="auf_tabs">
+            {%  set i = 0 %}
+            
+        {% for step_a in step_data.steps %}
+                <li id="step_{{ step_a.step }}" class="{{ step_a.step == step ? 'active' : ''}}">
+                    <a href="{{ path_for('checker.step',{'id':auftrag.id,'step':step_a.step})}}" class="btn bnt-default" {{ step_a.status == 'success' ? 'style="background:#bdffa7;"' : '' }}>
+                        {% if step_a.status == 'success' %}
+                            <i class="fa fa-check"></i>
+                        {% else %}
+                            <i class="fa fa-times"></i>
+                        {% endif %}
+                        {{ step_a.title }}
+                        <p>{{ step_a.success_time is not null ? step_a.success_time | date('d.m.Y H:i') : '' }}</p>
+                    </a>
+                </li>
+        {% endfor %}
+    </ul>
+    </nav>
+        
+    <div class="checker_step_block tab-content" id="dispoContent">
+    <div role="tabpanel" class="tab-pane container-fluid active">
+        {% block step %}{% endblock %}
+    </div>
+    </div>
+        
+    {% include 'filemanager/modal.twig' %}
+    {% include 'checker/part/modals.twig' %}
+    
+    <script src="/static/js/bootstrap3-typeahead.min.js"></script>
+    <script src="/static/js/ckeditor/ckeditor.js"></script>
+    <script src="/static/libs/cropperjs/dist/cropper.min.js"></script>
+    <script src="/static/libs/filemanager/js/start.js" type="module"></script>
+    <script src="/static/js/checker/step.js"></script>
+    <script src="/static/js/click2contact.js"></script>
+    <script src="/static/js/checker/tasks/technische.js"></script>
+    <script src="/static/js/checker/kundeanahme_hinweise.js"></script>
+{% endblock %}

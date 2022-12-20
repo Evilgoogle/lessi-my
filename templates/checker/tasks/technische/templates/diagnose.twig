@@ -1,0 +1,26 @@
+{% if place == 'deafult' %}
+    <div class="panel panel-default">
+        <input type="hidden" name="type" value="diagnose"> 
+        <input type="hidden" name="auftragnr" value="{{ auftragnr }}">
+        <input type="hidden" name="kundenhinweise_id" value="{{ kundenhinweise_id }}">
+        <div class="panel-heading head">
+            <div class="row">
+                <div class="col-xs-10" style="font-size: 17px;">Diagnose</div>
+                {#div class="col-xs-2 flex_right">
+                    <button id="task_block" type="button" class="btn btn-primary">Aktualisieren</button>
+                </div>#}
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="body">
+                <textarea name="message" class="form-control"></textarea>
+            </div>
+        </div>
+    </div>
+{% elseif place == 'task' %}
+    <div class="panel panel-default">
+        <span class="label label-danger" style="margin: 8px; display: inline-block;">Diagnose</span>
+        <input type="hidden" name="task_type" value="diagnose">
+        <textarea name="message" class="form-control"></textarea>
+    </div>
+{% endif %}

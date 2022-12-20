@@ -1,0 +1,83 @@
+{% if item.task == 'fehlerfrei_bedienfehler' %}
+<div class="item panel panel-default">
+    <div class="panel-heading head">
+        <div class="row">
+            <div class="col-xs-12" style="font-size: 17px;">Behoben (Fehlerfrei/Bedienfehler)</div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="body">
+            {% if data is defined %}
+                {{ data.message }}
+            {% else %}
+                {{ item.message }}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% elseif item.task == 'durch_auftragspositionen_gelöst' %}
+<div class="item panel panel-default">
+    <div class="panel-heading head">
+        <div class="row">
+            <div class="col-xs-12" style="font-size: 17px;">Reparatur (durch Auftragspositionen gelöst)</div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="body">
+            {% if data is defined %}
+                {{ data.message }}
+            {% else %}
+                {{ item.message }}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% elseif item.task == 'diagnose' %}
+<div class="item panel panel-default">
+    <div class="panel-heading head">
+        <div class="row">
+            <div class="col-xs-12" style="font-size: 17px;">Diagnose</div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="body">
+            {% if data is defined %}
+                {{ data.message }}
+            {% else %}
+                {{ item.message }}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% elseif item.task == 'nachterminierung' %}
+<div class="item panel panel-default">
+    <div class="panel-heading head">
+        <div class="row">
+            <div class="col-xs-12" style="font-size: 17px;">Nachterminierung</div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="checkbox_flex checkbox">
+            <label>
+                <input type="checkbox" checked disabled> 
+                <span>
+                    {% if data is defined %}
+                        {{ data.select }}
+                    {% else %}
+                        {{ item.id }}
+                    {% endif %}
+                </span>
+            </label>
+        </div>
+        <hr>
+        <div class="body">
+            {% if data is defined %}
+                {{ data.message }}
+            {% else %}
+                {{ item.message }}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}
+<input type="hidden" name="auftragnr" value="{{ auftragnr }}">

@@ -1,0 +1,421 @@
+.filemanager_create {
+  max-width: 400px;
+  width: 100%; }
+  .filemanager_create img {
+    width: 100%; }
+
+.image_manager .input-group-btn {
+  width: auto; }
+.image_manager .modal-lg {
+  width: 90%; }
+.image_manager .modal-dialog {
+  height: 90vh !important; }
+.image_manager .modal-content {
+  height: 100%; }
+.image_manager .modal-body {
+  height: 92%;
+  padding: 10px;
+  background-color: #e8edf1; }
+.image_manager .modal-header {
+  background-color: #18a689;
+  padding-bottom: 18px;
+  color: #FFFFFF; }
+  .image_manager .modal-header .modal-title {
+    font-weight: normal;
+    font-size: 18px; }
+  .image_manager .modal-header .close {
+    color: #FFFFFF;
+    opacity: 1; }
+.image_manager .images_content {
+  height: 100%;
+  position: relative;
+  display: flex; }
+  .image_manager .images_content .filecontent {
+    width: 100%;
+    height: 100%;
+    margin-right: 20px;
+    overflow: hidden;
+    position: relative; }
+    .image_manager .images_content .filecontent .top {
+      display: flex; }
+      .image_manager .images_content .filecontent .top .panel {
+        width: 100%; }
+        .image_manager .images_content .filecontent .top .panel .panel-body {
+          padding: 7px 12px; }
+          .image_manager .images_content .filecontent .top .panel .panel-body .btn .loading {
+            display: table !important; }
+          .image_manager .images_content .filecontent .top .panel .panel-body .btn .load {
+            width: 65px;
+            height: 17px;
+            margin: 2px auto 3px;
+            background: url("../img/checker/loading.gif") no-repeat;
+            background-size: cover;
+            display: none; }
+      .image_manager .images_content .filecontent .top .js_reload {
+        width: 50px;
+        height: 50px;
+        font-size: 22px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        background: linear-gradient(to top, #f1efef 0%, #eae9e9 20%, #fefefe 100%);
+        padding: 6px;
+        border: 1px solid #BBBBBB;
+        margin-left: 10px;
+        cursor: pointer; }
+    .image_manager .images_content .filecontent .alerts {
+      position: absolute;
+      z-index: 20; }
+      .image_manager .images_content .filecontent .alerts .alert {
+        width: auto;
+        text-align: left;
+        display: block;
+        margin-bottom: 5px; }
+      .image_manager .images_content .filecontent .alerts .badge {
+        background-color: #FFFFFF;
+        color: red; }
+    .image_manager .images_content .filecontent .loading {
+      display: block !important; }
+    .image_manager .images_content .filecontent .load {
+      width: 200px;
+      height: 60px;
+      background: url("../img/loading.gif") no-repeat;
+      background-size: cover;
+      margin-top: 20px;
+      display: none; }
+    .image_manager .images_content .filecontent .overlay_modal {
+      width: 100%;
+      height: calc(100% - 68px);
+      position: fixed;
+      cursor: pointer;
+      top: 68px;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.19);
+      display: none;
+      z-index: 11; }
+      @media only screen and (max-width: 1919px) {
+        .image_manager .images_content .filecontent .overlay_modal {
+          height: calc(100% - 58px);
+          top: 69px; } }
+      @media only screen and (max-width: 1366px) {
+        .image_manager .images_content .filecontent .overlay_modal {
+          height: calc(100% - 48px); } }
+    .image_manager .images_content .filecontent .ajax_content {
+      height: 90%;
+      overflow: scroll;
+      margin-top: -10px; }
+      .image_manager .images_content .filecontent .ajax_content .load_block {
+        width: 100%;
+        display: flex;
+        justify-content: center; }
+      .image_manager .images_content .filecontent .ajax_content #top_scroll, .image_manager .images_content .filecontent .ajax_content #bottom_scroll {
+        width: 100%; }
+      .image_manager .images_content .filecontent .ajax_content .flex {
+        display: flex;
+        flex-wrap: wrap;
+        align-content: flex-start; }
+      .image_manager .images_content .filecontent .ajax_content .pagination {
+        margin: 0px; }
+      .image_manager .images_content .filecontent .ajax_content .bn {
+        width: 16.6%;
+        position: relative; }
+        @media only screen and (max-width: 1279px) {
+          .image_manager .images_content .filecontent .ajax_content .bn {
+            width: 25%; } }
+        .image_manager .images_content .filecontent .ajax_content .bn .column {
+          cursor: pointer;
+          height: 100%;
+          padding: 10px; }
+          @media only screen and (max-width: 1919px) {
+            .image_manager .images_content .filecontent .ajax_content .bn .column {
+              padding: 6px; } }
+          .image_manager .images_content .filecontent .ajax_content .bn .column .rubber {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(to top, #f1efef 0%, #eae9e9 20%, #fefefe 100%);
+            padding: 6px;
+            border: 1px solid #BBBBBB;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; }
+            @media only screen and (max-width: 1919px) {
+              .image_manager .images_content .filecontent .ajax_content .bn .column .rubber {
+                padding: 5px; } }
+            .image_manager .images_content .filecontent .ajax_content .bn .column .rubber .box {
+              border-radius: 10px;
+              padding: 6px;
+              border: 1px solid transparent; }
+              .image_manager .images_content .filecontent .ajax_content .bn .column .rubber .box:before {
+                content: '';
+                display: block;
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                width: 35px;
+                height: 35px;
+                background: transparent;
+                background-size: contain !important; }
+              .image_manager .images_content .filecontent .ajax_content .bn .column .rubber .box .image {
+                height: 10vw;
+                background-size: cover;
+                background-position: center center;
+                background-repeat: no-repeat;
+                pointer-events: none; }
+                .image_manager .images_content .filecontent .ajax_content .bn .column .rubber .box .image > * {
+                  width: 100%;
+                  height: 100%;
+                  display: block; }
+                .image_manager .images_content .filecontent .ajax_content .bn .column .rubber .box .image .pdf {
+                  background: url("../img/f_pdf.png") no-repeat center;
+                  background-size: contain; }
+                .image_manager .images_content .filecontent .ajax_content .bn .column .rubber .box .image .doc {
+                  background: url("../img/f_doc.png") no-repeat center;
+                  background-size: contain; }
+                .image_manager .images_content .filecontent .ajax_content .bn .column .rubber .box .image .docx {
+                  background: url("../img/f_docx.png") no-repeat center;
+                  background-size: contain; }
+                .image_manager .images_content .filecontent .ajax_content .bn .column .rubber .box .image .txt {
+                  background: url("../img/f_txt.png") no-repeat center;
+                  background-size: contain; }
+                .image_manager .images_content .filecontent .ajax_content .bn .column .rubber .box .image .mp4 {
+                  background: url("../img/f_mp4.png") no-repeat center;
+                  background-size: contain; }
+              .image_manager .images_content .filecontent .ajax_content .bn .column .rubber .box .title {
+                margin-top: 5px;
+                overflow: hidden;
+                word-wrap: break-word;
+                line-height: 1;
+                font-size: 14px;
+                pointer-events: none; }
+                @media only screen and (max-width: 1919px) {
+                  .image_manager .images_content .filecontent .ajax_content .bn .column .rubber .box .title {
+                    margin-top: 3px;
+                    font-size: 12px; } }
+              .image_manager .images_content .filecontent .ajax_content .bn .column .rubber .box .date {
+                margin-top: 5px;
+                font-weight: bold;
+                color: #000000;
+                font-size: 10px;
+                pointer-events: none; }
+            .image_manager .images_content .filecontent .ajax_content .bn .column .rubber label {
+              height: 30px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border-radius: 10px;
+              background-color: #6e6e6e;
+              margin-top: 5px; }
+          .image_manager .images_content .filecontent .ajax_content .bn .column .blue {
+            background: linear-gradient(to top, #3792db 0%, #1e8cdb 20%, #fefefe 100%); }
+            .image_manager .images_content .filecontent .ajax_content .bn .column .blue .title {
+              color: #FFFFFF; }
+          .image_manager .images_content .filecontent .ajax_content .bn .column .active {
+            border: 1px solid #2196F3 !important; }
+            .image_manager .images_content .filecontent .ajax_content .bn .column .active:before {
+              background: url("../img/selected.png") no-repeat !important; }
+      .image_manager .images_content .filecontent .ajax_content .loading_ajax {
+        width: 100%; }
+    .image_manager .images_content .filecontent .active {
+      transform: translateX(0%) !important; }
+    .image_manager .images_content .filecontent #upload_block, .image_manager .images_content .filecontent .resize_block, .image_manager .images_content .filecontent .delete_block, .image_manager .images_content .filecontent .replace_block {
+      width: 100%;
+      position: absolute;
+      z-index: 15;
+      transform: translateX(105%);
+      transition: 0.4s;
+      display: flex;
+      justify-content: center;
+      top: 70px; }
+    .image_manager .images_content .filecontent .view_block, .image_manager .images_content .filecontent .cropper_block {
+      width: 100%;
+      height: 90%;
+      position: absolute;
+      z-index: 15;
+      transform: translateX(105%);
+      transition: 0.4s;
+      display: flex;
+      justify-content: center;
+      top: 57px; }
+      @media only screen and (max-width: 1366px) {
+        .image_manager .images_content .filecontent .view_block, .image_manager .images_content .filecontent .cropper_block {
+          height: 88%; } }
+    .image_manager .images_content .filecontent .main_block {
+      width: 96%;
+      height: 100%;
+      background-color: #FFFFFF;
+      box-shadow: 0 2px 7px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 10px; }
+      .image_manager .images_content .filecontent .main_block .title {
+        font-weight: bold;
+        padding: 10px 0;
+        text-align: center; }
+      .image_manager .images_content .filecontent .main_block .line {
+        height: 1px;
+        background-color: #dddddd; }
+      .image_manager .images_content .filecontent .main_block .button_block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 20px; }
+        .image_manager .images_content .filecontent .main_block .button_block .info {
+          margin: 20px 0;
+          text-align: center; }
+      .image_manager .images_content .filecontent .main_block .view {
+        height: 90%;
+        margin: 10px;
+        background-size: contain !important;
+        background-repeat: no-repeat !important;
+        background-position: center center !important;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center; }
+        @media only screen and (max-width: 1919px) {
+          .image_manager .images_content .filecontent .main_block .view {
+            height: 88%; } }
+        @media only screen and (max-width: 1366px) {
+          .image_manager .images_content .filecontent .main_block .view {
+            height: 86%; } }
+      .image_manager .images_content .filecontent .main_block .crop {
+        height: 90%;
+        margin: 10px;
+        display: flex;
+        justify-content: center; }
+        @media only screen and (max-width: 1919px) {
+          .image_manager .images_content .filecontent .main_block .crop {
+            height: 88%; } }
+        @media only screen and (max-width: 1366px) {
+          .image_manager .images_content .filecontent .main_block .crop {
+            height: 86%; } }
+        .image_manager .images_content .filecontent .main_block .crop .left {
+          width: 85%; }
+          @media only screen and (max-width: 1366px) {
+            .image_manager .images_content .filecontent .main_block .crop .left {
+              width: 75%; } }
+          @media only screen and (max-width: 1279px) {
+            .image_manager .images_content .filecontent .main_block .crop .left {
+              width: 65%; } }
+        .image_manager .images_content .filecontent .main_block .crop .right {
+          width: 120px;
+          margin-left: 20px; }
+          @media only screen and (max-width: 1366px) {
+            .image_manager .images_content .filecontent .main_block .crop .right {
+              width: 180px; } }
+          @media only screen and (max-width: 1279px) {
+            .image_manager .images_content .filecontent .main_block .crop .right {
+              width: 200px; } }
+          .image_manager .images_content .filecontent .main_block .crop .right .panel {
+            height: auto;
+            margin-bottom: 10px; }
+            .image_manager .images_content .filecontent .main_block .crop .right .panel .panel-heading {
+              padding: 5px 8px; }
+            .image_manager .images_content .filecontent .main_block .crop .right .panel .panel-body {
+              padding: 3px 8px; }
+          .image_manager .images_content .filecontent .main_block .crop .right .buttons .btn-group {
+            margin-bottom: 10px !important; }
+        .image_manager .images_content .filecontent .main_block .crop .js_cropend .load {
+          width: 65px;
+          height: 17px;
+          margin: 2px 10px 5px; }
+      .image_manager .images_content .filecontent .main_block .resize {
+        display: flex;
+        padding: 0px 10px; }
+        .image_manager .images_content .filecontent .main_block .resize .old {
+          width: 50%;
+          padding: 10px; }
+        .image_manager .images_content .filecontent .main_block .resize .width {
+          width: 50%;
+          padding: 10px; }
+        .image_manager .images_content .filecontent .main_block .resize .panel {
+          margin-top: 10px; }
+        .image_manager .images_content .filecontent .main_block .resize #js_resizend button .load {
+          width: 65px;
+          height: 17px;
+          margin: 2px 10px 5px; }
+      .image_manager .images_content .filecontent .main_block .delete {
+        display: flex;
+        width: 50%;
+        margin: auto;
+        justify-content: space-between;
+        padding: 12px; }
+        .image_manager .images_content .filecontent .main_block .delete button {
+          width: 45%; }
+        .image_manager .images_content .filecontent .main_block .delete .js_ok .load {
+          width: 65px;
+          height: 17px;
+          margin: 2px auto 5px;
+          display: table; }
+  .image_manager .images_content .right {
+    width: 380px;
+    height: 100%; }
+    .image_manager .images_content .right .panel {
+      height: 90%;
+      overflow: auto; }
+      .image_manager .images_content .right .panel .title {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 16px; }
+      .image_manager .images_content .right .panel .panel-body {
+        padding: 15px 15px 0px; }
+      .image_manager .images_content .right .panel .act, .image_manager .images_content .right .panel .info, .image_manager .images_content .right .panel .monitor, .image_manager .images_content .right .panel .del {
+        margin-bottom: 14px;
+        border-radius: 6px;
+        padding: 6px;
+        border: 1px solid #BBBBBB;
+        background-color: #FFFFFF;
+        box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25); }
+        .image_manager .images_content .right .panel .act .file_title, .image_manager .images_content .right .panel .info .file_title, .image_manager .images_content .right .panel .monitor .file_title, .image_manager .images_content .right .panel .del .file_title {
+          border-bottom: 1px solid #BBBBBB;
+          text-align: center;
+          margin-bottom: 5px; }
+        .image_manager .images_content .right .panel .act .btn, .image_manager .images_content .right .panel .info .btn, .image_manager .images_content .right .panel .monitor .btn, .image_manager .images_content .right .panel .del .btn {
+          width: 100%; }
+        .image_manager .images_content .right .panel .act .form-froup, .image_manager .images_content .right .panel .info .form-froup, .image_manager .images_content .right .panel .monitor .form-froup, .image_manager .images_content .right .panel .del .form-froup {
+          width: 16.6%; }
+        .image_manager .images_content .right .panel .act .file_altblock button .loading, .image_manager .images_content .right .panel .info .file_altblock button .loading, .image_manager .images_content .right .panel .monitor .file_altblock button .loading, .image_manager .images_content .right .panel .del .file_altblock button .loading {
+          display: table !important; }
+        .image_manager .images_content .right .panel .act .file_altblock button .load, .image_manager .images_content .right .panel .info .file_altblock button .load, .image_manager .images_content .right .panel .monitor .file_altblock button .load, .image_manager .images_content .right .panel .del .file_altblock button .load {
+          width: 65px;
+          height: 17px;
+          margin: 2px auto 5px;
+          background: url("../img/loading.gif") no-repeat;
+          background-size: cover;
+          display: none; }
+      .image_manager .images_content .right .panel .js_sendmail {
+        width: 100%;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center; }
+        .image_manager .images_content .right .panel .js_sendmail span {
+          width: 100%;
+          height: 20px;
+          background: url("../img/loading.gif") no-repeat center;
+          background-size: contain; }
+  .image_manager .images_content .upload_file {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    left: 10px;
+    bottom: 0px;
+    border-radius: 50%;
+    background-color: #18a689;
+    color: #FFFFFF;
+    font-size: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    transition: 0.5s;
+    transform: translateY(0px);
+    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.42); }
+    .image_manager .images_content .upload_file:hover {
+      background-color: #1E83D4;
+      transform: translateY(-7px); }
+
+#filemanager_name_alt .form-froup {
+  margin-bottom: 12px !important; }
+
+/*# sourceMappingURL=filemanager.css.map */

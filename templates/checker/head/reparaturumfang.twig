@@ -1,0 +1,23 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Reparatur Umfang</div>
+    <table class="panel-body table table-condensed">
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Gruppe</th>
+                <th>Bezeichnung</th>
+                <th>Stunden</th>
+            </tr>    
+        </thead>
+        <tbody>
+            {% for item in auftrag_m.reparatur_plan %}
+                <tr>
+                    <td>{{ item.DATUM | date('d.m.Y') }}</td>
+                    <td>{{ item.gruppe.WSGRUPPETEXT | mb_convert_encoding }}</td>
+                    <td>{{ item.BEZEICHNUNG }}</td>
+                    <td>{{ item.ANZSTD | round(1) }}</td>
+                </tr>    
+            {% endfor %}    
+        </tbody>
+    </table>
+</div>
